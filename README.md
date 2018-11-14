@@ -1,5 +1,7 @@
 # 42sh
 
+## requirements
+
 reference shell: bash or sh
 
 Mandatory part:
@@ -26,3 +28,16 @@ Optionnal features (select 5)
 - [ ] Dynamic autocompletion
 - [ ] Job control: fg, bg, &
 - [ ] Shell script
+
+## architecture
+
+### parsing
+
+- AST
+Precedence?
+
+### processing
+
+
+
+### builtins
