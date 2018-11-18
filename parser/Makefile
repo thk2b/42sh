@@ -1,10 +1,12 @@
 NAME = parser
 
-INCLUDES = -I ../includes/
+INCLUDES = -I includes/
 
 SRCS = $(addprefix srcs/, read.c)
 
-OBJ = $(SRCS:*.c=*.o)
+ASAN = -fsanitize=address -fsanitize=undefined -g
+
+OBJ = $(SRCS:%.c=%.o)
 
 FLAGS = -Wall -Werror -Wextra
 
@@ -13,7 +15,7 @@ CC = gcc
 all: $(NAME)
 
 $(NAME):
-	$(CC) $(FLAGS) $(INCLUDES) $(SRCS) -o $(NAME)
+	$(CC) $(FLAGS) $(ASAN) $(INCLUDES) $(SRCS) -o $(NAME)
 
 clean: 
 	rm -f $(OBJ)

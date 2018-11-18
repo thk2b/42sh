@@ -3,65 +3,60 @@
 /*                                                        :::      ::::::::   */
 /*   read.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ale-goff <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 17:54:05 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/17 18:52:40 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/18 13:13:04 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <strings.h>
-#include <string.h>
+#include <parser.h>
 
-# define REDIRECT_LEFT			1
-# define REDIRECT_RIGHT			2
-# define REDIRECT_APPEND_RIGHT	3
-
-typedef struct					s_redirect
+int					ft_strlen(const char *s)
 {
-	char						type;
-	int							fd;
-	char						*path;
-	struct s_redirect			*next;
-}								t_redirect;
+	int				p;
 
-# define T_CMD					1
-# define T_PIPE					2
-# define T_AND					3
-# define T_OR					4
-# define T_SEMI					5
-# define T_ALPHANUM				6
-# define T_QUOTE				7
-# define T_BRACKET				8
-# define T_PAREN				9
-# define T_BACKTICK				10
-# define T_SPACE				11
+	p = 0;
+	while (s[p])
+	{
+		p += 1;
+	}
+	return (p);
+}
 
-typedef struct					s_list
+char				*trip_join(const char *s1, const char c, const char *s2)
 {
-	char						*content;
-	struct s_list				*next;
-}								t_list;
+	char			*new;
+	int				tmp;
+	int				p;
+	int				len1;
+	int				len2;
 
-typedef struct					s_tree
-{
-	char						type;
-	struct s_tree				*left;
-	struct s_tree				*right;
-	struct s_list				*args;
-	//	struct s_cmd				*data;
-}								t_tree;
-
-typedef struct					s_cmd
-{
-	t_redirect					*redirects;
-	char						**argv;
-	int							return_status;
-}								t_cmd;
+	len1 = 0;
+	len2 = 0;
+	if (s1)
+		len1 = ft_strlen(s1);
+	if (s2)
+		len2 = ft_strlen(s2);
+	new = malloc(sizeof(char) * (len1 + len2 + 2));
+	tmp = 0;
+	p = 0;
+	if (s1)
+	{
+		while (s1[tmp])
+			new[p++] = s1[tmp++];
+	}
+	if (c)
+		new[p++] = c;
+	tmp = 0;
+	if (s2)
+	{
+		while (s2[tmp])
+			new[p++] = s2[tmp++];
+	}
+	new[p] = '\0';
+	return (new);
+}
 
 int				is_space(char c)
 {
@@ -167,19 +162,78 @@ int				classify_token(char c)
 		return (0);
 }
 
-void			print_list(t_list *head)
+void			print_list(t_list *lst)
 {
-	t_list			*traverse;
+	t_nodes			*node;
+	int				index = 0;
 
-	traverse = head;
-	while (traverse)
+	node = lst->head;
+	while (node)
 	{
-		printf("%s\n", traverse->content);
-		traverse = traverse->next;
+		printf("[%d] %s\n", index++, node->content);
+		node = node->next;
 	}
 }
 
-void			push(t_list **head, char *content)
+t_nodes		*new_node(char *new_data)
+{
+	t_nodes		*node;
+
+	node = (t_nodes *)malloc(sizeof(t_nodes));
+	node->content = new_data;
+	node->next = NULL;
+	return (node);
+}
+
+t_list		*new_list(char *new_data)
+{
+	t_list		*lst;
+	t_nodes		*node;
+
+	node = new_node(new_data);
+	lst = (t_list *)malloc(sizeof(t_list));
+	lst->head = node;
+	lst->tail = node;
+	return (lst);
+}
+
+void		append(t_list **head_ref, char *new_data)
+{
+    t_nodes		*new;
+
+	if (*head_ref == NULL)
+	{
+		*head_ref = new_list(new_data);
+		return ;
+	}
+	new = new_node(new_data);
+	(*head_ref)->tail->next = new;
+	(*head_ref)->tail = new;
+}
+
+/*void			push_back(t_list **head, char *content)
+{
+	t_list			*traverse;
+	t_list			*new;
+
+	new = malloc(sizeof(*new));
+	new->content = content;
+	new->next = NULL;
+	if (!(*head))
+	{
+		*head = new;
+		return ;
+	}
+	traverse = *head;
+	while (traverse && traverse->next)
+	{
+		traverse = traverse->next;
+	}
+	traverse->next = new;
+}
+*/
+
+/*void			push(t_list **head, char *content)
 {
 	t_list			*new;
 
@@ -195,52 +249,164 @@ void			push(t_list **head, char *content)
 	}
 	*head = new;
 }
-
-void			pull_token(t_list **head, char *s, int *p)
+*/
+int		ft_strequ(char const *s1, char const *s2)
 {
+	if (!s1 || !s2)
+		return (0);
+	if (ft_strlen(s1) != ft_strlen(s2))
+		return (0);
+	while (*s1 && *s2)
+	{
+		if (*s1 != *s2)
+			return (0);
+		s1++;
+		s2++;
+	}
+	return (1);
+}
+
+int		is_op(char *str)
+{
+	if (ft_strequ(str, "&")|| ft_strequ(str, "&&") || ft_strequ(str, "||") || ft_strequ(str, "|"))
+		return (1);
+	return (0);
+}
+void		check_errors(char *content, char *s)
+{
+	if (!content || !s)
+			return ;
+	if (is_op(content) && is_op(s))
+	{
+		printf("syntax eror\n");
+		exit(1);
+	}
+}
+
+void			pull_operator(t_list **head, char *s, int *tmp, int state)
+{
+	int				p;
+	int				begin;
+	char			*ptr;
+
+	begin = *tmp;
+	p = 2;
+	while (s[*tmp] && state == classify_token(s[*tmp]) && p--)
+	{
+		*tmp += 1;	
+	}
+	ptr = ft_strdup_range(s, begin, *tmp - 1);
+	check_errors((*head)->tail->content, ptr);
+	append(head, ptr);
+}
+
+int				pull_token(t_list **head, char *s, int *p)
+{
+	WOW();
 	int				tmp;
 	int				state;
 	int				begin;
+	int				status;
+	char			*ptr;
 
 	tmp = *p;
 	state = classify_token(s[tmp]);
-	begin = tmp;	
+	begin = tmp;
+	ptr = NULL;
 	if (state == T_QUOTE)
 	{
 		tmp += 1;
 		while (s[tmp] && classify_token(s[tmp]) != T_QUOTE)
 			tmp += 1;
-		push(head, ft_strdup_range(s, begin, tmp++));
+		if (!s[tmp])
+		{
+			status = SEEKING_END;
+//			*p = tmp;
+//			return (SEEKING_END);
+		}
+		else
+			status = END;
+		if (status == END)
+		{
+			ptr = ft_strdup_range(s, begin, tmp++);
+			check_errors((*head)->tail->content, ptr);
+			append(head, ptr);
+		}
 	}
+	else if (state == T_AND || state == T_OR || state == T_PIPE)
+	{
+		pull_operator(head, s, &tmp, state);
+		status = SEEKING_END;
+	}
+		//AND_OPERATOR function
 	else
 	{
 		while (s[tmp] && state == classify_token(s[tmp]))
 			tmp += 1;
-		push(head, ft_strdup_range(s, begin, tmp - 1));
+		ptr = ft_strdup_range(s, begin, tmp - 1);
+		if ((*head) && (*head)->tail)
+			check_errors((*head)->tail->content, ptr);
+		append(head, ptr);
+		status = END;
 	}
 	*p = tmp;
+	if (*head)
+		print_list(*head);
+	return (status);
 }
 
-void			parse(char *s)
+void			free_append(char **s, char *end)
 {
-	printf("%s\n", s);
-	t_list			*args;
+	char			*new;
 
+	new = trip_join(*s, 0, end);
+	free(*s);
+	*s = new;
+}
+
+t_list			*parse(char *s)
+{
+	WOW();
+	printf("%s\n", s);
+	static char		*full = NULL;
+	t_list			*args;
+	int				token_completion;
+	int				p;
+	static int		end  = 3;
+
+	token_completion = 0;
 	args = NULL;
-	for (int p = 0; s[p]; p += 1)
+	full = trip_join(full, 0, s);
+	printf("line to parsed = %s\n", full);
+	p = 0;
+	while(full[p])
 	{
-		if (is_space(s[p]))
-			p = skip_whitespace(s, p);
+		printf("%c\n", full[p]);
+		if (is_space(full[p]))
+			p = skip_whitespace(full, p);
 		else
-			pull_token(&args, s, &p);
+			token_completion = pull_token(&args, full, &p);
+		printf("p = %d\n", p);
 	}
+	if (token_completion == SEEKING_END && end--)
+	{
+		free_append(&full, "\n");
+		read_line();
+		return (NULL);
+	}
+	printf("printing split arguments (tokens)\n\n");
 	print_list(args);
+	printf("\n\nfull lined that was parsed = %s\n", full);
+	free(full);
+	full = NULL;
+	return (args);
 }
 
 void			read_line(void)
 {
 	char			buffer[1024];
 	int				p = 0;
+	t_list			*args;
 
 	bzero(buffer, 1024);
 	write(1, "->", 2);
@@ -253,7 +419,7 @@ void			read_line(void)
 		}
 		p += 1;
 	}
-	parse(strdup(buffer));
+	args = parse(strdup(buffer));
 }
 
 int				main(void)
