@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 16:31:26 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/18 13:27:36 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/18 14:01:50 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 #include <string.h>
 #include <libft.h>
 
+# define IS_SPACE(x) (x == ' ' || x == '\t' || x == '\n')
+# define IS_OP(x) (x == '&' || x == '|')
 # define WOW() printf("->%s\n", __func__)
 # define REDIRECT_LEFT			1
 # define REDIRECT_RIGHT			2
@@ -85,6 +87,11 @@ typedef struct					s_cmd
 	int							return_status;
 }								t_cmd;
 
-
+typedef struct					s_token
+{
+	int							type;
+	int							status;
+	char						*content;
+}								t_token;
 void			read_line(void);
 #endif

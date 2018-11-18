@@ -2,7 +2,7 @@ NAME = parser
 
 INCLUDES = -I includes/ -I./libft/
 
-SRCS = $(addprefix srcs/, read.c)
+SRCS = $(addprefix srcs/, preliminary_parse.c)
 
 ASAN = -fsanitize=address -fsanitize=undefined -g
 
