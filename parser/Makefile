@@ -1,6 +1,6 @@
 NAME = parser
 
-INCLUDES = -I includes/
+INCLUDES = -I includes/ -I./libft/
 
 SRCS = $(addprefix srcs/, read.c)
 
@@ -8,14 +8,22 @@ ASAN = -fsanitize=address -fsanitize=undefined -g
 
 OBJ = $(SRCS:%.c=%.o)
 
+LIBRARY = libft/libft.a
+
 FLAGS = -Wall -Werror -Wextra
 
 CC = gcc
 
 all: $(NAME)
 
-$(NAME):
-	$(CC) $(FLAGS) $(ASAN) $(INCLUDES) $(SRCS) -o $(NAME)
+%.o: %.c
+	gcc $(FLAGS) $(ASAN) $(INCLUDES) -c $< -o $@
+
+$(NAME): $(OBJ) $(LIBRARY)
+	$(CC) $(FLAGS) $(ASAN) $(INCLUDES) $(SRCS) $(LIBRARY) -o $(NAME)
+
+$(LIBRARY):
+	make -C libft/
 
 clean: 
 	rm -f $(OBJ)

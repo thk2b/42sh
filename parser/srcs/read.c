@@ -6,23 +6,11 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 17:54:05 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/18 13:13:04 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/18 13:31:48 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser.h>
-
-int					ft_strlen(const char *s)
-{
-	int				p;
-
-	p = 0;
-	while (s[p])
-	{
-		p += 1;
-	}
-	return (p);
-}
 
 char				*trip_join(const char *s1, const char c, const char *s2)
 {
@@ -211,45 +199,6 @@ void		append(t_list **head_ref, char *new_data)
 	(*head_ref)->tail = new;
 }
 
-/*void			push_back(t_list **head, char *content)
-{
-	t_list			*traverse;
-	t_list			*new;
-
-	new = malloc(sizeof(*new));
-	new->content = content;
-	new->next = NULL;
-	if (!(*head))
-	{
-		*head = new;
-		return ;
-	}
-	traverse = *head;
-	while (traverse && traverse->next)
-	{
-		traverse = traverse->next;
-	}
-	traverse->next = new;
-}
-*/
-
-/*void			push(t_list **head, char *content)
-{
-	t_list			*new;
-
-	new = malloc(sizeof(*new));
-	new->content = content;
-	if (!(*head))
-	{
-		new->next = NULL;
-	}
-	else
-	{
-		new->next = *head;
-	}
-	*head = new;
-}
-*/
 int		ft_strequ(char const *s1, char const *s2)
 {
 	if (!s1 || !s2)
@@ -296,6 +245,11 @@ void			pull_operator(t_list **head, char *s, int *tmp, int state)
 		*tmp += 1;	
 	}
 	ptr = ft_strdup_range(s, begin, *tmp - 1);
+	if (is_op(ptr) && (!(*head)))
+	{
+		printf("ERROR\n");
+		exit(1);
+	}
 	check_errors((*head)->tail->content, ptr);
 	append(head, ptr);
 }
@@ -321,8 +275,6 @@ int				pull_token(t_list **head, char *s, int *p)
 		if (!s[tmp])
 		{
 			status = SEEKING_END;
-//			*p = tmp;
-//			return (SEEKING_END);
 		}
 		else
 			status = END;
@@ -338,7 +290,6 @@ int				pull_token(t_list **head, char *s, int *p)
 		pull_operator(head, s, &tmp, state);
 		status = SEEKING_END;
 	}
-		//AND_OPERATOR function
 	else
 	{
 		while (s[tmp] && state == classify_token(s[tmp]))
@@ -372,7 +323,7 @@ t_list			*parse(char *s)
 	t_list			*args;
 	int				token_completion;
 	int				p;
-	static int		end  = 3;
+	static int		end = 3;
 
 	token_completion = 0;
 	args = NULL;
@@ -404,6 +355,18 @@ t_list			*parse(char *s)
 
 void			read_line(void)
 {
+	char			*line;
+	t_list			*args;
+
+	line = NULL;
+	write(1, "->", 2);
+	get_next_line(0, &line);
+	args = parse(line);	
+
+}
+/*
+void			read_line(void)
+{
 	char			buffer[1024];
 	int				p = 0;
 	t_list			*args;
@@ -421,7 +384,7 @@ void			read_line(void)
 	}
 	args = parse(strdup(buffer));
 }
-
+*/
 int				main(void)
 {
 	read_line();
