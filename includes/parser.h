@@ -85,7 +85,7 @@ typedef struct					s_tree
 	struct s_tree				*left;
 	struct s_tree				*right;
 	struct s_list				*args;
-	//	struct s_cmd				*data;
+	struct s_cmd				*data;
 }								t_tree;
 
 typedef struct					s_cmd
