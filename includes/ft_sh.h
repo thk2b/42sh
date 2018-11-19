@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 18:02:58 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/19 07:08:46 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/19 11:25:42 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <parser.h>
 # include <exec.h>
 # include <tokenizer.h>
+# include <local_var.h>
 # define NUM_OP 5
 # define TRUE 1
 # define FALSE 0
