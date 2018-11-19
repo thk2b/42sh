@@ -10,7 +10,7 @@ OBJ = $(SRCS:%.c=%.o)
 
 LIBRARY = libft/libft.a
 
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra -g
 
 CC = gcc
 

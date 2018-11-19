@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 16:31:26 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/18 14:01:50 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/18 16:50:44 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct					s_redirect
 # define T_PAREN				9
 # define T_BACKTICK				10
 # define T_SPACE				11
+# define T_COMMENT				12
 
 typedef struct			s_nodes
 {

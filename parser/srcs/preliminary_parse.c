@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   preliminary_parse.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ale-goff <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/18 14:51:50 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/18 17:12:49 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int				is_alpha_numeric(char c)
 	if (c >= 'A' && c <= 'Z')
 		return (1);
 	if (c >= 'a' && c <= 'z')
+		return (1);
+	if (c == '-')
 		return (1);
 	return (0);
 }
@@ -82,12 +84,15 @@ char				*ft_strdup_range(const char *str, int begin, int end)
 void	free_list(t_list *head)
 {
 	t_nodes	*tmp;
+	t_nodes *free_;
 
 	tmp = head->head;
 	while (tmp)
 	{
+		free_ = tmp;
 		free(tmp->content);
 		tmp = tmp->next;
+		free(free_);
 	}
 	free(head);
 	head = NULL;
@@ -160,18 +165,14 @@ char				*trip_join(const char *s1, const char c, const char *s2)
 	tmp = 0;
 	p = 0;
 	if (s1)
-	{
 		while (s1[tmp])
 			new[p++] = s1[tmp++];
-	}
 	if (c)
 		new[p++] = c;
 	tmp = 0;
 	if (s2)
-	{
 		while (s2[tmp])
 			new[p++] = s2[tmp++];
-	}
 	new[p] = '\0';
 	return (new);
 }
@@ -232,6 +233,8 @@ int				classify_token(char c)
 		return (T_BACKTICK);
 	else if (IS_SPACE(c))
 		return (T_SPACE);
+	else if (c == '#')
+		return (T_COMMENT);
 	else
 		return (0);
 }
@@ -246,21 +249,23 @@ void				init_token_info(t_token *info)
 int					pull_quote_content(t_list **head, const char *input, int *p)
 {
 	WOW();
-	int					begin;
+	int					tmp;
 	char				*content;
 
-	begin = *p;
-	*p += 1;
-	while (input[*p] && classify_token(input[*p]) != T_QUOTE)
+	tmp = *p;
+	tmp += 1;
+	while (input[tmp] && classify_token(input[tmp]) != T_QUOTE)
 	{
-		*p += 1;
+		tmp += 1;
 	}
-	if (!input[*p])
+	if (!input[tmp])
 	{
 		printf("seeking_end\n");
+		*p = tmp;
 		return (SEEKING_END);
 	}
-	content = ft_strdup_range(input, begin, *p++);
+	content = ft_strdup_range(input, *p, tmp++);
+	*p = tmp;
 	if (*head && (*head)->tail)
 		check_errors((*head)->tail->content, content);
 	append(head, content);
@@ -279,14 +284,17 @@ int					pull_operator(t_list **head, const char *input, int *p)
 	type = classify_token(input[tmp]);
 	op_max = 2;
 	while (input[tmp] && type == classify_token(input[tmp]) && op_max--)
-	{
 		tmp += 1;
-	}
 	content = ft_strdup_range(input, *p, tmp - 1);
+	if (is_op(content) && (!(*head)))
+	{
+		printf("syntax error\n");
+		exit(1);
+	}
 	check_errors((*head)->tail->content, content);
 	append(head, content);
 	*p = tmp;
-	return (END);
+	return (SEEKING_END);
 }
 
 int					pull_token(t_list **head, const char *input, int *p)
@@ -299,27 +307,42 @@ int					pull_token(t_list **head, const char *input, int *p)
 	tmp = *p;
 	type = classify_token(input[tmp]);
 	while (input[tmp] && type == classify_token(input[tmp]))
-	{
 		tmp += 1;
-	}
 	content = ft_strdup_range(input, *p, tmp - 1);
 	if ((*head) && (*head)->tail)
-	check_errors((*head)->tail->content, content);
+		check_errors((*head)->tail->content, content);
 	append(head, content);
 	*p = tmp;
+	return (END);
+}
+
+int					skip_to_end_of_line(const char *input, int *p, t_list **head)
+{
+	while (input[*p] && input[*p] != '\n')
+	{
+		*p += 1;
+	}
+	if (is_op((*head)->tail->content))
+	{
+		return (SEEKING_END);
+	}
 	return (END);
 }
 
 int					interpret_token(t_list **head, const char *input, int *p)
 {
 	int					tmp;
-	t_token				info;
+	static t_token		info;
 //	int					begin;
 
 	init_token_info(&info);
 	tmp = *p;
 	info.type = classify_token(input[tmp]);
-	if (info.type == T_QUOTE)
+	if (info.type == T_COMMENT)
+	{
+		info.status = skip_to_end_of_line(input, &tmp, head);//do something here
+	}
+	else if (info.type == T_QUOTE)
 	{
 		info.status = pull_quote_content(head, input, &tmp);
 	}
@@ -337,6 +360,7 @@ int					interpret_token(t_list **head, const char *input, int *p)
 
 t_list				*interpret_input(const char *input, int *token_completion)
 {
+	WOW();
 	int					p;
 	t_list				*arguments;
 
@@ -345,6 +369,9 @@ t_list				*interpret_input(const char *input, int *token_completion)
 	arguments = NULL;
 	while (input[p])
 	{
+		printf("p = %d\n", p);
+		printf("%s\n", input);
+		printf("%*c\n", (int)strlen(input), input[p]);
 		if (IS_SPACE(input[p]))
 			p = skip_whitespace(input, p);
 		else
@@ -367,6 +394,7 @@ t_list				*split_args(void)
 	int					token_completion;
 
 	line = NULL;
+	write(1, "->", 2);
 	get_next_line(0, &line);
 	free_append(&input, line);
 	arguments = interpret_input(input, &token_completion);
@@ -377,8 +405,10 @@ t_list				*split_args(void)
 	{
 		free_append(&input, "\n");
 		free(line);
+		printf("--------------------------------\n");
 		return (split_args());
 	}
+	free(input);
 	input = NULL;
 	free(line);
 	return (arguments);
@@ -390,6 +420,8 @@ void				parse(void)
 	t_list				*arguments;
 
 	arguments = split_args();
+	if (arguments)
+		free_list(arguments);
 }
 
 int					main(void)
