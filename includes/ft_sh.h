@@ -17,6 +17,10 @@
 # include "parser.h"
 # include "tokenizer.h"
 # define NUM_OP 5
+# define TRUE 1
+# define FALSE 0
+
+typedef	unsigned char t_bool;
 
 /*
 **	Initialization
