@@ -9,7 +9,7 @@ INCLUDEDIR = includes
 HASH_MAP_SRCS = $(addprefix hash_map/, hash_ascii.c hm_new.c hm_find.c hm_free.c hm_insert.c hm_new.c hm_remove.c hm_foreach.c hm_reduce.c)
 # QUEUE_SRCS = $(addprefix queue/, queue_new.c queue_free.c queue_add.c queue_pop.c)
 # PRIORITY_QUEUE_SRCS = $(addprefix priority_queue/, pq_new.c pq_free.c pq_add.c pq_get.c pq_pop.c)
-# ENV_SRCS = $(addprefix env/, ft_getenv.c ft_setenv.c ft_putenv.c ft_unsetenv.c)
+ENV_SRCS = $(addprefix env/, ft_getenv.c ft_setenv.c ft_putenv.c ft_unsetenv.c)
 # STACK_SRCS = $(addprefix stack/, stack_new_node.c stack_free.c stack_push.c stack_pop.c stack_swap.c stack_rotate.c stack_rrotate.c stack_is_sorted.c)
 # CLIST_SRCS = $(addprefix clist/, clist_new.c clist_free.c clist_push.c clist_pop.c clist_rotate.c clist_rrotate.c clist_swap_next.c clist_is_sorted.c)
 FT_PRINTF_SRCS = $(addprefix ft_printf/, parse_utils.c style.c parse.c linked_buffer.c convert_utils.c set_digits.c convert_num.c convert_str.c convert_wstr.c convert_percent.c convert.c get_len.c ft_asprintf.c ft_sprintf.c ft_printf.c)
@@ -78,24 +78,6 @@ SRCS = $(addprefix $(SRCDIR)/,\
 	ft_putstr_fd.c\
 	ft_putendl_fd.c\
 	ft_putnbr_fd.c\
-	ft_lstnew.c\
-	ft_lstdelone.c\
-	ft_lstdel.c\
-	ft_lstadd.c\
-	ft_lstiter.c\
-	ft_lstmap.c\
-	ft_strcjoin.c\
-	ft_strvjoin.c\
-	ft_btree_new.c\
-	ft_btree_add.c\
-	ft_btree_del.c\
-	ft_btree_find.c\
-	ft_btree_preorder.c\
-	ft_btree_inorder.c\
-	ft_btree_postorder.c\
-	ft_btree_backpreorder.c\
-	ft_btree_backinorder.c\
-	ft_btree_backpostorder.c\
 	get_next_line.c\
 	ft_putstrv.c\
 	ft_strv_len.c\
@@ -103,6 +85,24 @@ SRCS = $(addprefix $(SRCDIR)/,\
 	ft_strv_dup.c\
 	ft_strv_remove.c\
 )
+	# ft_lstnew.c\
+	# ft_lstdelone.c\
+	# ft_lstdel.c\
+	# ft_lstadd.c\
+	# ft_lstiter.c\
+	# ft_lstmap.c\
+	# ft_strcjoin.c\
+	# ft_strvjoin.c\
+	# ft_btree_new.c\
+	# ft_btree_add.c\
+	# ft_btree_del.c\
+	# ft_btree_find.c\
+	# ft_btree_preorder.c\
+	# ft_btree_inorder.c\
+	# ft_btree_postorder.c\
+	# ft_btree_backpostorder.c\
+	# ft_btree_backpreorder.c\
+	# ft_btree_backinorder.c\
 
 OBJS = $(SRCS:.c=.o)
 
