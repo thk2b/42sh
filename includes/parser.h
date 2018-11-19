@@ -25,6 +25,12 @@ typedef struct					s_redirect
 	struct s_redirect			*next;
 }								t_redirect;
 
+typedef struct					s_assign
+{
+	char			*value;
+	struct s_assign	*next;
+}								t_assign;
+
 # define T_CMD					1
 # define T_PIPE					2
 # define T_AND					3
@@ -34,6 +40,7 @@ typedef struct					s_redirect
 typedef struct					s_cmd
 {
 	t_redirect					*redirects;
+	t_assign					*assign;
 	char						**argv;
 	int							return_status;
 }								t_cmd;
