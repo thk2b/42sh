@@ -16,6 +16,7 @@
 # include "exec.h"
 # include "parser.h"
 # include "tokenizer.h"
+# define NUM_OP 5
 
 /*
 **	Initialization
@@ -24,6 +25,7 @@
 /*
 **	Runtime
 */
+
 
 /*
 **	Teardown

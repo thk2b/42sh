@@ -20,6 +20,18 @@ typedef struct	s_table
 	int		(*f)();
 }				t_table;
 
+
+/*
+**	exec_tree.c
+*/
+int		exec_node(t_tree *tree, int use_current_process);
+int		exec_semi(t_tree *tree, int use_current_process);
+int		exec_pipe(t_tree *tree, int use_current_process);
+int		exec_and(t_tree *tree, int use_current_process);
+int		exec_or(t_tree *tree, int use_current_process);
+int		exec_cmd(t_tree *tree);
+
+
 /*
 **	Handle environment
 **		getenv, setenv, unsetenv, env, 
@@ -43,26 +55,32 @@ typedef struct	s_table
 **		Simple Command
 */
 
-int		exec_tree(t_tree *tree, int use_current_process);
-int		exec_semi(t_tree *tree, int use_current_process);
-int		exec_pipe(t_tree *tree, int use_current_process);
-int		exec_and(t_tree *tree, int use_current_process);
-int		exec_or(t_tree *tree, int use_current_process);
-int		exec_cmd(t_tree *tree);
-
 /*
 **	Our Bonues
 **		Termcaps
 **		Local Variables
-**		Back Quotes
 **		Command History
 */
-
 
 /*
 **	More Bonuses
 **		File Descriptors and read
-**		Advanced redirectionss
+**		Advanced redirections, output aggregation and heredoc
+**		Back Quotes
 */
+
+
+/*
+**	TASKS:
+**		Reading and executing the tree. Along with all the operator functions.
+**		The "execute basic command", Path Management.
+**		Handle Environment, unsetenv, env, getenv
+**		Main, loop, simple getline
+**		Expansions
+**		
+**		
+**		
+*/
+
 
 #endif
