@@ -6,13 +6,13 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 17:52:34 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/17 18:49:09 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/19 06:58:37 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXEC_H
 # define EXEC_H
-# include "ft_sh.h"
+# include <ft_sh.h>
 
 typedef struct	s_table
 {
@@ -21,7 +21,7 @@ typedef struct	s_table
 }				t_table;
 
 /*
-**	exec_builitins or something like that
+**	exec_cmd.c
 */
 int		search_cmd(char **argv);
 
@@ -46,9 +46,13 @@ int		exec_cmd(t_tree *tree);
 */
 
 /*
+**	path.c
 **	Path management (make it easy to add hash map)
 **		Split path, try each, validate with access
 */
+int		path_init(void);
+char	*path_search(char *executable_name, char *exists);
+int		path_teardown(void);
 
 /*
 **	Exec tree
