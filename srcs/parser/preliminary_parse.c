@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/18 19:08:10 by dmendelo         ###   ########.fr       */
+/*   Updated: 2018/11/19 10:17:54 by dmendelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -418,8 +418,12 @@ void				parse(void)
 {
 	WOW();
 	t_list				*arguments;
-
+		
 	arguments = split_args();
+	while (arguments)
+	{
+		print_command_info(create_cmd(&arguments));
+	}
 	if (arguments)
 		free_list(arguments);
 }
