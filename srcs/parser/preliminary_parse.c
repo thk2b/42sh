@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/19 10:17:54 by dmendelo         ###   ########.fr       */
+/*   Updated: 2018/11/19 14:36:12 by dmendelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -414,7 +414,7 @@ t_list				*split_args(void)
 	return (arguments);
 }
 
-void				parse(void)
+t_tree				*parse(void)
 {
 	WOW();
 	t_list				*arguments;
@@ -426,6 +426,7 @@ void				parse(void)
 	}
 	if (arguments)
 		free_list(arguments);
+	return (NULL);
 }
 
 int					main(void)
