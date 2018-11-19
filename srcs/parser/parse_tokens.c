@@ -6,7 +6,7 @@
 /*   By: dmendelo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 10:18:05 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/11/19 11:38:10 by dmendelo         ###   ########.fr       */
+/*   Updated: 2018/11/19 14:30:19 by dmendelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,13 +146,13 @@ char					determine_redirection_type(char *o)
 		return (0);
 }
 
-t_redirect				*new_redirection(char *operator, int fd)
+t_redirect				*new_redirection(char *operator_, int fd)
 {
 	char				type;
 	t_redirect			*new;
 
 	new = (t_redirect *)malloc(sizeof(*new));
-	type = determine_redirection_type(operator);
+	type = determine_redirection_type(operator_);
 	new->type = type;
 	new->fd = fd;
 	new->path = NULL;
@@ -178,11 +178,53 @@ int						pull_redirection(t_nodes **node, t_nodes *prev, t_cmd **cmd)
 	return (0);
 }
 
-char					**append_word_argv(char *word, int *status)
+int						get_ptr_len(char **s)
+{
+	int					p;
+
+	if (!s)
+		return (0);
+	p = 0;
+	while (s[p])
+	{
+		p += 1;
+	}
+	return (p);
+}
+
+void					free_2d(char **s)
+{
+	int					p;
+
+	p = 0;
+	while (s[p])
+	{
+		free(s[p]);
+		p += 1;
+	}
+	free(s);
+}
+
+int						append_word_argv(char *word, t_cmd **cmd)
 {
 	char				**argv;
+	int					len;
+	int					p;
 
-
+	if ((*cmd)->argv)
+		len = get_pointer_len((*cmd)->argv);
+	argv = (char **)malloc(sizeof(*argv) * (len + 2));
+	p = 0;
+	while ((*cmd)->argv[p])
+	{
+		argv[p] = ft_strdup((*cmd)->argv[p]);
+		p += 1;
+	}
+	argv[p++] = ft_strdup(word);
+	argv[p] = NULL;
+	free_2d((*cmd)->argv);
+	(*cmd)->argv = argv;
+	return (0);
 }
 
 t_cmd					*create_cmd(t_list **tokens)
@@ -212,10 +254,10 @@ t_cmd					*create_cmd(t_list **tokens)
 		}
 		else if (is_word(traverse->content))
 		{
-			command->argv = append_word_argv(traverse->content, &status);
+			status = append_word_argv(traverse->content, &command);
 		}
 		prev = traverse;
 		traverse = traverse->next;
 	}
-	
+	return (command);
 }
