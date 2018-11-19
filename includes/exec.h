@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 17:52:34 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/19 07:11:53 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/19 07:22:35 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct	s_table
 **	exec_cmd.c
 */
 int		search_cmd(char **argv);
+int		exec_cmd(t_tree *tree);
 
 /*
 **	exec_tree.c

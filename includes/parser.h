@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 16:31:26 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/18 19:50:10 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/19 07:26:02 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ typedef struct					s_tree
 	struct s_tree				*left;
 	struct s_tree				*right;
 	struct s_list				*args;
-	//	struct s_cmd				*data;
+	struct s_cmd				*data;
 }								t_tree;
 
 typedef struct					s_cmd
