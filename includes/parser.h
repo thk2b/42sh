@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 16:31:26 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/19 07:26:02 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/19 07:55:18 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@
 # define IS_SPACE(x) (x == ' ' || x == '\t' || x == '\n')
 # define IS_OP(x) (x == '&' || x == '|')
 # define WOW() printf("->%s\n", __func__)
-# define REDIRECT_LEFT			1
-# define REDIRECT_RIGHT			2
-# define REDIRECT_APPEND_RIGHT	3
+# define REDIRECT_LEFT			1 //rename to heredoc?
+# define REDIRECT_RIGHT			2 //rename to redirect?
+# define REDIRECT_APPEND_RIGHT	3 //rename to redirect_append? 
 
 # define SEEKING_END 1
 # define END 2

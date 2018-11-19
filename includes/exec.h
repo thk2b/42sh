@@ -6,13 +6,15 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 17:52:34 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/19 07:34:44 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/19 08:04:48 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXEC_H
 # define EXEC_H
 # include <ft_sh.h>
+# include <sys/stat.h>
+# define CREAT_PERMS (S_IRUSR | S_IWUSR | S_IRGRP | S_IRUSR)
 
 typedef struct	s_table
 {
