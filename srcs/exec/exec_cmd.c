@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 06:14:19 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/19 07:28:43 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/19 07:42:03 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ int		exec_cmd(t_tree *tree)
 
 	// if (tree->data->assign)
 		//do all the assignments
-	// if (tree->data->redirects)
-		//do all the redirects
+	if (tree->data->redirects)
+		init_redirects(tree->data->redirects);
 	if ((path = search_cmd(tree->data->argv[0])) == NULL)
 		return (127);
 	execve(path, tree->data->argv, environ);
