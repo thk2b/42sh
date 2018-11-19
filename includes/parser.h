@@ -73,6 +73,12 @@ typedef struct			s_list
 t_list;
 */
 
+typedef struct        	         s_assign
+{
+    char				*value;
+    struct s_assign		*next;
+}                                t_assign;
+
 typedef struct					s_tree
 {
 	char						type;
@@ -85,6 +91,7 @@ typedef struct					s_tree
 typedef struct					s_cmd
 {
 	t_redirect					*redirects;
+	t_assign					*assign;
 	char						**argv;
 	int							return_status;
 }								t_cmd;

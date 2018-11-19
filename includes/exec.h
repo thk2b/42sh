@@ -20,6 +20,10 @@ typedef struct	s_table
 	int		(*f)();
 }				t_table;
 
+/*
+**	exec_builitins or something like that
+*/
+int		search_cmd(char **argv);
 
 /*
 **	exec_tree.c
