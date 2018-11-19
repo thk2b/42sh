@@ -94,6 +94,7 @@ void	path_teardown(void);
 **		Handle Environment, unsetenv, env, getenv
 **		Main, loop, simple getline
 **		Expansions
+**		Sub_module with hash function for storing local variables
 **		
 **		
 **		
