@@ -1,45 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   error.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/18 19:15:39 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/18 20:26:49 by tkobb            ###   ########.fr       */
+/*   Created: 2018/11/18 20:27:08 by tkobb             #+#    #+#             */
+/*   Updated: 2018/11/18 20:33:09 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_sh.h"
+#ifndef ERROR_H
+# define ERROR_H
+# include <errno.h>
+# include <string.h>
+# include <ft_printf.h>
 
-/*
-**	Initialize
-**	Loop
-**		Get line
-**		Tokenize
-**		Parse
-**		Expand
-**		Execute
-**	Teardown
-*/
+int		error(char *msg);
+int		error_ret(char *msg, int ret);
+void	*error_null(char *msg);
 
-static int	process_command(void)
-{
-	char	*line;
-
-	if (get_line(0, line))
-		return (error("cannot get line"));
-	return (0);
-}
-
-int			main(void)
-{
-	int		status;
-
-	status = 0;
-	init_shell();
-	while (process_command())
-		;
-	teardown_shell();
-	return (status);
-}
+#endif

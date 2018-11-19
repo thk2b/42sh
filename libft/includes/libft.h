@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/13 23:36:48 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/12 00:49:12 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/19 07:00:40 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,19 +75,21 @@ void			ft_putstr_fd(const char *s, int fd);
 void			ft_putendl_fd(const char *s, int fd);
 void			ft_putnbr_fd(int n, int fd);
 
-typedef struct	s_list
-{
-	void			*content;
-	size_t			content_size;
-	struct s_list	*next;
-}				t_list;
-
-t_list			*ft_lstnew(void const *content, size_t size);
-void			ft_lstdelone(t_list **lp, void(*del)(void*, size_t));
-void			ft_lstdel(t_list **lp, void (*del)(void*, size_t));
-void			ft_lstadd(t_list **lp, t_list *new);
-void			ft_lstiter(t_list *l, void(*f)(t_list *elem));
-t_list			*ft_lstmap(t_list *l, t_list*(*f)(t_list *elem));
+/*
+** typedef struct	s_list
+** {
+** 	void			*content;
+** 	size_t			content_size;
+** 	struct s_list	*next;
+** }				t_list;
+** 
+** t_list			*ft_lstnew(void const *content, size_t size);
+** void			ft_lstdelone(t_list **lp, void(*del)(void*, size_t));
+** void			ft_lstdel(t_list **lp, void (*del)(void*, size_t));
+** void			ft_lstadd(t_list **lp, t_list *new);
+** void			ft_lstiter(t_list *l, void(*f)(t_list *elem));
+** t_list			*ft_lstmap(t_list *l, t_list*(*f)(t_list *elem));
+*/
 
 char			*ft_strcjoin(const char *s, char c, const char *t);
 char			*ft_strvjoin(const char **strv, const char *sep);

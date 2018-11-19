@@ -10,6 +10,7 @@ COMPILE		= $(CC) $(FLAGS)
 
 SRCS		= $(addprefix srcs/,\
 	$(addprefix builtins/, )\
+	error.c
 	$(addprefix exec/, )\
 	$(addprefix get_line/, )\
 	$(addprefix parser/, )\

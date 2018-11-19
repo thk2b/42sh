@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acakste <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 19:10:15 by acakste           #+#    #+#             */
-/*   Updated: 2018/11/18 19:10:16 by acakste          ###   ########.fr       */
+/*   Updated: 2018/11/19 06:14:42 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,15 +125,6 @@ int		exec_or(t_tree *tree, int use_current_process)
 		exec_node(tree->right, 1);
     waitpid(child_pid[1], &return_status[1], 0);
     return (return_status[1]);
-}
-
-int		exec_cmd(t_tree *tree)
-{
-	if (tree->cmd->assign)
-		//do all the assignments
-	if (tree->cmd->redirects)
-		//do all the redirects
-	//search_simple_cmd();
 }
 
 /*
