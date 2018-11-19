@@ -18,6 +18,7 @@
 # include <parser.h>
 # include <exec.h>
 # include <tokenizer.h>
+# include <local_var.h>
 # define NUM_OP 5
 # define TRUE 1
 # define FALSE 0
