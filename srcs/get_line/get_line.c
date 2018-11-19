@@ -1,18 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_line.h                                         :+:      :+:    :+:   */
+/*   get_line.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/18 19:16:31 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/18 19:22:17 by tkobb            ###   ########.fr       */
+/*   Created: 2018/11/18 19:25:02 by tkobb             #+#    #+#             */
+/*   Updated: 2018/11/18 19:27:32 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GETLINE_H
-# define GETLINE_H
+#include "get_line.h"
+#include "get_next_line.h"
 
-int		get_line(int fd, char **line);
-
-#endif
+int		get_line(int fd, char **line)
+{
+	prompt();
+	return (get_next_line(fd, line));
+}

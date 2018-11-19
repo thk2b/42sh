@@ -6,13 +6,24 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 19:15:39 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/18 19:16:06 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/18 19:28:49 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_sh.h"
 
-int	main(void)
-{
+/*
+**	Initialize
+**	Loop
+**		Get line
+**		Tokenize
+**		Parse
+**		Expand
+**		Execute
+**	Teardown
+*/
 
+int		main(void)
+{
+	
 }
