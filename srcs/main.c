@@ -1,37 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_sh.h                                            :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/17 18:02:58 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/18 19:16:22 by tkobb            ###   ########.fr       */
+/*   Created: 2018/11/18 19:15:39 by tkobb             #+#    #+#             */
+/*   Updated: 2018/11/18 19:16:06 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_SH_H
-# define FT_SH_H
-# include "builtins.h"
-# include "get_line.h"
-# include "exec.h"
-# include "parser.h"
-# include "tokenizer.h"
+#include "ft_sh.h"
 
-/*
-**	Initialization
-*/
+int	main(void)
+{
 
-/*
-**	Runtime
-*/
-
-/*
-**	Teardown
-*/
-
-/*
-**	Error handling
-*/
-
-#endif
+}
