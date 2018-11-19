@@ -34,9 +34,9 @@ int		exec_cmd(t_tree *tree)
 	extern char	**environ;
 	char		*path;
 
-	// if (tree->data->assign)
-		//do all the assignments
-	expand(tree->data->argv)
+	if (tree->data->assign)
+		store_assignments(tree->data->assign);
+	expand(tree->data->argv);
 	if (tree->data->redirects)
 		init_redirects(tree->data->redirects);
 	if ((path = search_cmd(tree->data->argv[0])) == NULL)
