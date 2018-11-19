@@ -43,6 +43,7 @@ typedef struct					s_tree
 	char						type;
 	struct s_tree				*left;
 	struct s_tree				*right;
+	struct s_tree				*parent;
 	struct s_cmd				*data;
 }								t_tree;
 
