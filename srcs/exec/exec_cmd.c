@@ -14,6 +14,7 @@
 #include <ft_printf.h>
 #include <libft.h>
 #include <unistd.h>
+#include <ft_sh.h>
 
 char	*search_cmd(char *exec_name)
 {
@@ -25,7 +26,7 @@ char	*search_cmd(char *exec_name)
 	exec_path = path_search(exec_name, &exists);
 	if (exec_path)
 		return (exec_path);
-	ft_printf("%s: %s: %s\n", "42sh", exists ? "permission denied" : "command not found", exec_name); // move to errors.c?
+	ft_dprintf(2, "%s: %s: %s\n", "42sh", exists ? "permission denied" : "command not found", exec_name); // move to errors.c?
 	return (NULL);
 }
 
