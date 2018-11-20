@@ -6,11 +6,11 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/13 21:40:20 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/14 11:24:49 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/20 11:11:36 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "line.h"
+#include <get_line.h>
 
 int	line_move_right(t_line *l)
 {

@@ -6,11 +6,11 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/13 13:27:03 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/20 10:15:26 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/20 11:34:10 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <get_line.h>
+#include <ft_sh.h>
 
 int		puttc(char *name)
 {
@@ -27,3 +27,15 @@ int		puttc(char *name)
 		ft_putstr(cap);
 	return (0);
 }
+
+// char	getchar(int fd)
+// {
+// 	char	c;
+// 	ssize_t	nr;
+
+// 	if ((nr = read(fd, &c, 1)))
+// 		return (c);
+// 	if (nr == -1)
+// 		return (error_ret("read", -1));
+// 	return (0);
+// }

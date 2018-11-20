@@ -6,11 +6,11 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/13 21:38:16 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/13 21:39:31 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/20 11:10:52 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "line.h"
+#include <get_line.h>
 
 int	line_append(t_line *l, char c)
 {

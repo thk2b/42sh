@@ -6,11 +6,11 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/13 21:32:37 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/13 23:53:36 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/20 11:11:59 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <get_line.h>
 
 int	line_resize(t_line *l)
 {

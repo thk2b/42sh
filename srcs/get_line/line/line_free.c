@@ -6,11 +6,11 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/13 21:37:44 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/13 21:39:52 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/20 11:11:30 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "line.h"
+#include <get_line.h>
 
 void	line_free(t_line *l)
 {

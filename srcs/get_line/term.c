@@ -6,11 +6,11 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/20 09:47:53 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/20 10:15:34 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/20 11:38:23 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <get_line.h>
+#include <ft_sh.h>
 #include <termios.h>
 
 int		term_init(void)
@@ -21,7 +21,8 @@ int		term_init(void)
 		return (0);
 	if (tcgetattr(0, &t) == -1)
 		return (error("tcgetattr"));
-	t.c_lflag &= ~(ECHO | ICANON);
+	t.c_lflag &= ~ECHO;
+	t.c_lflag &= ~ICANON;
 	if (tcsetattr(0, TCIFLUSH, &t))
 		return (error("tcsetattr"));
 	return (0);
@@ -32,9 +33,8 @@ void	term_reset(void)
 	struct termios	t;
 
 	if (tcgetattr(0, &t) == -1)
-		return (error("tcgetattr"));
+		return ((void)error("tcgetattr"));
 	t.c_lflag &= (ECHO | ICANON);
 	if (tcsetattr(0, TCIFLUSH, &t))
-		return (error("tcsetattr"));
-	return (0);
+		return ((void)error("tcsetattr"));
 }

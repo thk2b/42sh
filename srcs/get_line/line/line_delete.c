@@ -6,11 +6,11 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/13 21:38:34 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/13 21:39:20 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/20 11:11:09 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "line.h"
+#include <get_line.h>
 
 int	line_delete(t_line *l)
 {

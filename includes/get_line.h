@@ -6,19 +6,22 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 19:16:31 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/20 10:32:00 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/20 11:33:57 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GETLINE_H
 # define GETLINE_H
+# include <libft.h>
 # include <stdlib.h>
+# include <curses.h>
+# include <termcap.h>
 
 # define TERMCAPS_ENABLED	1
 # define DEFAULT_PROMPT		"$> "
 
 /*
-**	line/*.c
+**	line/ *.c
 */
 
 # define LINE_BUFSIZE 48
@@ -70,12 +73,16 @@ int					cursor_delchar(void);
 **	handle_char.c
 */
 
-int					handle_char(char c, t_line *l);
+int					handle_char(t_line *l, char c);
+int					handle_escape(t_line *line);
+int					handle_arrow(t_line *line, char c);
+int					handle_backspace(t_line *line);
 
 /*
 **	termcaps_utils.c
 */
 
 int					puttc(char *name);
+// char				getchar(int fd);
 
 #endif

@@ -4,6 +4,8 @@
 		"ft_sh.h": "c",
 		"builtins.h": "c",
 		"error.h": "c",
-		"get_line.h": "c"
+		"get_line.h": "c",
+		"libft.h": "c",
+		"curses.h": "c"
 	}
 }
