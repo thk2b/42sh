@@ -95,15 +95,20 @@ void	path_teardown(void);
 
 /*
 **	TASKS:
-**		Reading and executing the tree. Along with all the operator functions.
-**		The "execute basic command", Path Management.
-**		Handle Environment, unsetenv, env, getenv
-**		Main, loop, simple getline
-**		Expansions
-**		Sub_module with hash function for storing local variables
+**		Reading and executing the tree. Along with all the operator functions. [X]
+**		The "execute basic command", Path Management. [X]
+**		Handle Environment, unsetenv, env, getenv [X]
+**		Main, loop,
+**		Simple getline [X]
+**		Expansions [X]
+**		Sub_module with hash function for storing local variables [X]
 **		
-**		
-**		
+**		Check that the builtins have the correct POSIX usage
+**		Check that expansion are according to POSIX standard
+**		What is "proper space and tabulations management?"
+**		unset and export builtins (ANTON)
+**		Did we add the feature: if PATH can't be found in env, check local variables?
+**		Look into more bonuses
 */
 
 
