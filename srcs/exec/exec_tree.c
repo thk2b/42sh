@@ -21,6 +21,8 @@ int		exec_node(t_tree *cur, int use_current_process)
 {
 	int	i;
 
+	if (!cur)
+		return (0);
 	i = 0;
 	while (i < NUM_OP)
 	{
@@ -77,7 +79,7 @@ int			exec_pipe(t_tree *curr, int use_curr_proc)
 				return (1);
 	if (child_pid[1] == 0 || use_curr_proc == 1)
 		set_up_half_pipe(fd[0], fd[1], 0, curr->right);
-	if (close(fd[0]) == -1 || close(fd[1] == -1))
+	if (close(fd[0]) == -1 || close(fd[1]) == -1)
 		_exit(1);
     waitpid(child_pid[0], &return_status[0], 0);
     waitpid(child_pid[1], &return_status[1], 0);
@@ -93,7 +95,7 @@ int		exec_and(t_tree *tree, int use_current_process)
 	if ((child_pid[0] = fork()) == -1)
 		return (1);
 	if (child_pid[0] == 0)
-		exec_node(tree->left, 1);
+		_exit(exec_node(tree->left, 1));
 	waitpid(child_pid[0], &return_status[0], 0);
 	if (return_status[0] != 0)
 		return (return_status[0]);
@@ -101,8 +103,8 @@ int		exec_and(t_tree *tree, int use_current_process)
 		if ((child_pid[1] = fork()) == -1)
 			return (1);
 	if (child_pid[1] == 0 || use_current_process == TRUE)
-		exec_node(tree->right, 1);
-    waitpid(child_pid[1], &return_status[1], 0);
+		_exit(exec_node(tree->right, 1));
+   	waitpid(child_pid[1], &return_status[1], 0);
     return (return_status[1]);
 }
 

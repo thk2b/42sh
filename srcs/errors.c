@@ -16,11 +16,11 @@ int		error(char *msg)
 {
 	if (msg)
 	{
-		ft_printf("%s: %s:\n", "42sh", msg, strerror(errno));
+		ft_dprintf(2, "%s: %s:\n", "42sh", msg, strerror(errno));
 	}
 	else
 	{
-		ft_printf("%s: %s\n", "42sh", msg, strerror(errno));
+		ft_dprintf(2, "%s: %s\n", "42sh", msg, strerror(errno));
 	}
 	return (errno);
 }
@@ -29,11 +29,11 @@ int		error_ret(char *msg, int ret)
 {
 	if (msg)
 	{
-		ft_printf("%s: %s:\n", "42sh", msg, strerror(errno));
+		ft_dprintf(2, "%s: %s:\n", "42sh", msg, strerror(errno));
 	}
 	else
 	{
-		ft_printf("%s: %s\n", "42sh", msg, strerror(errno));
+		ft_dprintf(2, "%s: %s\n", "42sh", msg, strerror(errno));
 	}
 	return (ret);
 }
@@ -42,11 +42,11 @@ void	*error_null(char *msg)
 {
 	if (msg)
 	{
-		ft_printf("%s: %s:\n", "42sh", msg, strerror(errno));
+		ft_dprintf(2, "%s: %s:\n", "42sh", msg, strerror(errno));
 	}
 	else
 	{
-		ft_printf("%s: %s\n", "42sh", msg, strerror(errno));
+		ft_dprintf(2, "%s: %s\n", "42sh", msg, strerror(errno));
 	}
 	return (NULL);
 }

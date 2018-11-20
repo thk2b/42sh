@@ -35,12 +35,22 @@ static void	teardown_shell(void)
 	path_teardown();
 }
 
-static int	process_command(void)
+static int	process_command(int *status)
 {
 	char	*line;
+	t_tree	*root;
+	int		return_status;
 
-	if (get_line(0, line))
+	if (get_line(0, line, "$>"))
 		return (error("cannot get line"));
+	//parser (calls the tokenizer internally) takes a line, and t_tree **root as argument
+		//token list should be cleaned inside parser.
+
+	//exex_node(root, 0); track return status.
+
+	//clean the tree, clean line
+
+	//set return status
 	return (0);
 }
 
@@ -50,7 +60,7 @@ int			main(void)
 
 	status = 0;
 	init_shell();
-	while (process_command())
+	while (process_command(&status) == 0)
 		;
 	teardown_shell();
 	return (status);
