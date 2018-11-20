@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 18:47:49 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/19 20:23:13 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/19 21:37:29 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,19 @@ t_tree	*init_tree(char **argv, char type)
 	tree->right = NULL;
 	tree->parent = NULL;
 	tree->data = init_cmd(argv);
+	return (tree);
+}
+
+t_tree	*push_top(t_tree *left, t_tree *right, char type, char **argv)
+{
+	t_tree *tree;
+
+	tree = init_tree(argv, type);
+	
+	// if (left == NULL)
+	// 	tree->parent = left;
+	tree->left = left;
+	tree->right = right;
 	return (tree);
 }
 
@@ -80,7 +93,6 @@ t_tree		*insert(t_tree *tree, char **args, int type)
 	return (tree);
 }
 
-void		token_to_command(void);
 
 t_tree		*join_tree(t_tree *left, t_tree *right, char **argv, char type)
 {
@@ -109,26 +121,44 @@ int		return_presidency(char **argv)
 	return (presidency);
 }
 
-int			build_tree(t_tree *tree, char **argv)
+int			build_tree(t_tree **tree, char **argv)
 {
 	t_tree		*root;
 	int			precedency;
 
 	precedency = return_presidency(argv);
-	while ((tree) && (tree)->type < precedency) //Dont forget the pipe and the and
-		tree = tree->parent;
-	if (!tree)
-		tree = init_tree(argv, precedency);
-	else if ((tree)->left == NULL)
-		insert((tree)->left, argv, precedency);
+	while ((*tree)->parent && (*tree)->type < precedency) //Dont forget the pipe and the and : same precedency
+		(*tree) = (*tree)->parent;
+	if (precedency > 1)
+		*tree = push_top(*tree, NULL, precedency, argv);
+	if ((*tree)->left == NULL)
+	{
+		// print_tree(*tree);
+		t_tree *lchild = insert((*tree)->left, argv, precedency);
+		// (*tree)->parent = lchild;
+		// printf("SALUT\n");
+	}
 	else
-		insert((tree)->right, argv, precedency);
-	print_tree(tree);
-	printf("command = ");
-	print_double(argv);
-	printf("\n");
+	{
+		t_tree *rchild = insert((*tree)->right, argv, precedency);
+		// (*tree)->parent = rchild;
+	}
+	// printf("command = ");
+	// print_double(argv);
+	// printf("\n");
 	return (0);
 }
+
+
+
+/*
+**	the idea is here, you need to work a bit with the parent, u have the algorithm in paper in front of you
+**	it recognizes the precedency, the type also, the insert might not work very well, you can aslo work with that
+**	but try to keep this idea, because, its how the AST has to be build for theo and anton
+**	if you dont have a clear idea of how to do it, i can finish it when i come
+**	ask anton and theo what you can do then, or maybe improve the lexer, i added some things
+**	Good luck Mister :D 
+*/
 
 int		main(int ac, char **av)
 {
@@ -148,8 +178,10 @@ int		main(int ac, char **av)
 	root = init_tree(param1, 1);
 	while (i < 4)
 	{
-		build_tree(root, array[i]);
+		build_tree(&root, array[i]);
 		i++;
+
 	}
+	print_tree(root);
 	return (0);
 }
