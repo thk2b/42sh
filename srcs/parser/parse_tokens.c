@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 10:18:05 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/11/20 08:47:14 by dmendelo         ###   ########.fr       */
+/*   Updated: 2018/11/20 11:14:40 by dmendelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void				print_assign_info(t_assign *s)
 void				print_command_info(t_cmd *cmd)
 {
 	WOW();
+	printf("---------------------------------------------\n");
 	if (!cmd)
 		return ;
 	if (cmd->argv)
@@ -71,6 +72,7 @@ void				print_command_info(t_cmd *cmd)
 	{
 		print_assign_info(cmd->assign);
 	}
+	printf("---------------------------------------------\n");
 }
 
 t_cmd					*init_command(void)
@@ -316,12 +318,14 @@ t_cmd					*create_cmd(t_nodes **tokens)
 	command = init_command();
 	status = 0;
 	prev = NULL;
-	while (traverse)
+	while (traverse && !is_op(traverse->content))
 	{
 		printf("mid loop\n");
 		printf("%s\n", traverse->content);
-		if (is_op(traverse->content) || !ft_strcmp(";", traverse->content))
-			break ;
+		if (is_op(traverse->content))
+		{
+				break ;
+		}
 		else if (is_reserved_word(traverse->content))
 		{
 			printf("1\n");

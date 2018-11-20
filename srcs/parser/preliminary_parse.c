@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/20 08:40:14 by dmendelo         ###   ########.fr       */
+/*   Updated: 2018/11/20 11:15:19 by dmendelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -423,11 +423,15 @@ t_tree				*parse(void)
 	WOW();
 	t_list				*arguments;
 	t_nodes				*traverse;
+	t_tree				*ast;
 
 	arguments = split_args();
 	traverse = arguments->head;
+//	ast = build_tree(traverse);
 	while (traverse)
 	{
+		if (is_op(traverse->content))
+			print_command_info(create_cmd)
 		print_command_info(create_cmd(&traverse));
 		if (traverse)
 			traverse = traverse->next;
