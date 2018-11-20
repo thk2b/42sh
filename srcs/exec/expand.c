@@ -62,7 +62,6 @@ static char	*expand_var(char *str)
 	len = next ? next - start : ft_strlen(str);
 	if ((value = ft_getenv(str)) == NULL
 	|| (value = get_local_var(str)) == NULL)
-	)
 		return (NULL);
 	return (ft_strreplace(str, start, len, value));
 }
