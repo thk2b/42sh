@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/20 08:40:14 by dmendelo         ###   ########.fr       */
+/*   Updated: 2018/11/20 11:31:46 by dmendelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,8 @@ int					skip_whitespace(const char *input, int p)
 int		is_op(char *str)
 {
 	if (ft_strequ(str, "&")|| ft_strequ(str, "&&") || ft_strequ(str, "||") || ft_strequ(str, "|"))
+		return (1);
+	if (ft_strequ(str, ";"))
 		return (1);
 	return (0);
 }
@@ -423,14 +425,16 @@ t_tree				*parse(void)
 	WOW();
 	t_list				*arguments;
 	t_nodes				*traverse;
+	t_tree				*ast;
 
 	arguments = split_args();
 	traverse = arguments->head;
+//	ast = build_tree(traverse);
 	while (traverse)
 	{
 		print_command_info(create_cmd(&traverse));
-		if (traverse)
-			traverse = traverse->next;
+	//	if (traverse)
+	//		traverse = traverse->next;
 	}
 	if (arguments)
 		free_list(arguments);
