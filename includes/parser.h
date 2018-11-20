@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 16:31:26 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/19 07:55:18 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/19 14:36:29 by dmendelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include <strings.h>
 #include <string.h>
 #include <libft.h>
-#include "parser.h"
+#include "grammar.h"
 
 # define IS_SPACE(x) (x == ' ' || x == '\t' || x == '\n')
 # define IS_OP(x) (x == '&' || x == '|')
@@ -31,6 +31,10 @@
 
 # define SEEKING_END 1
 # define END 2
+
+# define STDIN 0
+# define STDOUT 1
+# define STDERR 2
 
 typedef struct					s_redirect
 {

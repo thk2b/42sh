@@ -6,12 +6,13 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 09:01:02 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/19 10:44:38 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/19 11:25:32 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_sh.h>
 #include <env.h>
+#include <libft.h>
 
 static void	replace(char **dst, char *s)
 {
@@ -45,7 +46,8 @@ static char	*expand_tilde(char *str)
 {
 	char	*home_str;
 
-	home_str = ft_getenv("HOME"); // use local variable? store HOME var?
+	if ((home_str = ft_getenv("HOME")) == NULL)
+		return (ft_strdup("")); // use local variable? store HOME var?
 	return (ft_strreplace(str, str, 1, home_str));
 }
 
@@ -58,11 +60,11 @@ static char	*expand_var(char *str)
 
 	if ((start = ft_strchr(str, '$')) == NULL)
 		return (NULL);
-	next = ft_strchr(start, '$');
-	len = next ? next - start : ft_strlen(str);
-	if ((value = ft_getenv(str)) == NULL
+	next = ft_strchr(start + 1, '$');
+	len = next ? next - start : ft_strlen(start);
+	if ((value = ft_getenv(start + 1)) == NULL
 	|| (value = get_local_var(str)) == NULL)
-		return (NULL);
+		return (ft_strdup(""));
 	return (ft_strreplace(str, start, len, value));
 }
 
@@ -74,7 +76,7 @@ int			expand(char **argv)
 	i = 0;
 	while (argv[i])
 	{
-		if (argv[i][0] == '~')
+		if (argv[i][0] == '~' && argv[i][1] != '~')
 			replace(argv + i, expand_tilde(argv[i]));
 		while ((expanded = expand_var(argv[i])))
 			replace(argv + i, expanded);

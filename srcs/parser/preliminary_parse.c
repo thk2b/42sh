@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/18 19:08:10 by dmendelo         ###   ########.fr       */
+/*   Updated: 2018/11/19 15:41:32 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ int				is_alpha_numeric(char c)
 	if (c >= 'a' && c <= 'z')
 		return (1);
 	if (c == '-')
+		return (1);
+	if (c == '.')
+		return (1);
+	if (c == '=')
 		return (1);
 	return (0);
 }
@@ -414,14 +418,23 @@ t_list				*split_args(void)
 	return (arguments);
 }
 
-void				parse(void)
+t_tree				*parse(void)
 {
 	WOW();
 	t_list				*arguments;
+	t_nodes				*traverse;
 
 	arguments = split_args();
+	traverse = arguments->head;
+	while (traverse)
+	{
+		print_command_info(create_cmd(&traverse));
+		if (traverse)
+			traverse = traverse->next;
+	}
 	if (arguments)
 		free_list(arguments);
+	return (NULL);
 }
 
 int					main(void)
