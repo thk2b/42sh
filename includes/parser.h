@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 16:31:26 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/19 20:31:42 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/20 08:39:18 by dmendelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include <string.h>
 #include <libft.h>
 #include "grammar.h"
+#include "get_next_line.h"
 
 # define IS_SPACE(x) (x == ' ' || x == '\t' || x == '\n')
 # define IS_OP(x) (x == '&' || x == '|')
@@ -107,5 +108,10 @@ typedef struct					s_token
 	int							status;
 	char						*content;
 }								t_token;
+
+char			*ft_strdup_range(const char *str, int begin, int end);
+t_cmd			*create_cmd(t_nodes **tokens);
+int				is_op(char *str);
+void			print_command_info(t_cmd *cmd);
 
 #endif
