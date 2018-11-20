@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/20 11:31:46 by dmendelo         ###   ########.fr       */
+/*   Updated: 2018/11/20 14:46:23 by dmendelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -429,13 +429,13 @@ t_tree				*parse(void)
 
 	arguments = split_args();
 	traverse = arguments->head;
-//	ast = build_tree(traverse);
-	while (traverse)
-	{
-		print_command_info(create_cmd(&traverse));
+	ast = build_tree(traverse);
+//	while (traverse)
+//	{
+//		print_command_info(create_cmd(&traverse));
 	//	if (traverse)
 	//		traverse = traverse->next;
-	}
+//	}
 	if (arguments)
 		free_list(arguments);
 	return (NULL);
