@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 10:18:05 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/11/20 11:14:40 by dmendelo         ###   ########.fr       */
+/*   Updated: 2018/11/20 11:33:14 by dmendelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -318,13 +318,22 @@ t_cmd					*create_cmd(t_nodes **tokens)
 	command = init_command();
 	status = 0;
 	prev = NULL;
-	while (traverse && !is_op(traverse->content))
+	printf("traverse->content = %s\n", traverse->content);
+	if (traverse && is_op(traverse->content))
+	{
+		printf("\n\nreturning operator\n\n");
+		status = append_word_argv(traverse->content, &command);
+		*tokens = traverse->next;
+		return (command);
+	}
+	while (traverse)
 	{
 		printf("mid loop\n");
 		printf("%s\n", traverse->content);
 		if (is_op(traverse->content))
 		{
-				break ;
+			printf("break-------------------\n");
+			break ;
 		}
 		else if (is_reserved_word(traverse->content))
 		{
