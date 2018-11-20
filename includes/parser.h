@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 16:31:26 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/19 14:36:29 by dmendelo         ###   ########.fr       */
+/*   Updated: 2018/11/19 20:31:42 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 
 # define IS_SPACE(x) (x == ' ' || x == '\t' || x == '\n')
 # define IS_OP(x) (x == '&' || x == '|')
+# define IS_SEMI(x) (x == ';')
 # define WOW() printf("->%s\n", __func__)
 # define REDIRECT_LEFT			1 //rename to heredoc?
 # define REDIRECT_RIGHT			2 //rename to redirect?
@@ -89,6 +90,7 @@ typedef struct					s_tree
 	struct s_tree				*left;
 	struct s_tree				*right;
 	struct s_cmd				*data;
+	struct s_tree				*parent;
 }								t_tree;
 
 typedef struct					s_cmd
