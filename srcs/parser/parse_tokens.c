@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 10:18:05 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/11/20 14:45:37 by dmendelo         ###   ########.fr       */
+/*   Updated: 2018/11/20 18:22:28 by dmendelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -291,6 +291,8 @@ int						append_word_argv(char *word, t_cmd **cmd)
 
 	if ((*cmd)->argv)
 		len = get_ptr_len((*cmd)->argv);
+	else
+		len = 0;
 	argv = (char **)malloc(sizeof(*argv) * (len + 2));
 	p = 0;
 	while ((*cmd)->argv && (*cmd)->argv[p])

@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 16:31:26 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/20 17:57:21 by dmendelo         ###   ########.fr       */
+/*   Updated: 2018/11/20 18:15:49 by dmendelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,12 +174,12 @@ void			print_command_info(t_cmd *cmd);
 */
 
 t_tree			*build_tree(t_nodes *tokens);
-t_tree			*insert(t_tree **root, t_cmd *data, char *type);
+t_tree			*insert(t_tree **root, t_cmd *data, char type);
 t_tree			*build_subtree(t_tree **current, t_tree **new_root);
 int				compare_precedence(char a, char b);
 void			print_tree(t_tree *tree);
 void			print_operator_type(char type);
 char			get_type(char *s);
 t_tree			*new_leaf(t_tree *parent, char type, t_cmd *data);
-t_ree			*init_tree(void); // didn't end up using this function. scrap later
+t_tree			*init_tree(void); // didn't end up using this function. scrap later
 #endif
