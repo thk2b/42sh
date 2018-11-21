@@ -37,7 +37,6 @@ int		builtin(char **av, int *return_status)
 		if (ft_strcmp(builtins[i].name, av[0]) == 0)
 		{
 			*return_status = builtins[i].fn(av);
-			printf("%s\n", builtins[i].name);
 			return (0); // exit or return ? we use child for builtins now
 		}
 		i++;
