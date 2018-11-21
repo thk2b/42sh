@@ -36,7 +36,6 @@ int		exec_cmd(t_tree *tree)
 	char		*path;
 	int			return_status;
 
-	printf("Begin executing\n");
 	if (tree->data->assign)
 		store_assignments(tree->data->assign);
 	expand(tree->data->argv);
