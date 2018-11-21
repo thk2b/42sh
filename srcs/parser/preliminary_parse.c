@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/20 19:37:05 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/20 19:44:13 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -475,18 +475,3 @@ t_tree				*parse(char *input)
 // 		free_list(arguments);
 // 	return (ast);
 // }
-
-// int					main(void)
-// {
-
-<<<<<<< HEAD
-	char *arr = strdup("echo &&&& cat -e && echo");
-	parse(arr);
-	return (0);
-}
-=======
-// 	char *arr = strdup("echo | cat -e && echo");
-// 	parse(arr);
-// 	return (0);
-// }
->>>>>>> 46f0fe5a57a11c18cff7fa018c5d4585179f78f7
