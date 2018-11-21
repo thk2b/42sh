@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 09:01:02 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/21 11:13:24 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/21 11:18:04 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,10 @@ static int	expand_argv(char **argv)
 
 int expand(t_cmd *cmd)
 {
-	if (expand_argv(cmd->argv))
+
+	if (cmd->argv && expand_argv(cmd->argv))
 		return (1);
-	// if (expand_redirects(cmd->redirects))
+	// if (cmd->redirects && expand_redirects(cmd->redirects))
 		// return (1);
 	return (0);
 }
