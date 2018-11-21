@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   line_move.c                                        :+:      :+:    :+:   */
+/*   key_clipboard.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/13 21:40:20 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/20 11:11:36 by tkobb            ###   ########.fr       */
+/*   Created: 2018/10/30 16:29:32 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/11/20 18:24:07 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <get_line.h>
+#include <ft_sh.h>
 
-int	line_move_right(t_line *l)
+char						*g_clipboard = NULL;
+
+void	key_copy(t_rl *rl)
 {
-	if (l->cursor.end == l->bufsize - 1)
-		return (1);
-	l->buf[l->cursor.start++] = l->buf[l->cursor.end++];
-	return (0);
+	ft_strdel(&g_clipboard);
+	g_clipboard = ft_strdup(rl->row[rl->cy].buf);
 }
 
-int	line_move_left(t_line *l)
+void	key_paste(t_rl *rl)
 {
-	if (l->cursor.start == 0)
-		return (1);
-	l->buf[--l->cursor.end] = l->buf[--l->cursor.start];
-	l->buf[l->cursor.start] = '\0';
-	return (0);
+	ft_strdel(&rl->row[rl->cy].buf);
+	rl->row[rl->cy].buf = ft_strdup(g_clipboard);
+	rl->row[rl->cy].bsize = ft_strlen(rl->row[rl->cy].buf);
+	rl->cx = rl->row[rl->cy].bsize;
 }

@@ -1,22 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   line_delete.c                                      :+:      :+:    :+:   */
+/*   key_newline.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/13 21:38:34 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/20 11:11:09 by tkobb            ###   ########.fr       */
+/*   Created: 2018/10/30 17:38:22 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/11/20 18:24:06 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <get_line.h>
+#include <ft_sh.h>
 
-int	line_delete(t_line *l)
+void	key_newline(t_rl *rl)
 {
-	if (l->cursor.start == 0)
-		return (1);
-	l->buf[l->cursor.start] = '\0';
-	l->cursor.start--;
-	return (0);
+	rl->quote_status &= ~Q_BSLASH;
+	rl_row_insert(rl, NULL);
+	rl->cx = 0;
+	rl->cy++;
+	ft_putstr(tgetstr("do", NULL));
+	ft_putstr(tgetstr("cr", NULL));
+	ft_putstr("> ");
 }

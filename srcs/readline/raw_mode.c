@@ -1,24 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   line_append.c                                      :+:      :+:    :+:   */
+/*   raw_mode.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/13 21:38:16 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/20 11:10:52 by tkobb            ###   ########.fr       */
+/*   Created: 2018/10/30 16:46:42 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/11/20 18:26:20 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <get_line.h>
+#include <ft_sh.h>
+#include <termios.h>
 
-int	line_append(t_line *l, char c)
+void	raw_mode_enable(void)
 {
-	l->buf[l->cursor.start++] = c;
-	if (l->cursor.start == l->cursor.end)
-	{
-		if (line_resize(l))
-			return (1);
-	}
-	return (0);
+	t_termios	raw;
+
+	tcgetattr(STDERR_FILENO, &raw);
+	raw.c_lflag &= ~(ECHO | ICANON | ISIG);
+	tcsetattr(STDERR_FILENO, TCSAFLUSH, &raw);
+}
+
+void	raw_mode_disable(void)
+{
+	t_termios	raw;
+
+	tcgetattr(STDERR_FILENO, &raw);
+	raw.c_lflag |= (ECHO | ICANON | ISIG);
+	tcsetattr(STDERR_FILENO, TCSAFLUSH, &raw);
 }

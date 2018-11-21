@@ -1,41 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   termcaps_utils.c                                   :+:      :+:    :+:   */
+/*   key_cursor.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/13 13:27:03 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/20 11:34:10 by tkobb            ###   ########.fr       */
+/*   Created: 2018/10/30 16:24:39 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/11/20 18:24:06 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_sh.h>
 
-int		puttc(char *name)
+void	key_cursor_left(t_rl *rl)
 {
-	char	tname[1024];
-	char	buf[32];
-	char	*cap;
-
-	ft_bzero(buf, 32);
-	ft_bzero(tname, 1024);
-	if (tgetent(tname, getenv("TERM")) != 1)
-		return (1);
-	cap = tgetstr(name, (char**)&buf);
-	if (cap)
-		ft_putstr(cap);
-	return (0);
+	if (!(rl->cx > 0))
+		return ;
+	ft_putstr(tgetstr("le", NULL));
+	rl->cx--;
 }
 
-// char	getchar(int fd)
-// {
-// 	char	c;
-// 	ssize_t	nr;
+void	key_cursor_right(t_rl *rl)
+{
+	if (!(rl->cx <= rl->row[rl->cy].bsize))
+		return ;
+	ft_putstr(tgetstr("nd", NULL));
+	rl->cx++;
+}
 
-// 	if ((nr = read(fd, &c, 1)))
-// 		return (c);
-// 	if (nr == -1)
-// 		return (error_ret("read", -1));
-// 	return (0);
-// }
+void	key_cursor_beg(t_rl *rl)
+{
+	while (rl->cx)
+		key_cursor_left(rl);
+}
+
+void	key_cursor_end(t_rl *rl)
+{
+	while (rl->cx < rl->row[rl->cy].bsize)
+		key_cursor_right(rl);
+}
