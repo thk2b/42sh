@@ -41,12 +41,12 @@ int		exec_semi(t_tree *tree, int use_current_process)
 	if ((child_pid[0] = fork()) == -1)
 		return (1);
 	if (child_pid[0] == 0)
-		exec_node(tree->left, 1);
+		_exit(exec_node(tree->left, 1));
 	if (use_current_process == 0)
 		if ((child_pid[1] = fork()) == -1)
 			return (1);
 	if (child_pid[1] == 0 || use_current_process == TRUE)
-		exec_node(tree->right, 1);
+		_exit(exec_node(tree->right, 1));
 	waitpid(child_pid[0], &return_status[0], 0);
     waitpid(child_pid[1], &return_status[1], 0);
     return (return_status[1]);

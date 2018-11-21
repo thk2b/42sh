@@ -77,7 +77,6 @@ static int	process_command(int *status)
 	root = parse(line);
 	if (root)
 	{
-		ft_printf("execute\n");
 		//exex_node(root, 0); track return status.
 		return_status = exec_node(root, 0);
 		//clean the tree, clean line

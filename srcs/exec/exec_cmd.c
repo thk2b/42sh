@@ -48,7 +48,6 @@ int		exec_cmd(t_tree *tree)
 	if ((path = search_cmd(tree->data->argv[0])) == NULL)
 		return (127);
 //	signal(SIGCHLD, SIG_DFL); // set SIGCHLD to it's original purpose
-	printf("Before execute\n");
 	execve(path, tree->data->argv, environ);
 	return (error("execve"));
 }
