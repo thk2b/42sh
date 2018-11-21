@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   preliminary_parse.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/21 10:10:11 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/21 10:30:46 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,11 +215,13 @@ int			check_errors(char *content, char *s)
 	if (count > 1)
 	{
 		write(2, "syntax error near: ", 19);
+		write(2, &content, 2);
 		return (1);
 	}
 	if (is_op(content) && is_op(s))
 	{
 		write(2, "syntax error near: ", 19);
+		write(2, &content, 2);
 		return (1);
 	}
 	return (0);
@@ -295,7 +297,9 @@ int					pull_operator(t_list **head, const char *input, int *p)
 	content = ft_strdup_range(input, *p, tmp - 1);
 	if (is_op(content) && (!(*head)))
 	{
-		printf("syntax error\n");
+		write(2, "syntax error near: ", 19);
+		ft_putstr_fd(content, 2);
+		write(1, "\n", 1);
 		return (-1);
 	}
 	if (check_errors((*head)->tail->content, content))

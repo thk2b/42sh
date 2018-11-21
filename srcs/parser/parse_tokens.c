@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 10:18:05 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/11/21 08:57:09 by dmendelo         ###   ########.fr       */
+/*   Updated: 2018/11/21 10:42:04 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,17 +154,18 @@ int						pull_assignment(char *assignment, t_cmd **cmd)
 	{
 		p += 1;
 	}
-	push_back(&(*cmd)->assign, ft_strdup_range(assignment, 0, p - 1));
-	p += 1;
-	begin = p;
-	while (assignment[p])
-	{
-		p += 1;
-	}
-	if (p - begin)
-	{
-		push_back(&(*cmd)->assign, ft_strdup_range(assignment, begin, p));
-	}
+	push_back(&(*cmd)->assign, assignment);
+	// p += 1;
+	// begin = p;
+	// while (assignment[p])
+	// {
+	// 	p += 1;
+	// }
+	// if (p - begin)
+	// {
+	// 	push_back(&(*cmd)->assign, ft_strdup_range(assignment, begin, p));
+	// }
+	// print_assign_info((*cmd)->assign);
 	return (0);
 }
 
