@@ -61,6 +61,7 @@ SRCS = $(addprefix $(SRCDIR)/,\
 	ft_strdel.c\
 	ft_strvdel.c\
 	ft_strclr.c\
+	ft_strcjoin.c\
 	ft_striter.c\
 	ft_striteri.c\
 	ft_strmap.c\
