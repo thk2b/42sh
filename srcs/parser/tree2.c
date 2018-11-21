@@ -6,7 +6,7 @@
 /*   By: dmendelo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/20 09:45:55 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/11/20 15:54:45 by dmendelo         ###   ########.fr       */
+/*   Updated: 2018/11/20 17:57:27 by dmendelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,28 @@ char					get_type(char *s)
 }
 
 
+void					print_operator_type(char type)
+{
+	if (type == T_PIPE)
+		printf("------T_PIPE (|)------\n");
+	else if (type == T_AND)
+		printf("------T_AND (&&)------\n");
+	else if (type == T_OR)
+		printf("------T_OR (||)------\n");
+	else if (type == T_SEMI)
+		printf("------T_SEMI (;)------\n");
+	else
+		printf("------T_CMD (COMMAND)----------\n");
+
+}
+
 void					print_tree(t_tree *tree)
 {
 	if (!tree)
 		return ;
 	if (tree->left)
 		print_tree(tree->left);
-	printf("type: %d\n", tree->type);
+	print_operator_type(tree->type);
 	print_command_info(tree->data);
 	if (tree->right)
 		print_tree(tree->right);
@@ -110,68 +125,28 @@ t_tree					*build_subtree(t_tree **current, t_tree **new_root)
 	print_command_info((*new_root)->data);
 	return (*new_root);
 }
-/*
-t_tree					*insert(t_tree *parent, t_tree *current, t_cmd *data, char type)
-{
-	if (!current)
-	{
-		current = new_leaf(NULL, type, data);
-		current->parent = (parent) ? parent : NULL;
-		return (current);
-	}
-	if (compare_precedence(type, current->type) >= 0)
-	{
-		if (!parent)
-			current = build_subtree(current, new_leaf(current->parent, type, data));
-		else
-		{
-			if (compare_precedence(type, parent->type) < 0)
-				current = build_subtree(current, new_leaf(current->parent, type, data));
-			else
-				return (insert(current->parent->parent, current->parent, data, type));
-		}
-	}
-	else
-	{
-		if (!current->left)
-			return (insert(current, current->left, data, type));
-		else
-			return (insert(current, current->right, data, type));
-	}
-	return (current);
-}
-*/
 
 t_tree					*insert(t_tree **root, t_cmd *data, char type)
 {
 	WOW();
-	if (root)
-	{
-		printf("----------------------------------------");
-		printf("printing root node....");
-		printf("----------------------------------------");
-		if (*root)
-			print_command_info((*root)->data);
-	}
+	t_tree					*new_root;
+	
+	new_root = NULL;
 	if (!(*root))
 	{
-		printf("\n\nnew_leaf\n\n");
 		return (new_leaf(NULL, type, data));
 	}
 	if (compare_precedence(type, (*root)->type) >= 0)
 	{
-		printf("\n\n\n\nnew root\n\n");
-		t_tree				*new = new_leaf(NULL, type, data);
-		return (build_subtree(root, &new));
+		new_root = new_leaf(NULL, type, data);
+		return (build_subtree(root, &new_root));
 	}
 	if (!(*root)->left)
 	{
-		printf("\n\n\n\nmoving down left\n\n\n");
 		(*root)->left = insert(&(*root)->left, data, type);
 	}
 	else
 	{
-		printf("\n\n\n\nmoving down right\n\n\n");
 		(*root)->right = insert(&(*root)->right, data, type);
 	}
 	return (*root);
@@ -186,12 +161,10 @@ t_tree					*build_tree(t_nodes *tokens)
 	char				type;
 	t_cmd				*new;
 
-//	ast = init_tree();
 	ast = NULL;
 	root = ast;
 	while (tokens)
 	{
-	//	ast = root;
 		if (!tokens->content)
 		{
 			break ;
@@ -204,12 +177,7 @@ t_tree					*build_tree(t_nodes *tokens)
 			new = NULL;
 			tokens = tokens->next;
 		}
-		printf("----------------------------\n\n\nplacing command:\n");
-		print_command_info(new);
 		ast = insert(&ast, new, type);
-//		if (ast)
-//			print_tree(ast);
-//		tokens = tokens->next;
 	}
 	printf("\n\n\n------------------------done reading------------------------");
 	printf("------------------------------------------------------------------");
