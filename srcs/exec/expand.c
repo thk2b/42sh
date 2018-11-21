@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 09:01:02 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/21 10:15:29 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/21 11:13:24 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ static char	*expand_tilde(char *str)
 	return (ft_strreplace(str, str, 1, home_str));
 }
 
-#include <printf.h>
 static char	*expand_var(char *str)
 {
 	char	*start;
@@ -69,7 +68,7 @@ static char	*expand_var(char *str)
 	return (ft_strreplace(str, start, len, value));
 }
 
-int			expand(char **argv)
+static int	expand_argv(char **argv)
 {
 	size_t	i;
 	char	*expanded;
@@ -83,5 +82,25 @@ int			expand(char **argv)
 			replace(argv + i, expanded);
 		i++;
 	}
+	return (0);
+}
+
+// int			expand_redirection(t_redirect *redirect)
+// {
+// 	t_redirect	*cur;
+
+// 	cur = redirect
+// 	while (cur)
+// 	{
+
+// 	}
+// }
+
+int expand(t_cmd *cmd)
+{
+	if (expand_argv(cmd->argv))
+		return (1);
+	// if (expand_redirects(cmd->redirects))
+		// return (1);
 	return (0);
 }
