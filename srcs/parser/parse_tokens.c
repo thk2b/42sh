@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 10:18:05 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/11/20 19:05:56 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/21 08:57:09 by dmendelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,28 +48,28 @@ void				print_assign_info(t_assign *s)
 		traverse = traverse->next;
 	}
 }
-
-// void				print_command_info(t_cmd *cmd)
-// {
-// 	// printf("---------------------------------------------\n");
-// 	if (!cmd)
-// 		return ;
-// 	if (cmd->argv)
-// 	{
-// 		// printf("------argv------\n");
-// 		// ft_putstrv(cmd->argv);
-// 	}
-// 	if (cmd->redirects)
-// 	{
-// 		// print_redirect_info(cmd->redirects);
-// 	}
-// 	if (cmd->assign)
-// 	{
-// 		// print_assign_info(cmd->assign);
-// 	}
-// 	// printf("---------------------------------------------\n");
-// }
-
+/*
+ void				print_command_info(t_cmd *cmd)
+ {
+ 	 printf("---------------------------------------------\n");
+ 	if (!cmd)
+ 		return ;
+ 	if (cmd->argv)
+ 	{
+ 		 printf("------argv------\n");
+ 		 ft_putstrv(cmd->argv);
+ 	}
+ 	if (cmd->redirects)
+ 	{
+ 		 print_redirect_info(cmd->redirects);
+ 	}
+ 	if (cmd->assign)
+ 	{
+ 		 print_assign_info(cmd->assign);
+ 	}
+ 	 printf("---------------------------------------------\n");
+ }
+*/
 t_cmd					*init_command(void)
 {
 	t_cmd				*new;
