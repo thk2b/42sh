@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmendelo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/20 09:45:55 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/11/20 18:08:33 by dmendelo         ###   ########.fr       */
+/*   Updated: 2018/11/20 19:08:33 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,32 +58,32 @@ char					get_type(char *s)
 }
 
 
-void					print_operator_type(char type)
-{
-	if (type == T_PIPE)
-		printf("------T_PIPE (|)------\n");
-	else if (type == T_AND)
-		printf("------T_AND (&&)------\n");
-	else if (type == T_OR)
-		printf("------T_OR (||)------\n");
-	else if (type == T_SEMI)
-		printf("------T_SEMI (;)------\n");
-	else
-		printf("------T_CMD (COMMAND)----------\n");
+// void					print_operator_type(char type)
+// {
+// 	if (type == T_PIPE)
+// 		printf("------T_PIPE (|)------\n");
+// 	else if (type == T_AND)
+// 		printf("------T_AND (&&)------\n");
+// 	else if (type == T_OR)
+// 		printf("------T_OR (||)------\n");
+// 	else if (type == T_SEMI)
+// 		printf("------T_SEMI (;)------\n");
+// 	else
+// 		printf("------T_CMD (COMMAND)----------\n");
 
-}
+// }
 
-void					print_tree(t_tree *tree)
-{
-	if (!tree)
-		return ;
-	if (tree->left)
-		print_tree(tree->left);
-	print_operator_type(tree->type);
-	print_command_info(tree->data);
-	if (tree->right)
-		print_tree(tree->right);
-}
+// void					print_tree(t_tree *tree)
+// {
+// 	if (!tree)
+// 		return ;
+// 	if (tree->left)
+// 		print_tree(tree->left);
+// 	print_operator_type(tree->type);
+// 	print_command_info(tree->data);
+// 	if (tree->right)
+// 		print_tree(tree->right);
+// }
 
 int						compare_precedence(char a, char b)
 {
@@ -119,16 +119,15 @@ t_tree					*build_subtree(t_tree **current, t_tree **new_root)
 	(*new_root)->parent = (*current)->parent;
 	(*current)->parent = *new_root;
 	(*new_root)->left = *current;
-	printf("-------------------------------------------------");
-	printf("printing new root");
-	printf("-------------------------------------------------");
-	print_command_info((*new_root)->data);
+	// printf("-------------------------------------------------");
+	// printf("printing new root");
+	// printf("-------------------------------------------------");
+	// print_command_info((*new_root)->data);
 	return (*new_root);
 }
 
 t_tree					*insert(t_tree **root, t_cmd *data, char type)
 {
-	WOW();
 	t_tree					*new_root;
 	
 	new_root = NULL;
@@ -154,7 +153,6 @@ t_tree					*insert(t_tree **root, t_cmd *data, char type)
 
 t_tree					*build_tree(t_nodes *tokens)
 {
-	WOW();
 	t_tree				*ast;
 	t_tree				*current;
 	t_tree				*root;
@@ -179,10 +177,10 @@ t_tree					*build_tree(t_nodes *tokens)
 		}
 		ast = insert(&ast, new, type);
 	}
-	printf("\n\n\n------------------------done reading------------------------");
-	printf("------------------------------------------------------------------");
-	printf("printing tree....");
-	printf("------------------------------------------------------------------\n");
-	print_tree(ast);
+	// printf("\n\n\n------------------------done reading------------------------");
+	// printf("------------------------------------------------------------------");
+	// printf("printing tree....");
+	// printf("------------------------------------------------------------------\n");
+	// print_tree(ast);
 	return (ast);
 }
