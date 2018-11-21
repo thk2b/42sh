@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 16:31:26 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/19 14:36:29 by dmendelo         ###   ########.fr       */
+/*   Updated: 2018/11/20 08:52:50 by dmendelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,11 @@
 #include <string.h>
 #include <libft.h>
 #include "grammar.h"
+#include "get_next_line.h"
 
 # define IS_SPACE(x) (x == ' ' || x == '\t' || x == '\n')
 # define IS_OP(x) (x == '&' || x == '|')
+# define IS_SEMI(x) (x == ';')
 # define WOW() printf("->%s\n", __func__)
 # define REDIRECT_LEFT			1 //rename to heredoc?
 # define REDIRECT_RIGHT			2 //rename to redirect?
@@ -89,6 +91,7 @@ typedef struct					s_tree
 	struct s_tree				*left;
 	struct s_tree				*right;
 	struct s_cmd				*data;
+	struct s_tree				*parent;
 }								t_tree;
 
 typedef struct					s_cmd
@@ -106,4 +109,66 @@ typedef struct					s_token
 	char						*content;
 }								t_token;
 
+
+/*
+** lexing
+*/
+
+int				is_alpha_numeric(char c);
+int				is_and_operator(char c);
+int				is_pipe_operator(char c);
+int				is_quote(char c);
+int				is_bracket(char c);
+int				is_paren(char c);
+char			*ft_strdup_range(const char *str, int begin, int end);
+void			free_list(t_list *head);
+void			print_list(t_list *lst);
+t_nodes			*new_node(char *new_data);
+t_list			*new_list(char *new_data);
+void			append(t_list **head_ref, char *new_data);
+char			*trip_join(const char *s1, const char c, const char *s2);
+void			free_append(char **s, char *end);
+int				skip_whitespace(const char *input, int p);
+void			check_errors(char *content, char *s);
+int				classify_token(char c);
+void			init_token_info(t_token *info);
+int				pull_quote_content(t_list **head, const char *input, int *p);
+int				pull_operator(t_list **head, const char *input, int *p);
+int				pull_token(t_list **head, const char *input, int *p);
+int				skip_to_end_of_line(const char *input, int *p, t_list **head);
+int				interpret_token(t_list **head, const char *input, int *p);
+t_list			*interpret_input(const char *input, int *token_completion);
+t_list			*split_args(void);
+t_tree			*parse(void);
+int				is_op(char *str);
+
+
+
+/*
+** grammar
+*/
+
+t_cmd			*init_command(void);
+int				is_reserved_word(char *s);
+int				is_valid_name_char(char c);
+int				is_assignment_word(char *s);
+void			push_back(t_assign **head, char *value);
+int				pull_assignment(char *assignment, t_cmd **cmd);
+int				is_redirection(char *s);
+int				is_number(char *s);
+char			determine_redirection_type(char *o);
+t_redirect		*new_redirection(char *operator_, int fd);
+int				pull_redirection(t_nodes **node, t_nodes *prev, t_cmd **cmd);
+int				get_ptr_len(char **s);
+void			free_2d(char **s);
+int				append_word_argv(char *word, t_cmd **cmd);
+t_cmd			*create_cmd(t_nodes **tokens);
+void			print_assign_info(t_assign *s);
+void			print_redirect_info(t_redirect *r);
+void			print_command_info(t_cmd *cmd);
+
+
+/*
+** AST
+*/
 #endif

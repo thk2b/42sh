@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   b_setenv.c                                         :+:      :+:    :+:   */
+/*   line_delete.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/19 15:37:31 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/19 19:58:10 by tkobb            ###   ########.fr       */
+/*   Created: 2018/11/13 21:38:34 by tkobb             #+#    #+#             */
+/*   Updated: 2018/11/20 11:11:09 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <ft_sh.h>
+#include <get_line.h>
 
-int			b_setenv(char **av)
+int	line_delete(t_line *l)
 {
-	extern char	**environ;
-
-	if (av == NULL || av[0] == NULL || av[1] == NULL)
+	if (l->cursor.start == 0)
 		return (1);
-	else if (av[2])
-		ft_setenv(av[1], av[2], 1);
-	else
-		return (1);
+	l->buf[l->cursor.start] = '\0';
+	l->cursor.start--;
 	return (0);
 }

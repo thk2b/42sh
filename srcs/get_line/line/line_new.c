@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   b_setenv.c                                         :+:      :+:    :+:   */
+/*   line_new.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/19 15:37:31 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/19 19:58:10 by tkobb            ###   ########.fr       */
+/*   Created: 2018/11/13 21:36:27 by tkobb             #+#    #+#             */
+/*   Updated: 2018/11/20 11:11:42 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <ft_sh.h>
+#include <get_line.h>
+#include "libft.h"
 
-int			b_setenv(char **av)
+t_line	*line_new(void)
 {
-	extern char	**environ;
+	t_line	*l;
 
-	if (av == NULL || av[0] == NULL || av[1] == NULL)
-		return (1);
-	else if (av[2])
-		ft_setenv(av[1], av[2], 1);
-	else
-		return (1);
-	return (0);
+	MCK(l = (t_line*)malloc(sizeof(t_line)), NULL);
+	l->bufsize = LINE_BUFSIZE;
+	MCK(l->buf = (char*)ft_memalloc(sizeof(char) * (l->bufsize + 1)), NULL);
+	l->cursor.start = 0;
+	l->cursor.end = l->bufsize - 1;
+	if (l->cursor.start + 1 >= l->cursor.end)
+	{
+		if (line_resize(l))
+			return (NULL);
+	}
+	return (l);
 }

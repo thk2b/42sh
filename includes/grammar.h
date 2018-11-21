@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   grammar.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmendelo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 18:42:04 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/11/19 10:46:36 by dmendelo         ###   ########.fr       */
+/*   Updated: 2018/11/19 20:31:14 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct			s_token_list
 # define RESERVED_UNTIL "until"
 # define RESERVED_FOR "for"
 
-t_cmd				*create_cmd(t_list **lst);
+// t_cmd				*create_cmd(t_list **lst);
 
 		
 

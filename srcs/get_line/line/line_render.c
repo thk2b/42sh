@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   b_setenv.c                                         :+:      :+:    :+:   */
+/*   line_render.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/19 15:37:31 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/19 19:58:10 by tkobb            ###   ########.fr       */
+/*   Created: 2018/11/13 14:38:35 by tkobb             #+#    #+#             */
+/*   Updated: 2018/11/20 11:11:48 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <ft_sh.h>
+#include <get_line.h>
 
-int			b_setenv(char **av)
+char	*line_render(t_line *l)
 {
-	extern char	**environ;
+	char	*s;
+	size_t	len;
+	size_t	start_len;
+	size_t	end_len;
 
-	if (av == NULL || av[0] == NULL || av[1] == NULL)
-		return (1);
-	else if (av[2])
-		ft_setenv(av[1], av[2], 1);
-	else
-		return (1);
-	return (0);
+	start_len = l->cursor.start;
+	end_len = l->bufsize - l->cursor.end;
+	len = start_len + end_len;
+	MCK(s = (char*)ft_memalloc(sizeof(char) * (len + 1)), NULL);
+	ft_memcpy(s, l->buf, start_len);
+	ft_memcpy(s + start_len, l->buf + l->cursor.end, end_len);
+	return (s);
 }

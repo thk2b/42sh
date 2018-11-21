@@ -1,26 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   b_setenv.c                                         :+:      :+:    :+:   */
+/*   cursor.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/19 15:37:31 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/19 19:58:10 by tkobb            ###   ########.fr       */
+/*   Created: 2018/11/13 11:38:58 by tkobb             #+#    #+#             */
+/*   Updated: 2018/11/20 10:18:55 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <ft_sh.h>
+#include <get_line.h>
+#include <libft.h>
 
-int			b_setenv(char **av)
+int		cursor_move(char dir)
 {
-	extern char	**environ;
+	if (dir == DIR_UP)
+		;
+	else if (dir == DIR_DOWN)
+		;
+	else if (dir == DIR_LEFT)
+		return (puttc("le"));
+	else if (dir == DIR_RIGHT)
+		return (puttc("nd"));
+	return (0);
+}
 
-	if (av == NULL || av[0] == NULL || av[1] == NULL)
-		return (1);
-	else if (av[2])
-		ft_setenv(av[1], av[2], 1);
-	else
-		return (1);
+int		cursor_putchar(char c)
+{
+	puttc("im");
+	ft_putchar(c);
+	puttc("ei");
+	return (0);
+}
+
+int		cursor_delchar(void)
+{
+	puttc("le");
+	puttc("dc");
 	return (0);
 }
