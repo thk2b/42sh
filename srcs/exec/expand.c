@@ -64,7 +64,7 @@ static char	*expand_var(char *str)
 	next = ft_strchr(start + 1, '$');
 	len = next ? next - start : ft_strlen(start);
 	if ((value = ft_getenv(start + 1)) == NULL
-	|| (value = get_local_var(start + 1)) == NULL)
+	&& (value = get_local_var(start + 1)) == NULL)
 		return (ft_strdup(""));
 	return (ft_strreplace(str, start, len, value));
 }
