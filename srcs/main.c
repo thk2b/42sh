@@ -53,13 +53,16 @@ static int	process_command(int *status)
 	t_tree	*root;
 	int		return_status;
 
-	if (get_next_line(0, &line)) // get_line
-		return (error("cannot get line"));
+	line = NULL;
+	ft_printf("$>");
+	if (get_next_line(0, &line) != 1) // get_line
+		return (1);// theo this makes it weird --> error("cannot get line")
 	//parser (calls the tokenizer internally) takes a line, and t_tree **root as argument
 		//token list should be cleaned inside parser.
 	root = parse(line);
 	if (root)
 	{
+		ft_printf("execute\n");
 		//exex_node(root, 0); track return status.
 		return_status = exec_node(root, 0);
 		//clean the tree, clean line
