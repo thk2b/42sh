@@ -16,7 +16,6 @@ static t_var	*g_var[NUM_SLOTS] = {
 	 NULL
 };
 
-
 t_var	*find_lst(char *key)
 {
 	unsigned long	hash;
@@ -80,6 +79,7 @@ int		rm_local_var(char *key)
 	return (0);
 }
 
+//Should we update the enviornment here?
 int		store_local_var(char *key, char *value)
 {
 	t_var	*cur;

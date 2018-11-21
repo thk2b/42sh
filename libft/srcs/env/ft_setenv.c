@@ -32,7 +32,7 @@ char	**ft_getenvp(const char *name)
 	return (NULL);
 }
 
-int		t_setenv(const char *name, const char *value, int overwrite)
+int		ft_setenv(const char *name, const char *value, int overwrite)
 {
 	char	**current;
 	char	*str;

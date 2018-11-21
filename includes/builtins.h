@@ -25,5 +25,7 @@ int				b_echo(char **av);
 int				b_env(char **av);
 int				b_setenv(char **av);
 int				b_unsetenv(char **av);
+int				builtin(char **av, int *return_status);
+char			*ft_getenv(const char *name);
 
 #endif
