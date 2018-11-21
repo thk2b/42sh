@@ -23,9 +23,24 @@
 **	Teardown
 */
 
+
+static int	init_environ(void)
+{
+	extern char	**environ;
+	char		**env_cpy;
+
+	env_cpy = ft_strv_dup(environ);
+	if (!env_cpy)
+		return (1);
+	environ = env_cpy;
+	return (0);
+}
+
 static int	init_shell(void)
 {
 	if (path_init())
+		return (1);
+	if (init_environ())
 		return (1);
 	return (0);
 }
