@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/20 09:45:55 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/11/20 19:08:33 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/21 08:59:23 by dmendelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,34 +57,35 @@ char					get_type(char *s)
 		return (T_CMD);
 }
 
+/*
+ void					print_operator_type(char type)
+ {
+ 	if (type == T_PIPE)
+ 		printf("------T_PIPE (|)------\n");
+ 	else if (type == T_AND)
+ 		printf("------T_AND (&&)------\n");
+ 	else if (type == T_OR)
+ 		printf("------T_OR (||)------\n");
+ 	else if (type == T_SEMI)
+ 		printf("------T_SEMI (;)------\n");
+ 	else
+ 		printf("------T_CMD (COMMAND)----------\n");
 
-// void					print_operator_type(char type)
-// {
-// 	if (type == T_PIPE)
-// 		printf("------T_PIPE (|)------\n");
-// 	else if (type == T_AND)
-// 		printf("------T_AND (&&)------\n");
-// 	else if (type == T_OR)
-// 		printf("------T_OR (||)------\n");
-// 	else if (type == T_SEMI)
-// 		printf("------T_SEMI (;)------\n");
-// 	else
-// 		printf("------T_CMD (COMMAND)----------\n");
-
-// }
-
-// void					print_tree(t_tree *tree)
-// {
-// 	if (!tree)
-// 		return ;
-// 	if (tree->left)
-// 		print_tree(tree->left);
-// 	print_operator_type(tree->type);
-// 	print_command_info(tree->data);
-// 	if (tree->right)
-// 		print_tree(tree->right);
-// }
-
+ }
+*/
+/*
+ void					print_tree(t_tree *tree)
+ {
+ 	if (!tree)
+ 		return ;
+ 	if (tree->left)
+ 		print_tree(tree->left);
+ 	print_operator_type(tree->type);
+ 	print_command_info(tree->data);
+ 	if (tree->right)
+ 		print_tree(tree->right);
+ }
+*/
 int						compare_precedence(char a, char b)
 {
 	if (a == T_CMD)
@@ -176,10 +177,15 @@ t_tree					*build_tree(t_nodes *tokens)
 		}
 		ast = insert(&ast, new, type);
 	}
-	// printf("\n\n\n------------------------done reading------------------------");
-	// printf("------------------------------------------------------------------");
-	// printf("printing tree....");
-	// printf("------------------------------------------------------------------\n");
-	// print_tree(ast);
+	if (ast && ast->type != T_SEMI)
+	{
+		new = NULL;
+		ast = insert(&ast, new, T_SEMI);
+	}
+//	 printf("\n\n\n------------------------done reading------------------------");
+//	 printf("------------------------------------------------------------------");
+//	 printf("printing tree....");
+//	 printf("------------------------------------------------------------------\n");
+//	 print_tree(ast);
 	return (ast);
 }

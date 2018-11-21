@@ -20,7 +20,7 @@ int				is_alpha_numeric(char c)
 		return (1);
 	if (c >= 'a' && c <= 'z')
 		return (1);
-	if (c == '-' || c == '.' || c == '=')
+	if (c == '-' || c == '.' || c == '=' || c == '/')
 		return (1);
 	return (0);
 }
@@ -205,7 +205,7 @@ int			check_errors(char *content, char *s)
 	i = 0;
 	count = 0;
 	if (!content || !s)
-		exit (1);
+		return (1);
 	while (content[i])
 	{
 		if (content[i] == ';')
@@ -296,7 +296,7 @@ int					pull_operator(t_list **head, const char *input, int *p)
 	if (is_op(content) && (!(*head)))
 	{
 		printf("syntax error\n");
-		exit(1);
+		return (-1);
 	}
 	if (check_errors((*head)->tail->content, content))
 		return (-1);

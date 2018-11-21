@@ -36,7 +36,6 @@ int		exec_cmd(t_tree *tree)
 	char		*path;
 	int			return_status;
 
-	printf("Begin executing\n");
 	if (tree->data->assign)
 		store_assignments(tree->data->assign);
 	expand(tree->data->argv);
@@ -48,7 +47,6 @@ int		exec_cmd(t_tree *tree)
 	if ((path = search_cmd(tree->data->argv[0])) == NULL)
 		return (127);
 //	signal(SIGCHLD, SIG_DFL); // set SIGCHLD to it's original purpose
-	printf("Before execute\n");
 	execve(path, tree->data->argv, environ);
 	return (error("execve"));
 }
