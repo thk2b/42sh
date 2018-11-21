@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/20 19:08:24 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/20 19:37:05 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,13 +214,13 @@ int			check_errors(char *content, char *s)
 	}
 	if (count > 1)
 	{
-		printf("syntax error\n");
-		exit (1);
+		write(2, "syntax error near: ", 19);
+		return (1);
 	}
 	if (is_op(content) && is_op(s))
 	{
-		printf("syntax eror\n");
-		exit (1);
+		write(2, "syntax error near: ", 19);
+		return (1);
 	}
 	return (0);
 }
@@ -276,8 +276,6 @@ int					pull_quote_content(t_list **head, const char *input, int *p)
 	}
 	content = ft_strdup_range(input, *p, tmp++);
 	*p = tmp;
-	if (*head && (*head)->tail)
-		check_errors((*head)->tail->content, content);
 	append(head, content);
 	return (END);
 }
@@ -300,10 +298,11 @@ int					pull_operator(t_list **head, const char *input, int *p)
 		printf("syntax error\n");
 		exit(1);
 	}
-	check_errors((*head)->tail->content, content);
+	if (check_errors((*head)->tail->content, content))
+		return (-1);
 	append(head, content);
 	*p = tmp;
-	return (SEEKING_END);
+	return (0);
 }
 
 int					pull_token(t_list **head, const char *input, int *p)
@@ -317,8 +316,6 @@ int					pull_token(t_list **head, const char *input, int *p)
 	while (input[tmp] && type == classify_token(input[tmp]))
 		tmp += 1;
 	content = ft_strdup_range(input, *p, tmp - 1);
-	if ((*head) && (*head)->tail)
-		check_errors((*head)->tail->content, content);
 	append(head, content);
 	*p = tmp;
 	return (END);
@@ -355,7 +352,8 @@ int					interpret_token(t_list **head, const char *input, int *p)
 	}
 	else if (info.type == T_AND || info.type == T_PIPE)
 	{
-		info.status = pull_operator(head, input, &tmp);
+		if ((info.status = pull_operator(head, input, &tmp)) == -1)
+			return (-1);
 	}
 	else
 	{
@@ -378,6 +376,8 @@ t_list				*interpret_input(const char *input, int *token_completion)
 			p = skip_whitespace(input, p);
 		else
 			*token_completion = interpret_token(&arguments, input, &p);
+		if (*token_completion == -1)
+			return (NULL);
 	}
 	if (*token_completion == SEEKING_END)
 	{
@@ -453,6 +453,8 @@ t_tree				*parse(char *input)
 	t_tree				*ast;
 
 	arguments = split_args(input);
+	if (arguments == NULL)
+		return (NULL);
 	traverse = arguments->head;
 	ast = build_tree(traverse);
 	if (arguments)
@@ -479,7 +481,7 @@ t_tree				*parse(char *input)
 int					main(void)
 {
 
-	char *arr = strdup("echo | cat -e && echo");
+	char *arr = strdup("echo &&&& cat -e && echo");
 	parse(arr);
 	return (0);
 }
