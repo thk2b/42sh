@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/21 11:15:47 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/21 11:16:35 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int				is_alpha_numeric(char c)
 		return (1);
 	if (c >= 'a' && c <= 'z')
 		return (1);
-	if (c == '-' || c == '.' || c == '=' || c == '/' || c == '$')
+	if (c == '-' || c == '.' || c == '=' || c == '/' || c == '$' || c == '~')
 		return (1);
 	return (0);
 }
@@ -215,11 +215,13 @@ int			check_errors(char *content, char *s)
 	if (count > 1)
 	{
 		write(2, "syntax error near: ", 19);
+		write(2, &content, 2);
 		return (1);
 	}
 	if (is_op(content) && is_op(s))
 	{
 		write(2, "syntax error near: ", 19);
+		write(2, &content, 2);
 		return (1);
 	}
 	return (0);
@@ -295,7 +297,9 @@ int					pull_operator(t_list **head, const char *input, int *p)
 	content = ft_strdup_range(input, *p, tmp - 1);
 	if (is_op(content) && (!(*head)))
 	{
-		printf("syntax error\n");
+		write(2, "syntax error near: ", 19);
+		ft_putstr_fd(content, 2);
+		write(1, "\n", 1);
 		return (-1);
 	}
 	if (check_errors((*head)->tail->content, content))
