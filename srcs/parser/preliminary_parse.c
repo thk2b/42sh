@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/20 14:46:23 by dmendelo         ###   ########.fr       */
+/*   Updated: 2018/11/20 18:05:50 by dmendelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -391,6 +391,33 @@ t_list				*interpret_input(const char *input, int *token_completion)
 	return (arguments);
 }
 
+/*
+** see commented function for get_line() compatible arg splitter
+*/
+
+/*
+t_list				*split_args(char *input)
+{
+	WOW();
+	t_list				*arguments;
+	int					token_completion;
+
+	arguments = interpret_input(input, &token_completion);
+	if (arguments)
+		print_list(arguments);
+	if (token_completion == SEEKING_END)
+	{
+		free_append(&input, "\n");
+		free(line);
+		printf("--------------------------------\n");
+		return (split_args());
+	}
+	free(input);
+	input = NULL;
+	return (arguments);
+}
+*/
+
 t_list				*split_args(void)
 {
 	WOW();
@@ -420,6 +447,27 @@ t_list				*split_args(void)
 	return (arguments);
 }
 
+/*
+** see commented function!
+*/
+
+/*
+t_tree				*parse(char *input)
+{
+	WOW();
+	t_list				*arguments;
+	t_nodes				*traverse;
+	t_tree				*ast;
+
+	arguments = split_args(input);
+	traverse = arguments->head;
+	ast = build_tree(traverse);
+	if (arguments)
+		free_list(arguments);
+	return (ast);
+}
+*/
+
 t_tree				*parse(void)
 {
 	WOW();
@@ -430,15 +478,9 @@ t_tree				*parse(void)
 	arguments = split_args();
 	traverse = arguments->head;
 	ast = build_tree(traverse);
-//	while (traverse)
-//	{
-//		print_command_info(create_cmd(&traverse));
-	//	if (traverse)
-	//		traverse = traverse->next;
-//	}
 	if (arguments)
 		free_list(arguments);
-	return (NULL);
+	return (ast);
 }
 
 int					main(void)
