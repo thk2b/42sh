@@ -154,7 +154,6 @@ t_tree					*insert(t_tree **root, t_cmd *data, char type)
 t_tree					*build_tree(t_nodes *tokens)
 {
 	t_tree				*ast;
-	t_tree				*current;
 	t_tree				*root;
 	char				type;
 	t_cmd				*new;
