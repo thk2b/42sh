@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/04 10:40:33 by tkobb             #+#    #+#             */
-/*   Updated: 2018/10/13 23:34:11 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/21 09:18:04 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static int	parse_convertion(t_directive *d, const char *fmt)
 	return (1);
 }
 
-int			parse(t_directive *d, const char *fmt, va_list ap)
+int			ftp_parse(t_directive *d, const char *fmt, va_list ap)
 {
 	int len;
 

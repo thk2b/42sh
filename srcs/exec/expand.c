@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 09:01:02 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/19 11:25:32 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/21 10:15:29 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ static char	*expand_tilde(char *str)
 	return (ft_strreplace(str, str, 1, home_str));
 }
 
+#include <printf.h>
 static char	*expand_var(char *str)
 {
 	char	*start;
@@ -63,7 +64,7 @@ static char	*expand_var(char *str)
 	next = ft_strchr(start + 1, '$');
 	len = next ? next - start : ft_strlen(start);
 	if ((value = ft_getenv(start + 1)) == NULL
-	|| (value = get_local_var(str)) == NULL)
+	|| (value = get_local_var(start + 1)) == NULL)
 		return (ft_strdup(""));
 	return (ft_strreplace(str, start, len, value));
 }

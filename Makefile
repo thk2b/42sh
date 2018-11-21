@@ -37,3 +37,5 @@ clean:
 fclean:
 	make fclean -C $(LIB_DIR)
 	rm -rf $(NAME)
+
+re: fclean all
