@@ -35,22 +35,40 @@ static void	teardown_shell(void)
 	path_teardown();
 }
 
+
+static void	free_tree(t_tree *root)
+{
+	if (!root)
+		return ;
+	free_tree(root->left);
+	free_tree(root->right);
+	if (root->data)
+		free(root->data);
+	free(root);
+}
+
 static int	process_command(int *status)
 {
 	char	*line;
-	// t_tree	*root;
-	// int		return_status;
+	t_tree	*root;
+	int		return_status;
 
-	if (get_line(0, &line))
+	if (get_next_line(0, &line)) // get_line
 		return (error("cannot get line"));
 	//parser (calls the tokenizer internally) takes a line, and t_tree **root as argument
 		//token list should be cleaned inside parser.
-
-	//exex_node(root, 0); track return status.
-
-	//clean the tree, clean line
-
+	root = parse(line);
+	if (root)
+	{
+		//exex_node(root, 0); track return status.
+		return_status = exec_node(root, 0);
+		//clean the tree, clean line
+		free_tree(root);
+	}
+	else
+		return_status = 1;
 	//set return status
+	*status = return_status;
 	return (0);
 }
 

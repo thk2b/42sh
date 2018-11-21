@@ -130,7 +130,7 @@ void			append(t_list **head_ref, char *new_data);
 char			*trip_join(const char *s1, const char c, const char *s2);
 void			free_append(char **s, char *end);
 int				skip_whitespace(const char *input, int p);
-void			check_errors(char *content, char *s);
+int			check_errors(char *content, char *s);
 int				classify_token(char c);
 void			init_token_info(t_token *info);
 int				pull_quote_content(t_list **head, const char *input, int *p);
@@ -139,8 +139,8 @@ int				pull_token(t_list **head, const char *input, int *p);
 int				skip_to_end_of_line(const char *input, int *p, t_list **head);
 int				interpret_token(t_list **head, const char *input, int *p);
 t_list			*interpret_input(const char *input, int *token_completion);
-t_list			*split_args(void);
-t_tree			*parse(void);
+t_list			*split_args(char *input);
+t_tree			*parse(char *input);
 int				is_op(char *str);
 
 

@@ -407,8 +407,6 @@ t_list				*split_args(char *input)
 	// 	printf("--------------------------------\n");
 	// 	return (split_args());
 	// }
-	free(input);
-	input = NULL;
 	return (arguments);
 }
 
@@ -476,10 +474,10 @@ t_tree				*parse(char *input)
 // 	return (ast);
 // }
 
-int					main(void)
-{
+// int					main(void)
+// {
 
-	char *arr = strdup("echo | cat -e && echo");
-	parse(arr);
-	return (0);
-}
+// 	char *arr = strdup("echo | cat -e && echo");
+// 	parse(arr);
+// 	return (0);
+// }
