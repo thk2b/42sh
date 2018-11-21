@@ -34,11 +34,13 @@ int		builtin(char **av, int *return_status)
 	i = 0;
 	while (builtins[i].name)
 	{
-		if (ft_strcmp(builtins[i].name, av[0]))
+		if (ft_strcmp(builtins[i].name, av[0]) == 0)
 		{
 			*return_status = builtins[i].fn(av);
-			return (0);
+			printf("%s\n", builtins[i].name);
+			return (0); // exit or return ? we use child for builtins now
 		}
+		i++;
 	}
 	return (1);
 }

@@ -43,7 +43,7 @@ int		exec_cmd(t_tree *tree)
 	if (tree->data->redirects)
 		init_redirects(tree->data->redirects);
 	return_status = 0;
-	if (builtin(tree->data->argv, &return_status))
+	if (builtin(tree->data->argv, &return_status) == 0) // if we execute builtin, stop
 		return (return_status);
 	if ((path = search_cmd(tree->data->argv[0])) == NULL)
 		return (127);
