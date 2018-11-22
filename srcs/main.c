@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 19:15:39 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/20 10:54:27 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/22 09:07:21 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,15 @@ static void	free_assignments(t_assign *lst)
 static void	free_redirects(t_redirect *lst)
 {
 	t_redirect	*cur;
+	t_redirect	*next;
 
 	cur = lst;
 	while (cur)
 	{
 		ft_strdel(&cur->path);
+		next = cur->next;
 		free(cur);
-		cur = cur->next;
+		cur = next;
 	}
 }
 
