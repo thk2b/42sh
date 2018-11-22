@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   preliminary_parse.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/21 11:16:35 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/21 19:02:02 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,13 +212,7 @@ int			check_errors(char *content, char *s)
 			count++;
 		i++;
 	}
-	if (count > 1)
-	{
-		write(2, "syntax error near: ", 19);
-		write(2, &content, 2);
-		return (1);
-	}
-	if (is_op(content) && is_op(s))
+	if ((count > 1) || (is_op(content) && is_op(s)))
 	{
 		write(2, "syntax error near: ", 19);
 		write(2, &content, 2);
@@ -385,7 +379,8 @@ t_list				*interpret_input(const char *input, int *token_completion)
 	}
 	if (*token_completion == SEEKING_END)
 	{
-		free_list(arguments);
+		if (arguments)
+			free_list(arguments);
 		arguments = NULL;
 	}
 	return (arguments);
