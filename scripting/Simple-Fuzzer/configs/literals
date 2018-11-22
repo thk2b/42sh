@@ -1,4 +1,4 @@
-# working commands
+# literal commands. Enter anything you feel like testing w/ format 'literal=(command)'
 
 literal=ls;
 literal=ls -la; echo "ls!" > file.txt | cat -e;
@@ -11,8 +11,6 @@ literal=ls /dev | grep tty | sort -r | rev > toto ; < toto cat | rev | wc -l > t
 literal=env env env env env env ls && env env env ls && env ls && ls && env env env env env env env env env env env env `echo ls` && ls && env env env env env env env env env env env env env env env ls
 literal=ls oops && pwd || echo a
 literal=echo a || pwd && echo b
-
-maxseqlen=150
 
 endcfg
 FUZZ

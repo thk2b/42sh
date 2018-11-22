@@ -1,4 +1,6 @@
-# working commands
+# take working comamnds and set maxseqlen to a high number to throw a bunch of shit at out shell and sh
+# seqstep is how we increment our max character count. if seqstep == 10, we start with 10 character output, then 20.
+#
 
 sequence=ls;
 sequence=ls -la; echo "ls!" > file.txt | cat -e;
@@ -10,6 +12,7 @@ sequence=ls > toto ; date >> toto ; >> toto ls ; < toto cat ;
 sequence=ls /dev | grep tty | sort -r | rev > toto ; < toto cat | rev | wc -l > titi
 sequence=env env env env env env ls && env env env ls && env ls && ls && env env env env env env env env env env env env `echo ls` && ls && env env env env env env env env env env env env env env env ls
 
+seqstep=10
 maxseqlen=150
 
 endcfg

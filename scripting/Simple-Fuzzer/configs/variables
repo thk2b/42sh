@@ -1,3 +1,4 @@
+# for playing with variables and more complex fuzzing
 $X=ls;
 $Y=echo;
 sequence=XY
