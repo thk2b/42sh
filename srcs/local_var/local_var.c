@@ -12,7 +12,7 @@
 
 #include <ft_sh.h>
 
-static t_var	*g_var[NUM_SLOTS] = {
+t_var	*g_var[NUM_SLOTS] = {
 	 NULL
 };
 
@@ -24,6 +24,7 @@ t_var	*find_lst(char *key)
 	if (!key)
 		return (NULL);
 	hash = hash_var(key);
+	printf("hash is %lu for %s\n", hash, key);
 	cur = g_var[hash % NUM_SLOTS];
 	return (cur);
 }
@@ -42,10 +43,31 @@ t_var	*create_var_elem(char *key, char *value)
 char	*get_local_var(char *key)
 {
 	t_var			*cur;
+	unsigned long	hash;
 
-	cur = find_lst(key);
+	if (!key)
+		return (NULL);
+	hash = hash_var(key);
+	printf("GET LOCAL VAR\n\nhash is %lu for %s\n", hash, key);
+	cur = g_var[hash % NUM_SLOTS];
+	printf("find local var with '%s' as key\n", key);
+	// cur = find_lst(key);
+	int i = 0;
+	while (i < NUM_SLOTS)
+	{
+		if (g_var[i] != NULL)
+		{
+			printf("non empty slot %d\n", i);
+			break ;
+		}
+		i++;
+	}
+	if (!cur)
+		printf("nothing at that slot\n");
 	while (cur && ft_strcmp(cur->key, key))
 		cur = cur->next;
+	if (!cur)
+		printf("couldn't find key\n");
 	return ((cur) ? cur->value : NULL); // return a copy of the variable?
 }
 
@@ -89,6 +111,7 @@ int		store_local_var(char *key, char *value)
 	if (!key)
 		return (1);
 	hash = hash_var(key);
+	printf("hash is %lu for %s\n", hash, key);
 	cur = g_var[hash % NUM_SLOTS];
 	while (cur && ft_strcmp(cur->key, key))
 		cur = cur->next;
@@ -99,10 +122,12 @@ int		store_local_var(char *key, char *value)
 	}
 	else
 	{
+		printf("new element\n");
 		new = create_var_elem(key, value);
 		new->next = g_var[hash % NUM_SLOTS];
 		g_var[hash % NUM_SLOTS] = new;
 	}
+	printf("%s is now stored\n", get_local_var(key));
 	return (0);
 }
 
