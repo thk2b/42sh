@@ -27,6 +27,8 @@ int		builtin(char **av, int *return_status)
 		{"env", b_env},
 		{"setenv", b_setenv},
 		{"unsetenv", b_unsetenv},
+		{"export", b_export},
+		{"unset", b_unset},
 		{NULL, NULL}
 	};
 	int					i;

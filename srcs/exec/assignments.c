@@ -25,8 +25,8 @@ int		split_assignment(char *str, char **key, char **value)
 	}
 	*key = ft_strsub(str, 0, equal - str);
 	*value = ft_strdup(equal + 1);
-	if (!(*key) || !(*value))
-		return (1);
+	// if (!(*key))
+	// 	return (1);
 	return (0);
 }
 
@@ -42,7 +42,10 @@ int		store_assignments(t_assign *lst)
 	while (cur)
 	{
 		split_assignment(cur->value, &key, &value);
-		store_local_var(key, value);
+		if (ft_getenv(key))
+			ft_setenv(key, value, 1);
+		else
+			store_local_var(key, value);
 		// ft_strdel(&key);
 		// ft_strdel(&value);
 		cur = cur->next;
