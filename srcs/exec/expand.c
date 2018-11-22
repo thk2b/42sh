@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 09:01:02 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/21 11:18:04 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/22 14:02:49 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,29 +57,45 @@ static char	*expand_var(char *str)
 	char	*next;
 	char	*value;
 	size_t	len;
+	char	tmp;
 
 	if ((start = ft_strchr(str, '$')) == NULL)
 		return (NULL);
 	next = ft_strchr(start + 1, '$');
 	len = next ? next - start : ft_strlen(start);
-	if ((value = ft_getenv(start + 1)) == NULL
-	&& (value = get_local_var(start + 1)) == NULL)
-		return (ft_strdup(""));
+	tmp = str[len];
+	str[len] = '\0';
+	value = ft_getenv(start + 1);
+	if (value == NULL)
+		value = get_local_var(start + 1);
+	str[len] = tmp;
+	if (value == NULL)
+		return (ft_strreplace(str, start, len, ""));
 	return (ft_strreplace(str, start, len, value));
+}
+
+static int	expand_str(char **dst, char *str)
+{
+	char	*expanded;
+
+	*dst = str;
+	if (str[0] == '~' && str[1] != '~')
+		replace(dst, expand_tilde(*dst));
+	while ((expanded = expand_var(*dst)))
+	{
+		replace(dst, expanded);
+	}
+	return (0);
 }
 
 static int	expand_argv(char **argv)
 {
 	size_t	i;
-	char	*expanded;
 
 	i = 0;
 	while (argv[i])
 	{
-		if (argv[i][0] == '~' && argv[i][1] != '~')
-			replace(argv + i, expand_tilde(argv[i]));
-		while ((expanded = expand_var(argv[i])))
-			replace(argv + i, expanded);
+		expand_str(argv + i, argv[i]);
 		i++;
 	}
 	return (0);
@@ -98,7 +114,6 @@ static int	expand_argv(char **argv)
 
 int expand(t_cmd *cmd)
 {
-
 	if (cmd->argv && expand_argv(cmd->argv))
 		return (1);
 	// if (cmd->redirects && expand_redirects(cmd->redirects))
