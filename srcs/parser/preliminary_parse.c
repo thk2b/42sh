@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   preliminary_parse.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/21 11:16:35 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/21 19:23:27 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -404,7 +404,7 @@ t_list				*split_args(char *input)
 
 	arguments = interpret_input(input, &token_completion);
 	// if (arguments)
-	// 	print_list(arguments);
+		// print_list(arguments);
 	// if (token_completion == SEEKING_END)
 	// {
 	// 	free_append(&input, "\n");

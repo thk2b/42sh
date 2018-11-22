@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 10:18:05 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/11/21 10:42:04 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/21 19:42:51 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,9 +137,7 @@ void					push_back(t_assign **head, char *value)
 	}
 	traverse = *head;
 	while (traverse && traverse->next)
-	{
 		traverse = traverse->next;
-	}
 	traverse->next = new;
 }
 
@@ -151,21 +149,8 @@ int						pull_assignment(char *assignment, t_cmd **cmd)
 	p = 0;
 	begin = 0;
 	while (assignment[p] && assignment[p] != '=')
-	{
 		p += 1;
-	}
 	push_back(&(*cmd)->assign, assignment);
-	// p += 1;
-	// begin = p;
-	// while (assignment[p])
-	// {
-	// 	p += 1;
-	// }
-	// if (p - begin)
-	// {
-	// 	push_back(&(*cmd)->assign, ft_strdup_range(assignment, begin, p));
-	// }
-	// print_assign_info((*cmd)->assign);
 	return (0);
 }
 
@@ -173,9 +158,7 @@ int						is_redirection(char *s)
 {
 	if (!ft_strcmp(s, ">") || !ft_strcmp(s, ">>") || !ft_strcmp(s, "<") ||
 		!ft_strcmp(s, "<<") || !ft_strcmp(s, "|"))
-	{
 		return (1);
-	}
 	return (0);
 }
 
@@ -183,13 +166,10 @@ int						is_number(char *s)
 {
 	int					p;
 
-	p = 0;
-	while (s[p])
-	{
+	p = -1;
+	while (s[++p])
 		if (!ft_isdigit(s[p]))
 			return (0);
-		p += 1;
-	}
 	return (1);
 }
 
@@ -219,11 +199,27 @@ t_redirect				*new_redirection(char *operator_, int fd)
 	return (new);
 }
 
+void					push_back_test(t_redirect **redir, t_redirect *redirect)
+{
+	t_redirect *head;
+
+	if (!(*redir))
+	{
+		*redir = redirect;
+		return ;
+	}
+	head = *redir;
+	while (head->next != NULL)
+		head = head->next;
+	head->next = redirect;
+}
+
 int						pull_redirection(t_nodes **node, t_nodes *prev, t_cmd **cmd)
 {
-	t_redirect			*redirection;
+	t_redirect			*redirection = NULL;
 	int					fd;
 
+	// printf("contetn = %s\n", (*node)->content);
 	if (is_number(prev->content))
 		fd = ft_atoi(prev->content);
 	else
@@ -234,7 +230,8 @@ int						pull_redirection(t_nodes **node, t_nodes *prev, t_cmd **cmd)
 		redirection->path = (*node)->next->content;
 		(*node) = (*node)->next;
 	}
-	(*cmd)->redirects = redirection;
+	// (*cmd)->redirects = redirection;
+	push_back_test(&(*cmd)->redirects, redirection);
 	return (0);
 }
 
@@ -246,9 +243,7 @@ int						get_ptr_len(char **s)
 		return (0);
 	p = 0;
 	while (s[p])
-	{
-		p += 1;
-	}
+		p++;
 	return (p);
 }
 
@@ -293,23 +288,22 @@ int						append_word_argv(char *word, t_cmd **cmd)
 void					append_struct(t_nodes *traverse, t_nodes **tokens, t_cmd *command)
 {
 	t_nodes *prev;
-	int status;
 
-	status = 0;
 	prev = NULL;
 	while (traverse)
 	{
 		if (is_op(traverse->content))
 			break ;
 		else if (is_assignment_word(traverse->content))
-			status = pull_assignment(traverse->content, &command);	
+			pull_assignment(traverse->content, &command);	
 		else if (is_redirection(traverse->content))
-			status = pull_redirection(&traverse, prev, &command);
+			pull_redirection(&traverse, prev, &command);
 		else if (is_word(traverse->content))
-			status = append_word_argv(traverse->content, &command);
+			append_word_argv(traverse->content, &command);
 		prev = traverse;
 		traverse = traverse->next;
 	}
+	// print_redirect_info(command->redirects);
 	*tokens = traverse;
 }
 
@@ -331,5 +325,6 @@ t_cmd					*create_cmd(t_nodes **tokens)
 		return (command);
 	}
 	append_struct(traverse, tokens, command);
+	// print_redirect_info((command)->redirects);
 	return (command);
 }
