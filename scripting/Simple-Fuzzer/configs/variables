@@ -1,0 +1,10 @@
+$X=ls;
+$Y=echo;
+sequence=XY
+
+maxseqlen=100
+
+
+endcfg
+FUZZ
+--
