@@ -57,5 +57,6 @@ int		exec_cmd(t_tree *tree, int use_current_process)
 		return (error("execve"));
 	}
 	waitpid(pid, &return_status, 0);
+	free(path);
 	return (return_status);
 }
