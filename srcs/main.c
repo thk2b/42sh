@@ -53,13 +53,15 @@ static void	teardown_shell(void)
 static void	free_assignments(t_assign *lst)
 {
 	t_assign	*cur;
+	t_assign	*tmp;
 
 	cur = lst;
 	while (cur)
 	{
 		ft_strdel(&cur->value);
+		tmp = cur->next;
 		free(cur);
-		cur = cur->next;
+		cur = tmp;
 	}
 }
 
