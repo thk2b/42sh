@@ -22,6 +22,12 @@ typedef struct	s_table
 	int		(*f)();
 }				t_table;
 
+
+/*
+**	assignments.c
+*/
+int		split_assignment(char *str, char **key, char **value);
+
 /*
 **	expand.c
 */
