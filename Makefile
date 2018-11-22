@@ -34,7 +34,7 @@ clean:
 	make clean -C $(LIB_DIR)
 	rm -rf $(OBJS)
 
-fclean:
+fclean: clean
 	make fclean -C $(LIB_DIR)
 	rm -rf $(NAME)
 
