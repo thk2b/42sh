@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/14 22:32:54 by tkobb             #+#    #+#             */
-/*   Updated: 2018/09/14 22:33:29 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/22 10:06:36 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,7 @@
 
 void	ft_putstr(const char *s)
 {
+	if (!s)
+		return ;
 	write(1, s, ft_strlen(s));
 }
