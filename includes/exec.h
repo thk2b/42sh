@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 17:52:34 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/19 09:02:05 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/21 11:11:27 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct	s_table
 **	expand.c
 */
 
-int		expand(char **argv);
+int		expand(t_cmd *cmd);
 
 /*
 **	redirects.c

@@ -4,3 +4,4 @@
 .DS*
 ._DS*
 .nfs*
+.vscode/*

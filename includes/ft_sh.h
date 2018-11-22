@@ -19,6 +19,8 @@
 # include <exec.h>
 # include <tokenizer.h>
 # include <local_var.h>
+# include <builtins.h>
+# include <env.h>
 # define NUM_OP 5
 # define TRUE 1
 # define FALSE 0

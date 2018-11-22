@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 07:31:07 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/19 08:43:35 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/21 10:46:31 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,35 +45,25 @@ static int			init_heredoc(t_redirect *redirect)
 	return (0);
 }
 
-static void			get_last_redirects(t_redirect *redirects,
-	t_redirect **last_redirect, t_redirect **last_heredoc)
-{
-	t_redirect	*r;
-	t_redirect	*lr;
-	t_redirect	*lh;
-
-	r = redirects;
-	lr= NULL;
-	lh = NULL;
-	while (r)
-	{
-		if (r->type == REDIRECT_APPEND_RIGHT || r->type == REDIRECT_RIGHT)
-			lr = r;
-		else if (r->type == REDIRECT_LEFT)
-			lh = r;
-		r = r->next;
-	}
-	*last_redirect = lr;
-	*last_heredoc = lh;
-}
-
 int					init_redirects(t_redirect *redirects)
 {
-	t_redirect	*redirect;
-	t_redirect	*heredoc;
+	t_redirect	*cur;
 
-	get_last_redirects(redirects, &redirect, &heredoc);
-	init_redirect(redirect, redirect->type == REDIRECT_APPEND_RIGHT);
-	init_heredoc(heredoc);
+	cur = redirects;
+	while (cur)
+	{
+		// TODO: expand path
+		if (cur->type == REDIRECT_LEFT)
+		{
+			if (init_heredoc(cur))
+				return (1);
+		}
+		else
+		{
+			if (init_redirect(cur, cur->type == REDIRECT_APPEND_RIGHT))
+				return (1);
+		}
+		cur = cur->next;
+	}
 	return (0);
 }

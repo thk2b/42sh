@@ -12,7 +12,7 @@
 
 #include <builtins.h>
 
-int		b_exit(char **av)
+int		b_exit(void)
 {
 	return (1);
 }

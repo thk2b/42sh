@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 16:31:26 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/20 08:52:50 by dmendelo         ###   ########.fr       */
+/*   Updated: 2018/11/20 18:15:49 by dmendelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct					s_redirect
 # define T_AND					3
 # define T_OR					4
 # define T_SEMI					5
+
 # define T_ALPHANUM				6
 # define T_QUOTE				7
 # define T_BRACKET				8
@@ -129,7 +130,7 @@ void			append(t_list **head_ref, char *new_data);
 char			*trip_join(const char *s1, const char c, const char *s2);
 void			free_append(char **s, char *end);
 int				skip_whitespace(const char *input, int p);
-void			check_errors(char *content, char *s);
+int			check_errors(char *content, char *s);
 int				classify_token(char c);
 void			init_token_info(t_token *info);
 int				pull_quote_content(t_list **head, const char *input, int *p);
@@ -138,8 +139,8 @@ int				pull_token(t_list **head, const char *input, int *p);
 int				skip_to_end_of_line(const char *input, int *p, t_list **head);
 int				interpret_token(t_list **head, const char *input, int *p);
 t_list			*interpret_input(const char *input, int *token_completion);
-t_list			*split_args(void);
-t_tree			*parse(void);
+t_list			*split_args(char *input);
+t_tree			*parse(char *input);
 int				is_op(char *str);
 
 
@@ -171,4 +172,14 @@ void			print_command_info(t_cmd *cmd);
 /*
 ** AST
 */
+
+t_tree			*build_tree(t_nodes *tokens);
+t_tree			*insert(t_tree **root, t_cmd *data, char type);
+t_tree			*build_subtree(t_tree **current, t_tree **new_root);
+int				compare_precedence(char a, char b);
+void			print_tree(t_tree *tree);
+void			print_operator_type(char type);
+char			get_type(char *s);
+t_tree			*new_leaf(t_tree *parent, char type, t_cmd *data);
+t_tree			*init_tree(void); // didn't end up using this function. scrap later
 #endif

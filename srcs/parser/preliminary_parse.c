@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   preliminary_parse.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/20 11:31:46 by dmendelo         ###   ########.fr       */
+/*   Updated: 2018/11/21 11:16:35 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,48 +20,34 @@ int				is_alpha_numeric(char c)
 		return (1);
 	if (c >= 'a' && c <= 'z')
 		return (1);
-	if (c == '-')
-		return (1);
-	if (c == '.')
-		return (1);
-	if (c == '=')
+	if (c == '-' || c == '.' || c == '=' || c == '/' || c == '$' || c == '~')
 		return (1);
 	return (0);
 }
 
 int				is_and_operator(char c)
 {
-	if (c == '&')
-		return (1);
-	return (0);
+	return (c == '&');
 }
 
 int				is_pipe_operator(char c)
 {
-	if (c == '|')
-		return (1);
-	return (0);
+	return (c == '|');
 }
 
 int				is_quote(char c)
 {
-	if (c == '"' || c == '\'')
-		return (1);
-	return (0);
+	return (c == 34 || c == '\'');
 }
 
 int				is_bracket(char c)
 {
-	if (c == '[' || c == ']')
-		return (1);
-	return (0);
+	return (c == '[' || c == ']');
 }
 
 int				is_paren(char c)
 {
-	if (c == '(' || c == ')')
-		return (1);
-	return (0);
+	return (c == '(' || c == ')');
 }
 
 char				*ft_strdup_range(const char *str, int begin, int end)
@@ -94,7 +80,7 @@ void	free_list(t_list *head)
 	while (tmp)
 	{
 		free_ = tmp;
-		free(tmp->content);
+		// free(tmp->content);
 		tmp = tmp->next;
 		free(free_);
 	}
@@ -193,14 +179,17 @@ void			free_append(char **s, char *end)
 int					skip_whitespace(const char *input, int p)
 {
 	while (input[p] && IS_SPACE(input[p]))
-	{
 		p += 1;
-	}
 	return (p);
 }
 
 int		is_op(char *str)
 {
+	int		i;
+	int		count;
+
+	count = 0;
+	i = 0;
 	if (ft_strequ(str, "&")|| ft_strequ(str, "&&") || ft_strequ(str, "||") || ft_strequ(str, "|"))
 		return (1);
 	if (ft_strequ(str, ";"))
@@ -208,15 +197,34 @@ int		is_op(char *str)
 	return (0);
 }
 
-void		check_errors(char *content, char *s)
+int			check_errors(char *content, char *s)
 {
+	int		i;
+	int		count;
+
+	i = 0;
+	count = 0;
 	if (!content || !s)
-			return ;
+		return (1);
+	while (content[i])
+	{
+		if (content[i] == ';')
+			count++;
+		i++;
+	}
+	if (count > 1)
+	{
+		write(2, "syntax error near: ", 19);
+		write(2, &content, 2);
+		return (1);
+	}
 	if (is_op(content) && is_op(s))
 	{
-		printf("syntax eror\n");
-		exit(1);
+		write(2, "syntax error near: ", 19);
+		write(2, &content, 2);
+		return (1);
 	}
+	return (0);
 }
 
 int				classify_token(char c)
@@ -254,7 +262,6 @@ void				init_token_info(t_token *info)
 
 int					pull_quote_content(t_list **head, const char *input, int *p)
 {
-	WOW();
 	int					tmp;
 	char				*content;
 
@@ -266,21 +273,17 @@ int					pull_quote_content(t_list **head, const char *input, int *p)
 	}
 	if (!input[tmp])
 	{
-		printf("seeking_end\n");
 		*p = tmp;
 		return (SEEKING_END);
 	}
 	content = ft_strdup_range(input, *p, tmp++);
 	*p = tmp;
-	if (*head && (*head)->tail)
-		check_errors((*head)->tail->content, content);
 	append(head, content);
 	return (END);
 }
 
 int					pull_operator(t_list **head, const char *input, int *p)
 {
-	WOW();
 	int					tmp;
 	int					type;
 	int					op_max;
@@ -294,18 +297,20 @@ int					pull_operator(t_list **head, const char *input, int *p)
 	content = ft_strdup_range(input, *p, tmp - 1);
 	if (is_op(content) && (!(*head)))
 	{
-		printf("syntax error\n");
-		exit(1);
+		write(2, "syntax error near: ", 19);
+		ft_putstr_fd(content, 2);
+		write(1, "\n", 1);
+		return (-1);
 	}
-	check_errors((*head)->tail->content, content);
+	if (check_errors((*head)->tail->content, content))
+		return (-1);
 	append(head, content);
 	*p = tmp;
-	return (SEEKING_END);
+	return (0);
 }
 
 int					pull_token(t_list **head, const char *input, int *p)
 {
-	WOW();
 	int					tmp;
 	int					type;
 	char				*content;
@@ -315,8 +320,6 @@ int					pull_token(t_list **head, const char *input, int *p)
 	while (input[tmp] && type == classify_token(input[tmp]))
 		tmp += 1;
 	content = ft_strdup_range(input, *p, tmp - 1);
-	if ((*head) && (*head)->tail)
-		check_errors((*head)->tail->content, content);
 	append(head, content);
 	*p = tmp;
 	return (END);
@@ -339,7 +342,6 @@ int					interpret_token(t_list **head, const char *input, int *p)
 {
 	int					tmp;
 	static t_token		info;
-//	int					begin;
 
 	init_token_info(&info);
 	tmp = *p;
@@ -354,7 +356,8 @@ int					interpret_token(t_list **head, const char *input, int *p)
 	}
 	else if (info.type == T_AND || info.type == T_PIPE)
 	{
-		info.status = pull_operator(head, input, &tmp);
+		if ((info.status = pull_operator(head, input, &tmp)) == -1)
+			return (-1);
 	}
 	else
 	{
@@ -366,22 +369,19 @@ int					interpret_token(t_list **head, const char *input, int *p)
 
 t_list				*interpret_input(const char *input, int *token_completion)
 {
-	WOW();
 	int					p;
 	t_list				*arguments;
 
-	printf("-------------------------\nto be interpreted -> %s\n---------------------\n", input);
 	p = 0;
 	arguments = NULL;
 	while (input[p])
 	{
-		printf("p = %d\n", p);
-		printf("%s\n", input);
-		printf("%*c\n", (int)strlen(input), input[p]);
 		if (IS_SPACE(input[p]))
 			p = skip_whitespace(input, p);
 		else
 			*token_completion = interpret_token(&arguments, input, &p);
+		if (*token_completion == -1)
+			return (NULL);
 	}
 	if (*token_completion == SEEKING_END)
 	{
@@ -391,58 +391,91 @@ t_list				*interpret_input(const char *input, int *token_completion)
 	return (arguments);
 }
 
-t_list				*split_args(void)
+/*
+** see commented function for get_line() compatible arg splitter
+*/
+
+
+t_list				*split_args(char *input)
 {
-	WOW();
-	static char			*input = NULL;
-	char				*line;
 	t_list				*arguments;
 	int					token_completion;
 
-	line = NULL;
-	write(1, "->", 2);
-	get_next_line(0, &line);
-	free_append(&input, line);
 	arguments = interpret_input(input, &token_completion);
-
-	if (arguments)
-		print_list(arguments);
-	if (token_completion == SEEKING_END)
-	{
-		free_append(&input, "\n");
-		free(line);
-		printf("--------------------------------\n");
-		return (split_args());
-	}
-	free(input);
-	input = NULL;
-	free(line);
+	// if (arguments)
+	// 	print_list(arguments);
+	// if (token_completion == SEEKING_END)
+	// {
+	// 	free_append(&input, "\n");
+	// 	free(line);
+	// 	printf("--------------------------------\n");
+	// 	return (split_args());
+	// }
 	return (arguments);
 }
 
-t_tree				*parse(void)
+
+// t_list				*split_args(void)
+// {
+// 	WOW();
+// 	static char			*input = NULL;
+// 	char				*line;
+// 	t_list				*arguments;
+// 	int					token_completion;
+
+// 	line = NULL;
+// 	write(1, "->", 2);
+// 	get_next_line(0, &line);
+// 	free_append(&input, line);
+// 	arguments = interpret_input(input, &token_completion);
+
+// 	if (arguments)
+// 		print_list(arguments);
+// 	if (token_completion == SEEKING_END)
+// 	{
+// 		free_append(&input, "\n");
+// 		free(line);
+// 		printf("--------------------------------\n");
+// 		return (split_args());
+// 	}
+// 	free(input);
+// 	input = NULL;
+// 	free(line);
+// 	return (arguments);
+// }
+
+/*
+** see commented function!
+*/
+
+t_tree				*parse(char *input)
 {
-	WOW();
 	t_list				*arguments;
 	t_nodes				*traverse;
 	t_tree				*ast;
 
-	arguments = split_args();
+	arguments = split_args(input);
+	if (arguments == NULL)
+		return (NULL);
 	traverse = arguments->head;
-//	ast = build_tree(traverse);
-	while (traverse)
-	{
-		print_command_info(create_cmd(&traverse));
-	//	if (traverse)
-	//		traverse = traverse->next;
-	}
+	ast = build_tree(traverse);
 	if (arguments)
 		free_list(arguments);
-	return (NULL);
+	return (ast);
 }
 
-int					main(void)
-{
-	parse();
-	return (0);
-}
+
+// t_tree				*parse(void)
+// {
+// 	WOW();
+// 	t_list				*arguments;
+// 	t_nodes				*traverse;
+// 	t_tree				*ast;
+
+// 	arguments = split_args();
+// 	traverse = arguments->head;
+// 	ast = build_tree(traverse);
+// 	if (arguments)
+// 		free_list(arguments);
+// 	return (ast);
+// }

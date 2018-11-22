@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 09:01:02 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/19 11:25:32 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/21 11:18:04 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,12 @@ static char	*expand_var(char *str)
 	next = ft_strchr(start + 1, '$');
 	len = next ? next - start : ft_strlen(start);
 	if ((value = ft_getenv(start + 1)) == NULL
-	|| (value = get_local_var(str)) == NULL)
+	&& (value = get_local_var(start + 1)) == NULL)
 		return (ft_strdup(""));
 	return (ft_strreplace(str, start, len, value));
 }
 
-int			expand(char **argv)
+static int	expand_argv(char **argv)
 {
 	size_t	i;
 	char	*expanded;
@@ -82,5 +82,26 @@ int			expand(char **argv)
 			replace(argv + i, expanded);
 		i++;
 	}
+	return (0);
+}
+
+// int			expand_redirection(t_redirect *redirect)
+// {
+// 	t_redirect	*cur;
+
+// 	cur = redirect
+// 	while (cur)
+// 	{
+
+// 	}
+// }
+
+int expand(t_cmd *cmd)
+{
+
+	if (cmd->argv && expand_argv(cmd->argv))
+		return (1);
+	// if (cmd->redirects && expand_redirects(cmd->redirects))
+		// return (1);
 	return (0);
 }
