@@ -48,7 +48,6 @@ static int	init_shell(void)
 static void	teardown_shell(void)
 {
 	path_teardown();
-	term_reset();
 }
 
 
