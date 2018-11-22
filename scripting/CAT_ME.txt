@@ -1,0 +1,16 @@
+Hey!
+
+Check out Simple-Fuzzer/configs to add to test cases!
+
+run test.sh to diff files.
+test script will exit when this is a difference.
+42sh outputs will be in ft_shell (obv)
+sh outputs will be in shell
+
+see outputs in sequential order as they are listed in the configs file run in test_input.$x
+
+if you look in test.sh, we are reading from Simple-Fuzzer/configs/literals right now.
+Go add something or make a new config file and add that to another script. More specific scripts to come!
+
+run clean.sh to clean up files and directories.
+

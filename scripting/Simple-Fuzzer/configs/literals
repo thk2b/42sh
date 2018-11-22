@@ -1,0 +1,17 @@
+# literal commands. Enter anything you feel like testing w/ format 'literal=(command)'
+
+literal=ls;
+literal=ls -la; echo "ls!" > file.txt | cat -e;
+literal=echo"lllllllllllllllll" | cat -e ; echo "lol""echo">file>file2;
+literal=cd /tmp;cd ../;cd -;cd ~+;cd -; cd ..; cd ; cd - && echo $PWD;
+literal=ls ../../ -R | grep ".txt" > text_files;
+literal=setenv TRUC toto ; echo ${TRUC} ; echo ${truc}; setenv TRUC titi ; echo ${TRUC} ; echo ${sdse}
+literal=ls > toto ; date >> toto ; >> toto ls ; < toto cat ;
+literal=ls /dev | grep tty | sort -r | rev > toto ; < toto cat | rev | wc -l > titi
+literal=env env env env env env ls && env env env ls && env ls && ls && env env env env env env env env env env env env `echo ls` && ls && env env env env env env env env env env env env env env env ls
+literal=ls oops && pwd || echo a
+literal=echo a || pwd && echo b
+
+endcfg
+FUZZ
+--
