@@ -72,6 +72,8 @@ int					init_redirects(t_redirect *redirects)
 	t_redirect	*redirect;
 	t_redirect	*heredoc;
 
+	if (!redirects)
+		return (0);
 	get_last_redirects(redirects, &redirect, &heredoc);
 	init_redirect(redirect, redirect->type == REDIRECT_APPEND_RIGHT);
 	init_heredoc(heredoc);

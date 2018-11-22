@@ -41,6 +41,9 @@ int		exec_cmd(t_tree *tree)
 	if (tree->data->redirects)
 		init_redirects(tree->data->redirects);
 	return_status = 0;
+	printf("\n\n2. the value of x=%s\n\n", get_local_var("x"));
+	if (!tree->data->argv)
+		return (0);
 	expand(tree->data->argv);
 	if (builtin(tree->data->argv, &return_status) == 0) // if we execute builtin, stop
 		return (return_status);
