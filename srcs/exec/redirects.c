@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 07:31:07 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/21 20:19:32 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/22 09:25:53 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,11 @@ static int			init_heredoc(t_redirect *redirect)
 	int	fd;
 
 	if ((fd = open(redirect->path, O_RDONLY)) == -1)
+	{
+		close(STDIN);
+		close(STDOUT);
 		return (error(redirect->path));
+	}
 	if (dup2(fd, 0) == -1)
 		return (error("dup2"));
 	return (0);

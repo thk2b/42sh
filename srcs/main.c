@@ -66,13 +66,15 @@ static void	free_assignments(t_assign *lst)
 static void	free_redirects(t_redirect *lst)
 {
 	t_redirect	*cur;
+	t_redirect	*next;
 
 	cur = lst;
 	while (cur)
 	{
 		ft_strdel(&cur->path);
+		next = cur->next;
 		free(cur);
-		cur = cur->next;
+		cur = next;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 06:14:19 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/22 08:59:52 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/22 09:23:33 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int		exec_cmd(t_tree *tree, int use_current_process)
 	if (use_current_process || pid == 0)
 	{
 		if (tree->data->redirects && init_redirects(tree->data->redirects))
-			return (error("redirect"));
+			return (1);
 		execve(path, tree->data->argv, environ);
 		return (error("execve"));
 	}
