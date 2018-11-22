@@ -88,11 +88,14 @@ static void	free_tree(t_tree *root)
 	free_tree(root->right);
 	if (root->data)
 	{
-		i = 0;
-		while (root->data->argv[i])
+		if (root->data->argv)
 		{
-			free(root->data->argv[i]);
-			i++;
+			i = 0;
+			while (root->data->argv[i])
+			{
+				free(root->data->argv[i]);
+				i++;
+			}
 		}
 		free(root->data->argv);
 		free_assignments(root->data->assign);
