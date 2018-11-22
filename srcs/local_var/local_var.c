@@ -42,7 +42,6 @@ t_var	*create_var_elem(char *key, char *value)
 char	*get_local_var(char *key)
 {
 	t_var			*cur;
-	unsigned long	hash;
 
 	if (!key)
 		return (NULL);
