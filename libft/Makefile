@@ -85,6 +85,7 @@ SRCS = $(addprefix $(SRCDIR)/,\
 	ft_strv_add.c\
 	ft_strv_dup.c\
 	ft_strv_remove.c\
+	ft_strffjoin.c\
 )
 	# ft_lstnew.c\
 	# ft_lstdelone.c\

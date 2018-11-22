@@ -4,6 +4,9 @@ LIB			= libft.a
 LIB_DIR		= libft
 LIB_PATH	= $(LIB_DIR)/$(LIB)
 
+TERMCAP		= -ltermcap
+READLINE	= ft_readline/libft_readline.a
+
 CC			= gcc
 FLAGS		= -Wall -Wextra -Werror -g -fsanitize=address
 INCLUDES	= -I ./libft/includes -I ./includes
@@ -23,7 +26,7 @@ OBJS		= $(SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIB)
-	$(COMPILE) $(OBJS) $(LIB_PATH) -o $(NAME)
+	$(COMPILE) $(OBJS) $(LIB_PATH) $(TERMCAP) $(READLINE) -o $(NAME)
 
 %.o: %.c
 	$(COMPILE) -c $< -o $@

@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 18:02:58 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/19 15:45:14 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/22 09:31:36 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <local_var.h>
 # include <builtins.h>
 # include <env.h>
+# include "../ft_readline/ft_readline.h"
 # define NUM_OP 5
 # define TRUE 1
 # define FALSE 0
