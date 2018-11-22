@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 06:14:19 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/21 11:17:01 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/21 20:18:47 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,17 @@ int		exec_cmd(t_tree *tree, int use_current_process)
 	expand(tree->data);
 	if (tree->data->assign && !tree->data->argv)
 		store_assignments(tree->data->assign);
-	if (tree->data->redirects)
-		init_redirects(tree->data->redirects);
 	if (!tree->data->argv)
 		return (0);
 	if (builtin(tree->data->argv, &return_status) == 0) // if we execute builtin, stop
 		return (return_status);
 	if (!use_current_process)
 		if ((pid = fork()) == -1)
-			return (1);
+			return (error("fork"));
 	if (use_current_process || pid == 0)
 	{
+		if (tree->data->redirects && init_redirects(tree->data->redirects))
+			return (error("redirect"));
 		if ((path = search_cmd(tree->data->argv[0])) == NULL)
 			_exit(127);
 		execve(path, tree->data->argv, environ);
