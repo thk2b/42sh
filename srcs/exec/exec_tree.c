@@ -36,19 +36,19 @@ int		exec_node(t_tree *cur, int use_current_process)
 int		exec_semi(t_tree *tree, int use_current_process)
 {
 	int return_status[2];
-	int	child_pid[2];
+	// int	child_pid[2];
 
-	if ((child_pid[0] = fork()) == -1)
-		return (1);
-	if (child_pid[0] == 0)
-		_exit(exec_node(tree->left, 1));
-	if (use_current_process == 0)
-		if ((child_pid[1] = fork()) == -1)
-			return (1);
-	if (child_pid[1] == 0 || use_current_process == TRUE)
-		_exit(exec_node(tree->right, 1));
-	waitpid(child_pid[0], &return_status[0], 0);
-    waitpid(child_pid[1], &return_status[1], 0);
+	(void)use_current_process;
+	//if ((child_pid[0] = fork()) == -1)
+	//	return (1);
+	return_status[0] = exec_node(tree->left, 0);
+	// if (use_current_process == 0)
+	// 	if ((child_pid[1] = fork()) == -1)
+	// 		return (1);
+	// if (child_pid[1] == 0 || use_current_process == TRUE)
+	return_status[1] = exec_node(tree->right, 0);
+	// waitpid(child_pid[0], &return_status[0], 0);
+    // waitpid(child_pid[1], &return_status[1], 0);
     return (return_status[1]);
 }
 
@@ -90,42 +90,33 @@ int			exec_pipe(t_tree *curr, int use_curr_proc)
 int		exec_and(t_tree *tree, int use_current_process)
 {
 	int return_status[2];
-	int	child_pid[2];
 
-	if ((child_pid[0] = fork()) == -1)
-		return (1);
-	if (child_pid[0] == 0)
-		_exit(exec_node(tree->left, 1));
-	waitpid(child_pid[0], &return_status[0], 0);
+	(void)use_current_process;
+	// if ((child_pid[0] = fork()) == -1)
+	// 	return (1);
+	// if (child_pid[0] == 0)
+	return_status[0] = exec_node(tree->left, 0);
+	// waitpid(child_pid[0], &return_status[0], 0);
 	if (return_status[0] != 0)
 		return (return_status[0]);
-	if (use_current_process == 0)
-		if ((child_pid[1] = fork()) == -1)
-			return (1);
-	if (child_pid[1] == 0 || use_current_process == TRUE)
-		_exit(exec_node(tree->right, 1));
-   	waitpid(child_pid[1], &return_status[1], 0);
+	// if (use_current_process == 0)
+	// 	if ((child_pid[1] = fork()) == -1)
+	// 		return (1);
+	// if (child_pid[1] == 0 || use_current_process == TRUE)
+	return_status[1] = exec_node(tree->right, 0);
+   	// waitpid(child_pid[1], &return_status[1], 0);
     return (return_status[1]);
 }
 
 int		exec_or(t_tree *tree, int use_current_process)
 {
 	int return_status[2];
-	int	child_pid[2];
 
-	if ((child_pid[0] = fork()) == -1)
-		return (1);
-	if (child_pid[0] == 0)
-		exec_node(tree->left, 1);
-	waitpid(child_pid[0], &return_status[0], 0);
+	(void)use_current_process;
+	return_status[0] = exec_node(tree->left, 0);
 	if (return_status[0] == 0)
 		return (return_status[0]);
-	if (use_current_process == 0)
-		if ((child_pid[1] = fork()) == -1)
-			return (1);
-	if (child_pid[1] == 0 || use_current_process == TRUE)
-		exec_node(tree->right, 1);
-    waitpid(child_pid[1], &return_status[1], 0);
+	return_status[1] = exec_node(tree->right, 0);
     return (return_status[1]);
 }
 
