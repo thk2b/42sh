@@ -50,15 +50,54 @@ static void	teardown_shell(void)
 	path_teardown();
 }
 
+static void	free_assignments(t_assign *lst)
+{
+	t_assign	*cur;
 
+	cur = lst;
+	while (cur)
+	{
+		ft_strdel(&cur->value);
+		free(cur);
+		cur = cur->next;
+	}
+}
+
+static void	free_redirects(t_redirect *lst)
+{
+	t_redirect	*cur;
+
+	cur = lst;
+	while (cur)
+	{
+		ft_strdel(&cur->path);
+		free(cur);
+		cur = cur->next;
+	}
+}
+
+//leaks inside free_tree of course
 static void	free_tree(t_tree *root)
 {
+	int			i;
+
 	if (!root)
 		return ;
 	free_tree(root->left);
 	free_tree(root->right);
 	if (root->data)
+	{
+		i = 0;
+		while (root->data->argv[i])
+		{
+			free(root->data->argv[i]);
+			i++;
+		}
+		free(root->data->argv);
+		free_assignments(root->data->assign);
+		free_redirects(root->data->redirects);
 		free(root->data);
+	}
 	free(root);
 }
 
