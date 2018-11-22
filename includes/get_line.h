@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 19:16:31 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/21 18:10:37 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/22 09:32:24 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define GETLINE_H
 # include <libft.h>
 # include <stdlib.h>
-# include <curses.h>
 # include <termcap.h>
 
 # define TERMCAPS_ENABLED	1

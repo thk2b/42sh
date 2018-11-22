@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 19:15:39 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/20 10:54:27 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/22 09:43:29 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,9 +107,7 @@ static int	process_command(int *status)
 	int		return_status;
 
 	line = NULL;
-	ft_printf("$>");
-	if (get_next_line(0, &line) != 1) // get_line
-		return (1);// theo this makes it weird --> error("cannot get line")
+	line = ft_readline("$> ", 3, RL_DEFAULT);
 	//parser (calls the tokenizer internally) takes a line, and t_tree **root as argument
 		//token list should be cleaned inside parser.
 	root = parse(line);
