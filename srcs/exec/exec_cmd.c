@@ -30,23 +30,31 @@ char	*search_cmd(char *exec_name)
 	return (NULL);
 }
 
-int		exec_cmd(t_tree *tree)
+int		exec_cmd(t_tree *tree, int use_current_process)
 {
 	extern char	**environ;
 	char		*path;
 	int			return_status;
+	pid_t		pid;
 
-	if (tree->data->assign)
-		store_assignments(tree->data->assign);
 	expand(tree->data);
+	if (tree->data->assign && !tree->data->argv)
+		store_assignments(tree->data->assign);
 	if (tree->data->redirects)
 		init_redirects(tree->data->redirects);
-	return_status = 0;
+	if (!tree->data->argv)
+		return (0);
 	if (builtin(tree->data->argv, &return_status) == 0) // if we execute builtin, stop
 		return (return_status);
-	if ((path = search_cmd(tree->data->argv[0])) == NULL)
-		return (127);
-//	signal(SIGCHLD, SIG_DFL); // set SIGCHLD to it's original purpose
-	execve(path, tree->data->argv, environ);
-	return (error("execve"));
+	if (!use_current_process)
+		if ((pid = fork()) == -1)
+			return (1);
+	if (use_current_process || pid == 0)
+	{
+		if ((path = search_cmd(tree->data->argv[0])) == NULL)
+			_exit(127);
+		execve(path, tree->data->argv, environ);
+	}
+	waitpid(pid, &return_status, 0);
+	return (return_status);
 }

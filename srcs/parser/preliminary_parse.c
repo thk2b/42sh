@@ -20,7 +20,8 @@ int				is_alpha_numeric(char c)
 		return (1);
 	if (c >= 'a' && c <= 'z')
 		return (1);
-	if (c == '-' || c == '.' || c == '=' || c == '/' || c == '$' || c == '~')
+	if (c == '-' || c == '.' || c == '=' || c == '/' || c == '$'
+		|| c == '~' || c == '_')
 		return (1);
 	return (0);
 }
