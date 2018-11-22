@@ -42,6 +42,8 @@ int		exec_cmd(t_tree *tree, int use_current_process)
 		store_assignments(tree->data->assign);
 	if (tree->data->redirects)
 		init_redirects(tree->data->redirects);
+	if (!tree->data->argv)
+		return (0);
 	if (builtin(tree->data->argv, &return_status) == 0) // if we execute builtin, stop
 		return (return_status);
 	if (!use_current_process)
