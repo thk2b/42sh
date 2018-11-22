@@ -76,7 +76,6 @@ static void	free_redirects(t_redirect *lst)
 	}
 }
 
-//leaks inside free_tree of course
 static void	free_tree(t_tree *root)
 {
 	int			i;
@@ -140,3 +139,8 @@ int			main(void)
 	teardown_shell();
 	return (status);
 }
+
+/*
+**	TODO
+**	try assignments and redirects. Any leaks?
+*/
