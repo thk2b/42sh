@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 06:14:19 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/21 20:18:47 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/22 08:59:52 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int		exec_cmd(t_tree *tree, int use_current_process)
 		return (0);
 	if (builtin(tree->data->argv, &return_status) == 0) // if we execute builtin, stop
 		return (return_status);
+	if ((path = search_cmd(tree->data->argv[0])) == NULL)
+		return (127);
 	if (!use_current_process)
 		if ((pid = fork()) == -1)
 			return (error("fork"));
@@ -51,9 +53,8 @@ int		exec_cmd(t_tree *tree, int use_current_process)
 	{
 		if (tree->data->redirects && init_redirects(tree->data->redirects))
 			return (error("redirect"));
-		if ((path = search_cmd(tree->data->argv[0])) == NULL)
-			_exit(127);
 		execve(path, tree->data->argv, environ);
+		return (error("execve"));
 	}
 	waitpid(pid, &return_status, 0);
 	return (return_status);

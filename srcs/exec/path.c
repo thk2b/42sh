@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 06:18:30 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/19 07:19:20 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/22 08:55:45 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int			path_init(void)
 static int	is_executable(char *path, char *exists)
 {
 	if (access(path, F_OK) == 0)
-		*exists = 1;
+		return ((*exists = 1));
 	return (access(path, X_OK) == 0);
 }
 
