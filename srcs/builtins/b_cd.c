@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 15:37:31 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/19 19:56:03 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/21 20:38:04 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,10 @@ int		b_cd(char **av)
 	if (ft_setenv("OLD_PWD", curpwd, 1))
 		;
 	if (chdir(dst) == -1)
-		return (1);
+		return (error("cd"));
 	if ((curpwd = getcwd(NULL, 0)) == NULL)
-		return (1);
+		return (error("getcwd"));
 	ft_setenv("PWD", curpwd, 1);
 	free(curpwd);
 	return (0);
 }
-
