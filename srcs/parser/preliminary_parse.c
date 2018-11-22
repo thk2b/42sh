@@ -81,7 +81,7 @@ void	free_list(t_list *head)
 	while (tmp)
 	{
 		free_ = tmp;
-		// free(tmp->content);
+		free(tmp->content);
 		tmp = tmp->next;
 		free(free_);
 	}

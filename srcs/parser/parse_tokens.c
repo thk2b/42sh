@@ -128,7 +128,7 @@ void					push_back(t_assign **head, char *value)
 	t_assign			*traverse;
 
 	new = malloc(sizeof(*new));
-	new->value = value;
+	new->value = ft_strdup(value); // We now copy the value here since token list is freed
 	new->next = NULL;
 	if (!(*head))
 	{
@@ -148,7 +148,7 @@ int						pull_assignment(char *assignment, t_cmd **cmd)
 
 	p = 0;
 	begin = 0;
-	while (assignment[p] && assignment[p] != '=')
+	while (assignment[p] && assignment[p] != '=') //What does this do?
 		p += 1;
 	push_back(&(*cmd)->assign, assignment);
 	return (0);
@@ -227,7 +227,7 @@ int						pull_redirection(t_nodes **node, t_nodes *prev, t_cmd **cmd)
 	redirection = new_redirection((*node)->content, fd);
 	if ((*node)->next)
 	{
-		redirection->path = (*node)->next->content;
+		redirection->path = ft_strdup((*node)->next->content); // We now copy the value here since token list is freed
 		(*node) = (*node)->next;
 	}
 	// (*cmd)->redirects = redirection;

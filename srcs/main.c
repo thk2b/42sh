@@ -85,6 +85,7 @@ static int	process_command(int *status)
 	else
 		return_status = 1;
 	//set return status
+	free(line);
 	*status = return_status;
 	return (0);
 }
