@@ -38,7 +38,7 @@ int		init_redirects(t_redirect *redirect);
 **	exec_cmd.c
 */
 char	*search_cmd(char *argv);
-int		exec_cmd(t_tree *tree);
+int		exec_cmd(t_tree *tree, int use_current_process);
 
 /*
 **	exec_tree.c
@@ -48,7 +48,6 @@ int		exec_semi(t_tree *tree, int use_current_process);
 int		exec_pipe(t_tree *tree, int use_current_process);
 int		exec_and(t_tree *tree, int use_current_process);
 int		exec_or(t_tree *tree, int use_current_process);
-int		exec_cmd(t_tree *tree);
 
 
 /*

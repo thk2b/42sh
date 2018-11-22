@@ -41,19 +41,11 @@ int		store_assignments(t_assign *lst)
 	cur = lst;
 	while (cur)
 	{
-		printf("%s\n", cur->value);
 		split_assignment(cur->value, &key, &value);
-		printf("Store this thingy: key: %s - value: %s \n", key, value);
 		store_local_var(key, value);
 		// ft_strdel(&key);
 		// ft_strdel(&value);
 		cur = cur->next;
 	}
-	printf("\n\n1. the value of x=%s\n\n", get_local_var("x"));
-	// if (g_var[13].next == NULL)
-	// 	printf("ERRROr\n");
-	// else
-	// 	printf("%s\n", g_var[13].value); 
-	printf("end of assignment\n");
 	return (0);
 }
