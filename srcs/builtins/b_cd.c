@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   b_cd.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 15:37:31 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/21 20:38:04 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/22 13:04:17 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,12 @@ int		b_cd(char **av)
 	}
 	else if (dst[0] == '-')
 	{
-		MCK(dst = ft_getenv("OLD_PWD"), 1);
+		if ((dst = ft_getenv("OLD_PWD")) == NULL)
+		{
+			ft_dprintf(2, "%s: OLDPWD not set\n", "42sh");
+			return (1);
+		}
+		ft_printf("%s\n", dst);
 	}
 	MCK(curpwd = ft_getenv("PWD"), 1);
 	if (ft_setenv("OLD_PWD", curpwd, 1))

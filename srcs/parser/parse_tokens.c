@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 10:18:05 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/11/21 19:46:48 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/22 13:52:57 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ void					push_back(t_assign **head, char *value)
 	traverse->next = new;
 }
 
+
 int						pull_assignment(char *assignment, t_cmd **cmd)
 {
 	int					p;
@@ -148,9 +149,10 @@ int						pull_assignment(char *assignment, t_cmd **cmd)
 
 	p = 0;
 	begin = 0;
-	while (assignment[p] && assignment[p] != '=') //What does this do?
-		p += 1;
-	push_back(&(*cmd)->assign, assignment);
+	if ((*cmd)->argv == NULL)
+		push_back(&(*cmd)->assign, assignment);
+	else
+		append_word_argv(assignment, cmd);
 	return (0);
 }
 

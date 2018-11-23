@@ -46,8 +46,8 @@ int		store_assignments(t_assign *lst)
 			ft_setenv(key, value, 1);
 		else
 			store_local_var(key, value);
-		// ft_strdel(&key);
-		// ft_strdel(&value);
+		ft_strdel(&key);
+		ft_strdel(&value);
 		cur = cur->next;
 	}
 	return (0);
