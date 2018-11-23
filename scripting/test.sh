@@ -6,7 +6,7 @@ mkdir ft_shell
 for x in test_input.*
 do
     cat $x | sh > shell/$x
-	eval $x | cat > ft_shell/$x
+	cat $x | ../42sh > ft_shell/$x
 	if diff ft_shell/$x shell/$x
 	then
 		echo "same!"
