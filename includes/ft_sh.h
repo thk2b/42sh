@@ -6,13 +6,17 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 18:02:58 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/22 09:31:36 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/22 20:23:01 by dmendelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_SH_H
 # define FT_SH_H
 # include <builtins.h>
+# include <sys/ioctl.h>
+# include <sys/time.h>
+# include <poll.h>
+# include <time.h>
 # include <get_line.h>
 # include <error.h>
 # include <parser.h>
