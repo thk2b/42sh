@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 19:15:39 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/22 20:23:26 by dmendelo         ###   ########.fr       */
+/*   Updated: 2018/11/22 20:32:28 by dmendelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,11 @@ static int	execute_non_interactive_shell(char *line, int *status)
 
 int			check_stdin(void)
 {
-	fd_set			readfds;
+
+	if (isatty(0))
+		return (0);
+	return (1);
+/*	fd_set			readfds;
 	struct timeval	timeout;
 
 	timeout.tv_sec = 0;
@@ -169,6 +173,7 @@ int			check_stdin(void)
 		return (1);
 	}
 	return (0);
+	*/
 }
 
 int			main(void)
