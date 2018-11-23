@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 09:01:02 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/22 14:02:49 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/23 09:03:37 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,20 @@ static char	*expand_tilde(char *str)
 	return (ft_strreplace(str, str, 1, home_str));
 }
 
+// static char	*find_var_name_start(char *str)
+// {
+// 	while (*str && !ft_isalpha(*str) && *str != '$')
+// 		str++;
+// 	return (*str == '$' ? str : NULL);
+// }
+
+static char	*find_var_name_end(char *str)
+{
+	while (*str && ft_isalpha(*str))
+		str++;
+	return (str);
+}
+
 static char	*expand_var(char *str)
 {
 	char	*start;
@@ -61,8 +75,8 @@ static char	*expand_var(char *str)
 
 	if ((start = ft_strchr(str, '$')) == NULL)
 		return (NULL);
-	next = ft_strchr(start + 1, '$');
-	len = next ? next - start : ft_strlen(start);
+	next = find_var_name_end(start + 1);
+	len = next ? next - start : ft_strlen(start + 1);
 	tmp = str[len];
 	str[len] = '\0';
 	value = ft_getenv(start + 1);
