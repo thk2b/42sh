@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/22 13:56:38 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/23 15:51:45 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@ int				is_alpha_numeric(char c)
 		return (1);
 	if (c >= 'a' && c <= 'z')
 		return (1);
-	if (c == '-' || c == '.' || c == '=' || c == '/' || c == '$'
-		|| c == '~' || c == '_')
+	// if (c == '-' || c == '.' || c == '=' || c == '/' || c == '$'
+	// 	|| c == '~' || c == '_' || c == 64)
+	// 	return (1);
+	if ((c >= 33 && c <= 47) || c == '_' || (c > 122 && c < 127) || (c >= 58 && c <= 64))
 		return (1);
 	return (0);
 }
@@ -398,8 +400,8 @@ t_list				*split_args(char *input)
 	int					token_completion;
 
 	arguments = interpret_input(input, &token_completion);
-	// if (arguments)
-	// 	print_list(arguments);
+	if (arguments)
+		print_list(arguments);
 	// if (token_completion == SEEKING_END)
 	// {
 	// 	free_append(&input, "\n");
@@ -460,6 +462,11 @@ t_tree				*parse(char *input)
 	return (ast);
 }
 
+// int			main()
+// {
+// 	char *arr = strdup("ls @a@");
+// 	parse(arr);
+// }
 
 // t_tree				*parse(void)
 // {
