@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 10:18:05 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/11/22 13:52:57 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/23 15:40:13 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,10 +218,10 @@ void					push_back_test(t_redirect **redir, t_redirect *redirect)
 
 int						pull_redirection(t_nodes **node, t_nodes *prev, t_cmd **cmd)
 {
-	t_redirect			*redirection = NULL;
+	t_redirect			*redirection;
 	int					fd;
 
-	// printf("contetn = %s\n", (*node)->content);
+	redirection = NULL;
 	if (is_number(prev->content))
 		fd = ft_atoi(prev->content);
 	else
@@ -232,7 +232,6 @@ int						pull_redirection(t_nodes **node, t_nodes *prev, t_cmd **cmd)
 		redirection->path = ft_strdup((*node)->next->content); // We now copy the value here since token list is freed
 		(*node) = (*node)->next;
 	}
-	// (*cmd)->redirects = redirection;
 	push_back_test(&(*cmd)->redirects, redirection);
 	return (0);
 }
@@ -284,6 +283,7 @@ int						append_word_argv(char *word, t_cmd **cmd)
 	if ((*cmd)->argv)
 		free_2d((*cmd)->argv);
 	(*cmd)->argv = argv;
+	// ft_putstrv((*cmd)->argv);
 	return (0);
 }
 

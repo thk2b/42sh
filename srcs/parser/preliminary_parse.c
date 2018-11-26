@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   preliminary_parse.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/23 17:07:44 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/25 20:00:47 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -276,7 +276,7 @@ int					pull_operator(t_list **head, const char *input, int *p)
 	int					type;
 	int					op_max;
 	char				*content;
-	
+
 	tmp = *p;
 	type = classify_token(input[tmp]);
 	op_max = 2;
@@ -286,8 +286,8 @@ int					pull_operator(t_list **head, const char *input, int *p)
 	if (is_op(content) && (!(*head)))
 	{
 		write(2, "syntax error near: ", 19);
-		ft_putstr_fd(content, 2);
-		write(1, "\n", 1);
+		write(2, &content, 2);
+		write(2, "\n", 1);
 		return (-1);
 	}
 	if (check_errors((*head)->tail->content, content))
@@ -297,12 +297,37 @@ int					pull_operator(t_list **head, const char *input, int *p)
 	return (0);
 }
 
+int					check_redirections(const char *input)
+{
+	int			i;
+	int			count;
+
+	count = 0;
+	i = 0;
+	while (input[i])
+	{
+		if (input[i] == '>' || input[i] == '<')
+			count++;
+		i++;
+	}
+	if (count > 2)
+		return (1);
+	return (0);
+}
+
 int					pull_token(t_list **head, const char *input, int *p)
 {
 	int					tmp;
 	int					type;
 	char				*content;
 
+	if (check_redirections(input) || (IS_RED(*input) && (*head) == NULL))
+	{
+		write(2, "syntax error near: ", 19);
+		ft_putstr_fd(input, 2);
+		write(2, "\n", 1);
+		return (-1);
+	}
 	tmp = *p;
 	type = classify_token(input[tmp]);
 	while (input[tmp] && type == classify_token(input[tmp]))
@@ -349,7 +374,8 @@ int					interpret_token(t_list **head, const char *input, int *p)
 	}
 	else
 	{
-		info.status = pull_token(head, input, &tmp);
+		if ((info.status = pull_token(head, input, &tmp)) == -1)
+			return (-1);
 	}
 	*p = tmp;
 	return (info.status);
@@ -402,6 +428,12 @@ t_list				*split_args(char *input)
 	// }
 	return (arguments);
 }
+
+// int		main()
+// {
+// 	char *arr = strdup("salut >>> salut");
+// 	parse(arr);
+// }
 
 
 // t_list				*split_args(void)
