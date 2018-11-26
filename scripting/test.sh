@@ -1,5 +1,5 @@
 #!/bin/sh
-./Simple-Fuzzer/sfuzz -f -q -O -n Simple-Fuzzer/configs/literals -L test_input
+./Simple-Fuzzer/sfuzz -f -q -O -n ../test_config -L test_input
 mkdir shell
 mkdir ft_shell
 
@@ -7,11 +7,11 @@ for x in test_input.*
 do
     cat $x | sh > shell/$x
 	cat $x | ../42sh > ft_shell/$x
-	if diff ft_shell/$x shell/$x
+	if diff -y ft_shell/$x shell/$x
 	then
-		echo "same!"
+		printf "\e[1;34mMATCHED.\n\e[0m"
 	else
-		echo "found error!"
+		printf "\e[31;1mError!\n\e[0m"
 		break
 	fi 
 done

@@ -1,0 +1,7 @@
+literal=ls
+literal=echo hello world
+literal=echo "hello world"
+
+endcfg
+FUZZ
+--
