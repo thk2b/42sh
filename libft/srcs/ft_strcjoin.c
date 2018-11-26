@@ -19,11 +19,16 @@ char	*ft_strcjoin(const char *s, char c, const char *t)
 	char	*j;
 
 	slen = ft_strlen(s);
-	len = slen + ft_strlen(t) + 1;
+	len = slen + 1;
+	if (t)
+		len += ft_strlen(t);
 	if ((j = (char*)malloc((len + 2) * sizeof(char))) == NULL)
 		return (NULL);
 	ft_strcpy(j, s);
 	j[slen] = c;
-	ft_strcpy(j + slen + 1, t);
+	if (t)
+		ft_strcpy(j + slen + 1, t);
+	else
+		j[slen + 1] = '\0';
 	return (j);
 }

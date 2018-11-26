@@ -56,7 +56,7 @@ char		*path_search(char *exec_name, char *exists)
 	if (ft_strchr(exec_name, '/'))
 	{
 		if (is_executable(exec_name, exists))
-			return (exec_name);
+			return (ft_strdup(exec_name));
 		return (NULL);
 	}
 	i = 0;

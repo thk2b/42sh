@@ -8,7 +8,7 @@ TERMCAP		= -ltermcap
 READLINE	= ft_readline/libft_readline.a
 
 CC			= gcc
-FLAGS		= -Wall -Wextra -Werror -g #-fsanitize=address
+FLAGS		= -Wall -Wextra -Werror -g -fsanitize=address
 INCLUDES	= -I ./libft/includes -I ./includes
 COMPILE		= $(CC) $(FLAGS) $(INCLUDES)
 

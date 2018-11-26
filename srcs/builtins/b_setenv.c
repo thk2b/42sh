@@ -17,10 +17,11 @@ int			b_setenv(char **av)
 	extern char	**environ;
 
 	if (av == NULL || av[0] == NULL || av[1] == NULL)
-		return (1);
+		b_env(av);
 	else if (av[2])
 		ft_setenv(av[1], av[2], 1);
 	else
-		return (1);
+		ft_setenv(av[1], NULL, 1);
+		// return (1);
 	return (0);
 }
