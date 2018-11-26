@@ -12,22 +12,58 @@
 
 #include <ft_sh.h>
 
-int		b_export(char **av)
+static void	print_env_export(void)
 {
-	char	*key;
-	char	*value;
+	extern char	**environ;
+	int			i;
+
+	i = 0;
+	while (environ[i])
+	{
+		ft_printf("EXPORT %s\n", environ[i]);
+		i++;
+	}
+}
+
+static char	*scan_argv(char **av)
+{
+	char	*assignment;
 	int		argc;
 
 	argc = 0;
 	while (av[argc])
 		argc++;
-	if (argc != 2)
-		return (1);
-	if (split_assignment(av[1], &key, &value))
+	if (argc == 1)
+		return (NULL);
+	if (ft_strcmp(av[1], "-p") == 0)
 	{
-		if ((value = get_local_var(av[1])) == NULL)
+		if (argc == 2)
+			return ("-p");
+		else if (argc == 3)
+			assignment = av[2];
+		else
+			return (NULL);
+	}
+	else
+		assignment = av[1];
+	return (assignment);
+}
+
+int		b_export(char **av)
+{
+	char	*key;
+	char	*value;
+	char	*assignment;
+
+	if ((assignment = scan_argv(av)) == NULL)
+		return (1);
+	if (ft_strcmp(assignment, "-p") == 0)
+		print_env_export();
+	else if (split_assignment(assignment, &key, &value))
+	{
+		if ((value = get_local_var(assignment)) == NULL)
 			return (1);
-		if (ft_setenv(av[1], value, 1) || rm_local_var(av[1]))
+		if (ft_setenv(assignment, value, 1) || rm_local_var(assignment))
 			return (1);
 	}
 	else
