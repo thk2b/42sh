@@ -22,6 +22,7 @@
 #include <libft.h>
 #include "grammar.h"
 #include "get_next_line.h"
+#include <ft_printf.h>
 
 # define IS_SPACE(x) (x == ' ' || x == '\t' || x == '\n')
 # define IS_OP(x) (x == '&' || x == '|')
@@ -59,6 +60,12 @@ typedef struct					s_redirect
 # define T_BACKTICK				10
 # define T_SPACE				11
 # define T_COMMENT				12
+
+//Just to make it compile
+#define	HEREDOC_DOC				13
+#define HEREDOC_STR				14
+#define IS_REDIRECT_LEFT		15
+#define IS_REDIRECT_RIGHT		16
 
 typedef struct			s_nodes
 {
