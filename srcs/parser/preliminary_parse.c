@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/25 20:03:47 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/25 20:18:52 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -301,15 +301,23 @@ int					check_redirections(const char *input)
 {
 	int			i;
 	int			count;
+	char		*tmp;
 
 	count = 0;
 	i = 0;
+	tmp = ft_strtrim(input);
 	while (input[i])
 	{
-		if (input[i] == '>' || input[i] == '<')
+		if (IS_RED(input[i]))
 			count++;
+		if (IS_RED(input[i]) && !input[i + 1])
+		{
+			free(tmp);
+			return (1);
+		}
 		i++;
 	}
+	free(tmp);
 	if (count > 2)
 		return (1);
 	return (0);
@@ -324,7 +332,7 @@ int					pull_token(t_list **head, const char *input, int *p)
 	if (check_redirections(input) || (IS_RED(*input) && (*head) == NULL))
 	{
 		write(2, "syntax error near: ", 19);
-		ft_putstr_fd(input, 2);
+		ft_putchar_fd(input[ft_strlen(input) - 1], 2);
 		write(2, "\n", 1);
 		return (-1);
 	}
