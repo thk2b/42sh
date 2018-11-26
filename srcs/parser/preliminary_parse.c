@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/25 21:40:46 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/25 21:45:06 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -285,7 +285,7 @@ int					pull_operator(t_list **head, const char *input, int *p)
 	while (input[tmp] && type == classify_token(input[tmp]) && op_max--)
 		tmp += 1;
 	content = ft_strdup_range(input, *p, tmp - 1);
-	if ((is_op(content) && (!(*head))))
+	if ((is_op(content) && (!(*head))) || ft_strequ(content, "&"))
 	{
 		error_message(content);
 		return (-1);
@@ -304,7 +304,7 @@ int					check_semicolon(char *input)
 	i = 0;
 	while (IS_SEMI(input[i]))
 		i++;
-	return (i > 1 ? 1 : 0);
+	return (i > 1);
 }
 
 int					check_redirections(char *input)
