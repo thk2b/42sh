@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_tokens.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmendelo <dmendelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 10:18:05 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/11/22 13:52:57 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/25 20:30:02 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@ void				print_redirect_info(t_redirect *r)
 		printf(">\n");
 	else if (r->type == REDIRECT_APPEND_RIGHT)
 		printf(">>\n");
+	else if (r->type == HEREDOC_DOC)
+		printf("<<");
+	else if (r->type == HEREDOC_STR)
+		printf("<<<");
 	printf("fd = %d\n", r->fd);
 	printf("path = %s\n", r->path);
 }
@@ -159,7 +163,7 @@ int						pull_assignment(char *assignment, t_cmd **cmd)
 int						is_redirection(char *s)
 {
 	if (!ft_strcmp(s, ">") || !ft_strcmp(s, ">>") || !ft_strcmp(s, "<") ||
-		!ft_strcmp(s, "<<") || !ft_strcmp(s, "|"))
+		!ft_strcmp(s, "<<") || !ft_strcmp(s, "|") || !ft_strcmp(s, "<<<"))
 		return (1);
 	return (0);
 }
@@ -183,6 +187,10 @@ char					determine_redirection_type(char *o)
 		return (REDIRECT_RIGHT);
 	else if (!ft_strcmp(o, ">>"))
 		return (REDIRECT_APPEND_RIGHT);
+	else if (!ft_strcmp(o, "<<"))
+		return (HEREDOC_DOC);
+	else if (!ft_strcmp(o, "<<<"))
+		return (HEREDOC_STR);
 	else
 		return (0);
 }
@@ -218,10 +226,10 @@ void					push_back_test(t_redirect **redir, t_redirect *redirect)
 
 int						pull_redirection(t_nodes **node, t_nodes *prev, t_cmd **cmd)
 {
-	t_redirect			*redirection = NULL;
+	t_redirect			*redirection;
 	int					fd;
 
-	// printf("contetn = %s\n", (*node)->content);
+	redirection = NULL;
 	if (is_number(prev->content))
 		fd = ft_atoi(prev->content);
 	else
@@ -232,7 +240,6 @@ int						pull_redirection(t_nodes **node, t_nodes *prev, t_cmd **cmd)
 		redirection->path = ft_strdup((*node)->next->content); // We now copy the value here since token list is freed
 		(*node) = (*node)->next;
 	}
-	// (*cmd)->redirects = redirection;
 	push_back_test(&(*cmd)->redirects, redirection);
 	return (0);
 }
@@ -284,6 +291,7 @@ int						append_word_argv(char *word, t_cmd **cmd)
 	if ((*cmd)->argv)
 		free_2d((*cmd)->argv);
 	(*cmd)->argv = argv;
+	// ft_putstrv((*cmd)->argv);
 	return (0);
 }
 
@@ -297,7 +305,7 @@ void					append_struct(t_nodes *traverse, t_nodes **tokens, t_cmd *command)
 		if (is_op(traverse->content))
 			break ;
 		else if (is_assignment_word(traverse->content))
-			pull_assignment(traverse->content, &command);	
+			pull_assignment(traverse->content, &command);
 		else if (is_redirection(traverse->content))
 			pull_redirection(&traverse, prev, &command);
 		else if (is_word(traverse->content))
