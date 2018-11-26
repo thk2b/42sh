@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 06:18:30 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/22 08:55:45 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/26 14:40:06 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char		*path_search(char *exec_name, char *exists)
 	if (ft_strchr(exec_name, '/'))
 	{
 		if (is_executable(exec_name, exists))
-			return (exec_name);
+			return (ft_strdup(exec_name));
 		return (NULL);
 	}
 	i = 0;
