@@ -3,33 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 16:31:26 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/20 18:15:49 by dmendelo         ###   ########.fr       */
+/*   Updated: 2018/11/25 21:25:04 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <strings.h>
-#include <string.h>
-#include <libft.h>
-#include "grammar.h"
-#include "get_next_line.h"
+# include <stdio.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <fcntl.h>
+# include <strings.h>
+# include <string.h>
+# include <libft.h>
+# include "grammar.h"
+# include "get_next_line.h"
+# include <errno.h>
+# include <ft_printf.h>
 
 # define IS_SPACE(x) (x == ' ' || x == '\t' || x == '\n')
 # define IS_OP(x) (x == '&' || x == '|')
 # define IS_SEMI(x) (x == ';')
+# define IS_RED(x) (x == '<' || x == '>')
+# define IS_REDIRECT_LEFT(x) (x == '<')
+# define IS_REDIRECT_RIGHT(x) (x == '>')
 # define WOW() printf("->%s\n", __func__)
 # define REDIRECT_LEFT			1 //rename to heredoc?
 # define REDIRECT_RIGHT			2 //rename to redirect?
-# define REDIRECT_APPEND_RIGHT	3 //rename to redirect_append? 
+# define REDIRECT_APPEND_RIGHT	3 //rename to redirect_append?
+# define HEREDOC_DOC			4
+# define HEREDOC_STR			5
 
 # define SEEKING_END 1
 # define END 2
