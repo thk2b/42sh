@@ -67,12 +67,6 @@ typedef struct					s_redirect
 # define T_SPACE				11
 # define T_COMMENT				12
 
-//Just to make it compile
-#define	HEREDOC_DOC				13
-#define HEREDOC_STR				14
-#define IS_REDIRECT_LEFT		15
-#define IS_REDIRECT_RIGHT		16
-
 typedef struct			s_nodes
 {
 	char				*content;
