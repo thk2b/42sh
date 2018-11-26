@@ -6,15 +6,20 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/25 20:18:52 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/25 21:40:46 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
+void			error_message(char *line)
+{
+	ft_dprintf(2, "%s: syntax error near: %s\n", "42sh", line);
+}
+
 int				is_alpha_numeric(char c)
 {
-	if (ft_isalnum(c) || (c > 32 && c != 34 && c != 39 && c != 59))
+	if (ft_isalnum(c) || (c > 32 && c != 34 && c != 39 && c != 59 && !IS_OP(c)))
 		return (1);
 	return (0);
 }
@@ -202,14 +207,13 @@ int			check_errors(char *content, char *s)
 		return (1);
 	while (content[i])
 	{
-		if (content[i] == ';')
+		if (IS_OP(content[i]))
 			count++;
 		i++;
 	}
 	if ((count > 1) || (is_op(content) && is_op(s)))
 	{
-		write(2, "syntax error near: ", 19);
-		write(2, &content, 2);
+		error_message(content);
 		return (1);
 	}
 	return (0);
@@ -256,9 +260,7 @@ int					pull_quote_content(t_list **head, const char *input, int *p)
 	tmp = *p;
 	tmp += 1;
 	while (input[tmp] && classify_token(input[tmp]) != T_QUOTE)
-	{
 		tmp += 1;
-	}
 	if (!input[tmp])
 	{
 		*p = tmp;
@@ -283,11 +285,9 @@ int					pull_operator(t_list **head, const char *input, int *p)
 	while (input[tmp] && type == classify_token(input[tmp]) && op_max--)
 		tmp += 1;
 	content = ft_strdup_range(input, *p, tmp - 1);
-	if (is_op(content) && (!(*head)))
+	if ((is_op(content) && (!(*head))))
 	{
-		write(2, "syntax error near: ", 19);
-		write(2, &content, 2);
-		write(2, "\n", 1);
+		error_message(content);
 		return (-1);
 	}
 	if (check_errors((*head)->tail->content, content))
@@ -297,29 +297,54 @@ int					pull_operator(t_list **head, const char *input, int *p)
 	return (0);
 }
 
-int					check_redirections(const char *input)
+int					check_semicolon(char *input)
 {
 	int			i;
-	int			count;
-	char		*tmp;
 
-	count = 0;
 	i = 0;
-	tmp = ft_strtrim(input);
+	while (IS_SEMI(input[i]))
+		i++;
+	return (i > 1 ? 1 : 0);
+}
+
+int					check_redirections(char *input)
+{
+	int			i;
+
+	i = 0;
+	while (input[i] == '>')
+		i++;
+	if (i > 2)
+		return (1);
+	i = 0;
+	while (input[i] == '<')
+		i++;
+	if (i > 3)
+		return (1);
+	i = 0;
 	while (input[i])
 	{
-		if (IS_RED(input[i]))
-			count++;
-		if (IS_RED(input[i]) && !input[i + 1])
-		{
-			free(tmp);
+		if (IS_REDIRECT_LEFT(input[i]) && IS_REDIRECT_RIGHT(input[i + 1]))
 			return (1);
-		}
+		if (IS_RED(input[i]) && !input[i + 1])
+			return (1);
 		i++;
 	}
-	free(tmp);
-	if (count > 2)
+	return (0);
+}
+
+int					error_special(char *input, t_list **head)
+{
+	if (check_semicolon(input) || check_redirections(input))
+	{
+		error_message(input);
 		return (1);
+	}
+	if ((IS_SEMI(*input) || IS_RED(*input)) && !(*head))
+	{
+		error_message(input);
+		return (1);
+	}
 	return (0);
 }
 
@@ -329,18 +354,13 @@ int					pull_token(t_list **head, const char *input, int *p)
 	int					type;
 	char				*content;
 
-	if (check_redirections(input) || (IS_RED(*input) && (*head) == NULL))
-	{
-		write(2, "syntax error near: ", 19);
-		ft_putchar_fd(input[ft_strlen(input) - 1], 2);
-		write(2, "\n", 1);
-		return (-1);
-	}
 	tmp = *p;
 	type = classify_token(input[tmp]);
 	while (input[tmp] && type == classify_token(input[tmp]))
 		tmp += 1;
 	content = ft_strdup_range(input, *p, tmp - 1);
+	if (content && error_special(content, head))
+		return (-1);
 	append(head, content);
 	*p = tmp;
 	return (END);
@@ -349,13 +369,9 @@ int					pull_token(t_list **head, const char *input, int *p)
 int					skip_to_end_of_line(const char *input, int *p, t_list **head)
 {
 	while (input[*p] && input[*p] != '\n')
-	{
 		*p += 1;
-	}
 	if (is_op((*head)->tail->content))
-	{
 		return (SEEKING_END);
-	}
 	return (END);
 }
 
@@ -414,11 +430,6 @@ t_list				*interpret_input(const char *input, int *token_completion)
 	return (arguments);
 }
 
-/*
-** see commented function for get_line() compatible arg splitter
-*/
-
-
 t_list				*split_args(char *input)
 {
 	t_list				*arguments;
@@ -437,45 +448,6 @@ t_list				*split_args(char *input)
 	return (arguments);
 }
 
-// int		main()
-// {
-// 	char *arr = strdup("salut >>> salut");
-// 	parse(arr);
-// }
-
-
-// t_list				*split_args(void)
-// {
-// 	WOW();
-// 	static char			*input = NULL;
-// 	char				*line;
-// 	t_list				*arguments;
-// 	int					token_completion;
-
-// 	line = NULL;
-// 	write(1, "->", 2);
-// 	get_next_line(0, &line);
-// 	free_append(&input, line);
-// 	arguments = interpret_input(input, &token_completion);
-
-// 	if (arguments)
-// 		print_list(arguments);
-// 	if (token_completion == SEEKING_END)
-// 	{
-// 		free_append(&input, "\n");
-// 		free(line);
-// 		printf("--------------------------------\n");
-// 		return (split_args());
-// 	}
-// 	free(input);
-// 	input = NULL;
-// 	free(line);
-// 	return (arguments);
-// }
-
-/*
-** see commented function!
-*/
 
 t_tree				*parse(char *input)
 {
@@ -492,30 +464,3 @@ t_tree				*parse(char *input)
 		free_list(arguments);
 	return (ast);
 }
-
-// int			main()
-// {
-// 	char *arr = strdup("ls @a@");
-// 	parse(arr);
-// }
-
-// t_tree				*parse(void)
-// {
-// 	WOW();
-// 	t_list				*arguments;
-// 	t_nodes				*traverse;
-// 	t_tree				*ast;
-
-// 	arguments = split_args();
-// 	traverse = arguments->head;
-// 	ast = build_tree(traverse);
-// 	if (arguments)
-// 		free_list(arguments);
-// 	return (ast);
-// }
-
-// int			main()
-// {
-// 	char *arr = strdup("ls -l echo=salut");
-// 	parse(arr);
-// }
