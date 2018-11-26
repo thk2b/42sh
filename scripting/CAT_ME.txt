@@ -1,6 +1,6 @@
 Hey!
 
-Check out Simple-Fuzzer/configs to add to test cases!
+Checkout test_config to add test cases as literals
 
 run test.sh to diff files.
 test script will exit when this is a difference.

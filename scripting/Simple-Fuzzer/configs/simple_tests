@@ -1,0 +1,20 @@
+# literal commands. Enter anything you feel like testing w/ format 'literal=(command)'
+
+literal=ls;
+literal=ls -la; echo "ls!" | cat -e;
+literal=ls -la; ls -l; ls ../; ls -t          ; ls -r && echo "ls!"
+literal=echo -n "testing!" ;
+literal=echo "ls" | cat -e;
+literal=rm undefined_dir ; echo "did we delete it?" | cat -e;
+literal=undefined
+literal=mkdir test_dir;rm test_dir && echo "deleted!" || echo "huh";
+literal=ls && ls && ls && ls && ls && ls && ls;
+literal=cd ../; echo $PWD && echo $OLDPWD ; cd - ; echo $PWD && echo $OLDPWD;
+literal=cd /tmp;cd ../;cd -;cd ~+;cd -; cd ..; cd ; cd - && echo $PWD;
+# literal=env env env env env env ls && env env env ls && env ls && ls && env env env env env env env env env env env env `echo ls` && ls && env env env env env env env env env env env env env env env ls
+literal=ls oops && pwd || echo a
+literal=echo a || pwd && echo b
+
+endcfg
+FUZZ
+--
