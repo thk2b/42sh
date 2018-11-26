@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/25 20:00:47 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/25 20:03:47 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int				is_alpha_numeric(char c)
 {
-	if (ft_isalnum(c) || (c > 32 && c != 34 && c != 39))
+	if (ft_isalnum(c) || (c > 32 && c != 34 && c != 39 && c != 59))
 		return (1);
 	return (0);
 }
