@@ -17,9 +17,10 @@ void			error_message(char *line)
 	ft_dprintf(2, "%s: syntax error near: %s\n", "42sh", line);
 }
 
+//This is pretty messy.
 int				is_alpha_numeric(char c)
 {
-	if (ft_isalnum(c) || (c > 32 && c != 34 && c != 39 && c != 59 && !IS_OP(c)))
+	if (ft_isalnum(c) || (c > 32 && c != 34 && c != 96 && c != 39 && c != 59 && !IS_OP(c)))
 		return (1);
 	return (0);
 }
@@ -36,7 +37,7 @@ int				is_pipe_operator(char c)
 
 int				is_quote(char c)
 {
-	return (c == 34 || c == '\'');
+	return (c == '\"' || c == '\'' || c == '`');
 }
 
 int				is_bracket(char c)
@@ -107,6 +108,7 @@ t_nodes		*new_node(char *new_data)
 	node = (t_nodes *)malloc(sizeof(t_nodes));
 	node->content = new_data;
 	node->next = NULL;
+	node->prev = NULL;
 	return (node);
 }
 
@@ -132,6 +134,7 @@ void		append(t_list **head_ref, char *new_data)
 		return ;
 	}
 	new = new_node(new_data);
+	new->prev = (*head_ref)->tail;
 	(*head_ref)->tail->next = new;
 	(*head_ref)->tail = new;
 }
@@ -322,14 +325,14 @@ int					check_redirections(char *input)
 	if (i > 3)
 		return (1);
 	i = 0;
-	while (input[i])
-	{
-		if (IS_REDIRECT_LEFT(input[i]) && IS_REDIRECT_RIGHT(input[i + 1]))
-			return (1);
-		if (IS_RED(input[i]) && !input[i + 1])
-			return (1);
-		i++;
-	}
+	// while (input[i])
+	// {
+	// 	if (IS_REDIRECT_LEFT(input[i]) && IS_REDIRECT_RIGHT(input[i + 1]))
+	// 		return (1);
+	// 	if (IS_RED(input[i]) && !input[i + 1])
+	// 		return (1);
+	// 	i++;
+	// }
 	return (0);
 }
 
@@ -340,7 +343,7 @@ int					error_special(char *input, t_list **head)
 		error_message(input);
 		return (1);
 	}
-	if ((IS_SEMI(*input) || IS_RED(*input)) && !(*head))
+	if ((IS_SEMI(*input) ) && !(*head)) // IS_SEMI() || IS_RED(*input)
 	{
 		error_message(input);
 		return (1);
@@ -457,6 +460,9 @@ t_tree				*parse(char *input)
 
 	arguments = split_args(input);
 	if (arguments == NULL)
+		return (NULL);
+	//we need to go through the token list and do expansions here.
+	if (expand_tokens(&arguments))
 		return (NULL);
 	traverse = arguments->head;
 	ast = build_tree(traverse);

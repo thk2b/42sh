@@ -25,6 +25,7 @@
 # include <local_var.h>
 # include <builtins.h>
 # include <env.h>
+# include <ft_printf.h>
 # include "../ft_readline/ft_readline.h"
 # define NUM_OP 5
 # define TRUE 1

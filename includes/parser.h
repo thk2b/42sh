@@ -71,6 +71,7 @@ typedef struct			s_nodes
 {
 	char				*content;
 	struct s_nodes		*next;
+	struct s_nodes		*prev;
 }						t_nodes;
 
 typedef struct			s_list
@@ -189,4 +190,11 @@ void			print_operator_type(char type);
 char			get_type(char *s);
 t_tree			*new_leaf(t_tree *parent, char type, t_cmd *data);
 t_tree			*init_tree(void); // didn't end up using this function. scrap later
+
+
+/*
+**	expand_tokens.c
+*/
+int		expand_tokens(t_list **arguments);
+
 #endif

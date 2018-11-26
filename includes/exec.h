@@ -56,6 +56,11 @@ int		exec_pipe(t_tree *tree, int use_current_process);
 int		exec_and(t_tree *tree, int use_current_process);
 int		exec_or(t_tree *tree, int use_current_process);
 
+/*
+**	back_ticks.c
+*/
+int		exec_backticks(char **dst, char *str);
+
 
 /*
 **	Handle environment

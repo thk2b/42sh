@@ -81,27 +81,30 @@ static char	*expand_var(char *str)
 	return (ft_strreplace(str, start, len, value));
 }
 
-static int	strip_quotes(char *str)
-{
-	int		is_single_quote;
-	size_t	len;
+// static int	strip_quotes(char *str)
+// {
+// 	int		is_single_quote;
+// 	size_t	len;
 
-	if (ft_strchr("\"'", *str) == NULL)
-		return (0);
-	is_single_quote = *str == '\'';
-	len = ft_strlen(str);
-	ft_memmove(str, str + 1, len - 1);
-	str[len - 2] = '\0';
-	return (is_single_quote);
-}
+// 	if (ft_strchr("\"'", *str) == NULL)
+// 		return (0);
+// 	is_single_quote = *str == '\'';
+// 	len = ft_strlen(str);
+// 	ft_memmove(str, str + 1, len - 1);
+// 	str[len - 2] = '\0';
+// 	return (is_single_quote);
+// }
 
 int			expand_str(char **dst, char *str)
 {
 	char	*expanded;
 
 	*dst = str;
-	if (strip_quotes(str))
+	// ft_printf("str is %s\n", str);
+	if (exec_backticks(dst, str))
 		return (0);
+	// if (strip_quotes(str))
+		// return (0);
 	if (str[0] == '~' && str[1] != '~')
 		replace(dst, expand_tilde(*dst));
 	while ((expanded = expand_var(*dst)))

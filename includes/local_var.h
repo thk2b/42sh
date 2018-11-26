@@ -13,7 +13,7 @@
 #ifndef LOCAL_VAR_H
 # define LOCAL_VAR_H
 # define NUM_SLOTS 20
-
+# include <ft_sh.h>
 typedef struct	s_var
 {
 	char			*key;

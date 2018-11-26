@@ -37,7 +37,7 @@ int		exec_cmd(t_tree *tree, int use_current_process)
 	int			return_status;
 	pid_t		pid;
 
-	expand(tree->data);
+	// expand(tree->data);
 	if (tree->data->assign && !tree->data->argv)
 		store_assignments(tree->data->assign);
 	if (!tree->data->argv)
