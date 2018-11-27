@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/26 21:27:09 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/27 14:50:47 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,7 +238,7 @@ int				classify_token(char c)
 	else if (c == ';')
 		return (T_SEMI);
 	else if (is_quote(c))
-		return (T_QUOTE);
+		return (T_ALPHANUM);
 	else if (is_bracket(c))
 		return (T_BRACKET);
 	else if (is_paren(c))
@@ -294,7 +294,7 @@ int					pull_operator(t_list **head, const char *input, int *p,
 	while (input[tmp] && type == classify_token(input[tmp]) && op_max--)
 		tmp += 1;
 	content = ft_strdup_range(input, *p, tmp - 1);
-	if ((is_op(content) && (!(*head))) || (ft_strequ(content, "&")))
+	if ((is_op(content) && (!(*head))))
 	{
 		if (errors)
 		{
@@ -369,13 +369,7 @@ int					pull_token(t_list **head, const char *input, int *p, int errors)
 	while (input[tmp] && type == classify_token(input[tmp]))
 		tmp += 1;
 	type = classify_token(input[tmp]);
-	if (type == T_QUOTE)
-	{
-		tmp++;
-		while (input[tmp] && classify_token(input[tmp]) != T_QUOTE)
-			tmp++;
-	}
-	content = ft_strdup_range(input, *p, type == T_QUOTE ? tmp : tmp - 1); // if doesn't work, remove 4 lines above and put only tmp
+	content = ft_strdup_range(input, *p, type == T_QUOTE ? tmp : tmp - 1);
 	if (content && error_special(content, head) && errors)
 		return (-1);
 	append(head, content);
