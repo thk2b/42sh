@@ -325,14 +325,14 @@ int					check_redirections(char *input)
 	if (i > 3)
 		return (1);
 	i = 0;
-	// while (input[i])
-	// {
-	// 	if (IS_REDIRECT_LEFT(input[i]) && IS_REDIRECT_RIGHT(input[i + 1]))
-	// 		return (1);
-	// 	if (IS_RED(input[i]) && !input[i + 1])
-	// 		return (1);
-	// 	i++;
-	// }
+	while (input[i])
+	{
+		if (IS_REDIRECT_LEFT(input[i]) && IS_REDIRECT_RIGHT(input[i + 1]))
+			return (1);
+		if (IS_RED(input[i]) && !input[i + 1])
+			return (1);
+		i++;
+	}
 	return (0);
 }
 
