@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/26 19:56:37 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/26 20:06:16 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void			error_message(char *line)
 //This is pretty messy.
 int				is_alpha_numeric(char c)
 {
-	if (ft_isalnum(c) || (c > 32 && c != 34 && c != 96 && c != 39 && c != 59 && !IS_OP(c)))
+	if (ft_isalnum(c) || (c != 96 && c != 39 && c != 59 && !IS_OP(c)))
 		return (1);
 	return (0);
 }
