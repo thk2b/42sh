@@ -1,5 +1,8 @@
 literal=ls
 literal=echo hello world
+literal=echo ls ; ls ; ls;ls
+literal=echo ls && cd .. ; ls
+literal=cd undefined && echo hm! || echo wat
 literal=echo "hello world"
 
 endcfg
