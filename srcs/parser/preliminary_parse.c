@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/25 21:45:06 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/26 19:36:25 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -433,11 +433,12 @@ t_list				*interpret_input(const char *input, int *token_completion)
 	return (arguments);
 }
 
-t_list				*split_args(char *input)
+t_list				*split_args(char *input, int activate_errors)
 {
 	t_list				*arguments;
 	int					token_completion;
 
+	(void)activate_errors;
 	arguments = interpret_input(input, &token_completion);
 	// if (arguments)
 	// 	print_list(arguments);
@@ -452,30 +453,22 @@ t_list				*split_args(char *input)
 }
 
 
-t_tree				*parse(char *input)
+t_tree				*parse(char *input, int activate_errors)
 {
 	t_list				*arguments;
 	t_nodes				*traverse;
 	t_tree				*ast;
 
-	arguments = split_args(input);
+	arguments = split_args(input, activate_errors);
 	if (arguments == NULL)
 		return (NULL);
 	//we need to go through the token list and do expansions here.
 	if (expand_tokens(&arguments))
 		return (NULL);
-	t_nodes *cur = arguments->head;
-	ft_printf("-----------\n");
-	while (cur)
-	{
-		// ft_printf("| ");
-		ft_printf("%s -> ", cur->content);
-		cur = cur->next;
-	}
-	ft_printf("\n-----------\n");
 	traverse = arguments->head;
 	ast = build_tree(traverse);
 	if (arguments)
 		free_list(arguments);
 	return (ast);
 }
+ 	
