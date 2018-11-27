@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/27 15:42:30 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/27 15:47:24 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,15 @@ void			error_message(char *line)
 //This is pretty messy.
 int				is_alpha_numeric(char c)
 {
-	if (c >= '0' && c <= '9')
-		return (1);
-	if (c >= 'A' && c <= 'Z')
-		return (1);
-	if (c >= 'a' && c <= 'z')
-		return (1);
-	if (c == '-' || c == '.' || c == '=' || c == '/' || c == '$' || c == '~')
+	// if (c >= '0' && c <= '9')
+	// 	return (1);
+	// if (c >= 'A' && c <= 'Z')
+	// 	return (1);
+	// if (c >= 'a' && c <= 'z')
+	// 	return (1);
+	// if (c == '-' || c == '.' || c == '=' || c == '/' || c == '$' || c == '~')
+	// 	return (1);
+	if (c != ' ')
 		return (1);
 	return (0);
 }
@@ -372,7 +374,7 @@ int					error_special(char *input, t_list **head)
 		error_message(input);
 		return (1);
 	}
-	if (((IS_SEMI(*input) || IS_RED(*input))) && !(*head)) // IS_SEMI() || IS_RED(*input)
+	if (((IS_SEMI(*input) || IS_RED(*input))) && !(head)) // IS_SEMI() || IS_RED(*input)
 	{
 		error_message(input);
 		return (1);
