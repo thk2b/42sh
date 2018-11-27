@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/26 19:46:18 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/26 19:56:37 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -297,7 +297,7 @@ int					pull_operator(t_list **head, const char *input, int *p,
 			return (-1);
 		}
 	}
-	if (check_errors((*head)->tail->content, content))
+	if (errors && check_errors((*head)->tail->content, content))
 		return (-1);
 	append(head, content);
 	*p = tmp;
