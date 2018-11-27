@@ -375,7 +375,7 @@ int					pull_token(t_list **head, const char *input, int *p, int errors)
 		while (input[tmp] && classify_token(input[tmp]) != T_QUOTE)
 			tmp++;
 	}
-	content = ft_strdup_range(input, *p, type == T_QUOTE ? tmp : tmp - 1);
+	content = ft_strdup_range(input, *p, type == T_QUOTE ? tmp : tmp - 1); // if doesn't work, remove 4 lines above and put only tmp
 	if (content && error_special(content, head) && errors)
 		return (-1);
 	append(head, content);
