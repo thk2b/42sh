@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/26 20:28:22 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/26 21:27:09 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int				is_pipe_operator(char c)
 
 int				is_quote(char c)
 {
-	return (c == '\"' || c == '\'' || c == '`');
+	return (c == 34 || c == '\'' || c == '`');
 }
 
 int				is_bracket(char c)
@@ -272,7 +272,7 @@ int					pull_quote_content(t_list **head, const char *input, int *p)
 	if (!input[tmp])
 	{
 		*p = tmp;
-		return (SEEKING_END);
+		return (END);
 	}
 	content = ft_strdup_range(input, *p, tmp++);
 	*p = tmp;
@@ -340,7 +340,6 @@ int					check_redirections(char *input)
 			return (1);
 		i++;
 	}
-	printf("no error\n");
 	return (0);
 }
 
@@ -369,7 +368,14 @@ int					pull_token(t_list **head, const char *input, int *p, int errors)
 	type = classify_token(input[tmp]);
 	while (input[tmp] && type == classify_token(input[tmp]))
 		tmp += 1;
-	content = ft_strdup_range(input, *p, tmp - 1);
+	type = classify_token(input[tmp]);
+	if (type == T_QUOTE)
+	{
+		tmp++;
+		while (input[tmp] && classify_token(input[tmp]) != T_QUOTE)
+			tmp++;
+	}
+	content = ft_strdup_range(input, *p, type == T_QUOTE ? tmp : tmp - 1);
 	if (content && error_special(content, head) && errors)
 		return (-1);
 	append(head, content);
@@ -449,8 +455,8 @@ t_list				*split_args(char *input, int activate_errors)
 	int					token_completion;
 
 	arguments = interpret_input(input, &token_completion, activate_errors);
-	// if (arguments)
-	// 	print_list(arguments);
+	if (arguments)
+		print_list(arguments);
 	// if (token_completion == SEEKING_END)
 	// {
 	// 	free_append(&input, "\n");
@@ -474,14 +480,14 @@ t_tree				*parse(char *input)
 	//we need to go through the token list and do expansions here.
 	if (expand_tokens(&arguments))
 		return (NULL);
-	t_nodes	*cur = arguments->head;
-	ft_printf("___________\n");
-	while (cur)
-	{
-		ft_printf("%s -> ", cur->content);
-		cur = cur->next;
-	}
-	ft_printf("\n___________\n");
+	// t_nodes	*cur = arguments->head;
+	// ft_printf("___________\n");
+	// while (cur)
+	// {
+	// 	ft_printf("%s -> ", cur->content);
+	// 	cur = cur->next;
+	// }
+	// ft_printf("\n___________\n");
 	traverse = arguments->head;
 	ast = build_tree(traverse);
 	if (arguments)
