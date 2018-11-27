@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 16:31:26 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/25 21:25:04 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/26 19:35:09 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 # define REDIRECT_APPEND_RIGHT	3 //rename to redirect_append?
 # define HEREDOC_DOC			4
 # define HEREDOC_STR			5
+# define AGGREG_RED				6
 
 # define SEEKING_END 1
 # define END 2
@@ -49,6 +50,7 @@ typedef struct					s_redirect
 {
 	char						type;
 	int							fd;
+	int							fd_dest;
 	char						*path;
 	struct s_redirect			*next;
 }								t_redirect;
@@ -147,8 +149,8 @@ int				pull_token(t_list **head, const char *input, int *p);
 int				skip_to_end_of_line(const char *input, int *p, t_list **head);
 int				interpret_token(t_list **head, const char *input, int *p);
 t_list			*interpret_input(const char *input, int *token_completion);
-t_list			*split_args(char *input);
-t_tree			*parse(char *input);
+t_list			*split_args(char *input, int activate_errors);
+t_tree			*parse(char *input, int activate_errors);
 int				is_op(char *str);
 
 
