@@ -464,6 +464,15 @@ t_tree				*parse(char *input)
 	//we need to go through the token list and do expansions here.
 	if (expand_tokens(&arguments))
 		return (NULL);
+	t_nodes *cur = arguments->head;
+	ft_printf("-----------\n");
+	while (cur)
+	{
+		// ft_printf("| ");
+		ft_printf("%s -> ", cur->content);
+		cur = cur->next;
+	}
+	ft_printf("\n-----------\n");
 	traverse = arguments->head;
 	ast = build_tree(traverse);
 	if (arguments)
