@@ -340,6 +340,7 @@ int					check_redirections(char *input)
 			return (1);
 		i++;
 	}
+	printf("no error\n");
 	return (0);
 }
 
@@ -473,14 +474,14 @@ t_tree				*parse(char *input)
 	//we need to go through the token list and do expansions here.
 	if (expand_tokens(&arguments))
 		return (NULL);
-	// t_nodes	*cur = arguments->head;
-	// ft_printf("___________\n");
-	// while (cur)
-	// {
-	// 	ft_printf("%s -> ", cur->content);
-	// 	cur = cur->next;
-	// }
-	// ft_printf("\n___________\n");
+	t_nodes	*cur = arguments->head;
+	ft_printf("___________\n");
+	while (cur)
+	{
+		ft_printf("%s -> ", cur->content);
+		cur = cur->next;
+	}
+	ft_printf("\n___________\n");
 	traverse = arguments->head;
 	ast = build_tree(traverse);
 	if (arguments)

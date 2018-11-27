@@ -54,8 +54,10 @@ int					init_redirects(t_redirect *redirects)
 	t_redirect	*cur;
 
 	cur = redirects;
+	printf("init redirects\n");
 	while (cur)
 	{
+		printf("init redirects\n");
 		// TODO: expand path
 		if (cur->type == REDIRECT_LEFT)
 		{
