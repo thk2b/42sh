@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/26 20:18:27 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/26 20:28:22 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,16 @@ void			error_message(char *line)
 //This is pretty messy.
 int				is_alpha_numeric(char c)
 {
-	if (ft_isalnum(c) || (c != 32 && c != 96 && c != 39 && c != 59 && !IS_OP(c)))
+	if (c >= '0' && c <= '9')
+		return (1);
+	if (c >= 'A' && c <= 'Z')
+		return (1);
+	if (c >= 'a' && c <= 'z')
+		return (1);
+	if (c == '-' || c == '.' || c == '=' || c == '/' || c == '$' || c == '~')
 		return (1);
 	return (0);
 }
-
 int				is_and_operator(char c)
 {
 	return (c == '&');
@@ -332,8 +337,6 @@ int					check_redirections(char *input)
 	while (input[i])
 	{
 		if (IS_REDIRECT_LEFT(input[i]) && IS_REDIRECT_RIGHT(input[i + 1]))
-			return (1);
-		if (IS_RED(input[i]) && !input[i + 1])
 			return (1);
 		i++;
 	}
