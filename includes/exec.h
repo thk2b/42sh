@@ -33,6 +33,7 @@ int		split_assignment(char *str, char **key, char **value);
 */
 
 int		expand_str(char **dst, char *str);
+char	*ft_strreplace(char *s, char *start, size_t r_len, char *by);
 int		expand(t_cmd *cmd);
 
 /*

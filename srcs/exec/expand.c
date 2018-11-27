@@ -49,9 +49,9 @@ static int	expand_assignments(t_assign *a)
 	cur = a;
 	while (cur)
 	{
-		printf("Value: %s\n", cur->value);
+		// printf("Value: %s\n", cur->value);
 		expand_str(&cur->value, cur->value);
-		printf("Expanded: %s\n", cur->value);
+		// printf("Expanded: %s\n", cur->value);
 		cur = cur->next;
 	}
 	return (0);
@@ -66,7 +66,7 @@ int			expand(t_cmd *cmd)
 		return (1);
 	if (cmd->assign && expand_assignments(cmd->assign))
 	{
-		printf("Expand assignemnts\n");
+		// printf("Expand assignemnts\n");
 		return (1);
 	}
 	return (0);

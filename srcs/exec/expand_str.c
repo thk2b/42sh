@@ -22,7 +22,7 @@ static void	replace(char **dst, char *s)
 	*dst = s;
 }
 
-static char	*ft_strreplace(char *s, char *start, size_t r_len, char *by)
+char	*ft_strreplace(char *s, char *start, size_t r_len, char *by)
 {
 	size_t	s_len;
 	size_t	e_len;
@@ -105,7 +105,7 @@ int			expand_str(char **dst, char *str)
 		return (0);
 	// if (strip_quotes(str))
 		// return (0);
-	if (str[0] == '~' && str[1] != '~')
+	if (*dst[0] == '~' && *dst[1] != '~')
 		replace(dst, expand_tilde(*dst));
 	while ((expanded = expand_var(*dst)))
 		replace(dst, expanded);
