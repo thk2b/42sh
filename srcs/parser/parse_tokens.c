@@ -6,7 +6,7 @@
 /*   By: dmendelo <dmendelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 10:18:05 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/11/26 20:28:16 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/27 15:33:13 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,13 +230,15 @@ int						pull_redirection(t_nodes **node, t_nodes *prev, t_cmd **cmd)
 	int					fd;
 
 	redirection = NULL;
-	if (is_number(prev->content))
+	if (prev && prev->content && is_number(prev->content))
 		fd = ft_atoi(prev->content);
 	else
 		fd = STDOUT;
 	redirection = new_redirection((*node)->content, fd);
 	if ((*node)->next)
 	{
+		// if (is_op((*node)->next->content))
+		// 	printf("SALUT\n");
 		redirection->path = ft_strdup((*node)->next->content); // We now copy the value here since token list is freed
 		(*node) = (*node)->next;
 	}
@@ -335,6 +337,7 @@ t_cmd					*create_cmd(t_nodes **tokens)
 		return (command);
 	}
 	append_struct(traverse, tokens, command);
-	print_redirect_info((command)->redirects);
+	// print_redirect_info((command)->redirects);
+	// ft_putstrv(command->argv);
 	return (command);
 }

@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/27 14:50:47 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/27 15:42:30 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -336,21 +336,43 @@ int					check_redirections(char *input)
 	i = 0;
 	while (input[i])
 	{
-		if (IS_REDIRECT_LEFT(input[i]) && IS_REDIRECT_RIGHT(input[i + 1]))
+		if ((IS_REDIRECT_LEFT(input[i]) && IS_REDIRECT_RIGHT(input[i + 1])) ||
+			(IS_REDIRECT_RIGHT(input[i]) && IS_REDIRECT_LEFT(input[i + 1])))
 			return (1);
 		i++;
 	}
 	return (0);
 }
 
+int					is_red(char *input)
+{
+	if (ft_strequ(input, ">>") || ft_strequ(input, "<") ||
+	ft_strequ(input, "<<") || ft_strequ(input, "<<<") ||
+	ft_strequ(input, ">>") || ft_strequ(input, ">"))
+		return (1);
+	return (0);
+}
+
 int					error_special(char *input, t_list **head)
 {
+	int			i;
+
+	i = 0;
+	while (input[i])
+	{
+		if ((*head) && is_red(input) && is_op((*head)->tail->content))
+		{
+			error_message(input);
+			return (1);
+		}
+		i++;
+	}
 	if (check_semicolon(input) || check_redirections(input))
 	{
 		error_message(input);
 		return (1);
 	}
-	if ((IS_SEMI(*input) ) && !(*head)) // IS_SEMI() || IS_RED(*input)
+	if (((IS_SEMI(*input) || IS_RED(*input))) && !(*head)) // IS_SEMI() || IS_RED(*input)
 	{
 		error_message(input);
 		return (1);
@@ -449,8 +471,8 @@ t_list				*split_args(char *input, int activate_errors)
 	int					token_completion;
 
 	arguments = interpret_input(input, &token_completion, activate_errors);
-	if (arguments)
-		print_list(arguments);
+	// if (arguments)
+	// 	print_list(arguments);
 	// if (token_completion == SEEKING_END)
 	// {
 	// 	free_append(&input, "\n");
