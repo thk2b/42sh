@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 16:31:26 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/26 19:35:09 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/26 19:46:38 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,13 +144,14 @@ int			check_errors(char *content, char *s);
 int				classify_token(char c);
 void			init_token_info(t_token *info);
 int				pull_quote_content(t_list **head, const char *input, int *p);
-int				pull_operator(t_list **head, const char *input, int *p);
-int				pull_token(t_list **head, const char *input, int *p);
+int				pull_operator(t_list **head, const char *input, int *p, int errors);
+int				pull_token(t_list **head, const char *input, int *p, int errors);
 int				skip_to_end_of_line(const char *input, int *p, t_list **head);
-int				interpret_token(t_list **head, const char *input, int *p);
-t_list			*interpret_input(const char *input, int *token_completion);
+int				interpret_token(t_list **head, const char *input, int *p, int errors);
+t_list			*interpret_input(const char *input, int *token_completion,
+				int errors);
 t_list			*split_args(char *input, int activate_errors);
-t_tree			*parse(char *input, int activate_errors);
+t_tree			*parse(char *input);
 int				is_op(char *str);
 
 

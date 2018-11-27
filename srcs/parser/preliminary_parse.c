@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/26 19:36:25 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/26 19:46:18 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,7 +275,8 @@ int					pull_quote_content(t_list **head, const char *input, int *p)
 	return (END);
 }
 
-int					pull_operator(t_list **head, const char *input, int *p)
+int					pull_operator(t_list **head, const char *input, int *p,
+					int errors)
 {
 	int					tmp;
 	int					type;
@@ -288,10 +289,13 @@ int					pull_operator(t_list **head, const char *input, int *p)
 	while (input[tmp] && type == classify_token(input[tmp]) && op_max--)
 		tmp += 1;
 	content = ft_strdup_range(input, *p, tmp - 1);
-	if ((is_op(content) && (!(*head))) || ft_strequ(content, "&"))
+	if ((is_op(content) && (!(*head))) || (ft_strequ(content, "&")))
 	{
-		error_message(content);
-		return (-1);
+		if (errors)
+		{
+			error_message(content);
+			return (-1);
+		}
 	}
 	if (check_errors((*head)->tail->content, content))
 		return (-1);
@@ -351,7 +355,7 @@ int					error_special(char *input, t_list **head)
 	return (0);
 }
 
-int					pull_token(t_list **head, const char *input, int *p)
+int					pull_token(t_list **head, const char *input, int *p, int errors)
 {
 	int					tmp;
 	int					type;
@@ -362,7 +366,7 @@ int					pull_token(t_list **head, const char *input, int *p)
 	while (input[tmp] && type == classify_token(input[tmp]))
 		tmp += 1;
 	content = ft_strdup_range(input, *p, tmp - 1);
-	if (content && error_special(content, head))
+	if (content && error_special(content, head) && errors)
 		return (-1);
 	append(head, content);
 	*p = tmp;
@@ -378,7 +382,8 @@ int					skip_to_end_of_line(const char *input, int *p, t_list **head)
 	return (END);
 }
 
-int					interpret_token(t_list **head, const char *input, int *p)
+int					interpret_token(t_list **head, const char *input, int *p,
+					int errors)
 {
 	int					tmp;
 	static t_token		info;
@@ -396,19 +401,20 @@ int					interpret_token(t_list **head, const char *input, int *p)
 	}
 	else if (info.type == T_AND || info.type == T_PIPE)
 	{
-		if ((info.status = pull_operator(head, input, &tmp)) == -1)
+		if ((info.status = pull_operator(head, input, &tmp, errors)) == -1)
 			return (-1);
 	}
 	else
 	{
-		if ((info.status = pull_token(head, input, &tmp)) == -1)
+		if ((info.status = pull_token(head, input, &tmp, errors)) == -1)
 			return (-1);
 	}
 	*p = tmp;
 	return (info.status);
 }
 
-t_list				*interpret_input(const char *input, int *token_completion)
+t_list				*interpret_input(const char *input, int *token_completion,
+					int errors)
 {
 	int					p;
 	t_list				*arguments;
@@ -420,7 +426,7 @@ t_list				*interpret_input(const char *input, int *token_completion)
 		if (IS_SPACE(input[p]))
 			p = skip_whitespace(input, p);
 		else
-			*token_completion = interpret_token(&arguments, input, &p);
+			*token_completion = interpret_token(&arguments, input, &p, errors);
 		if (*token_completion == -1)
 			return (NULL);
 	}
@@ -438,8 +444,7 @@ t_list				*split_args(char *input, int activate_errors)
 	t_list				*arguments;
 	int					token_completion;
 
-	(void)activate_errors;
-	arguments = interpret_input(input, &token_completion);
+	arguments = interpret_input(input, &token_completion, activate_errors);
 	// if (arguments)
 	// 	print_list(arguments);
 	// if (token_completion == SEEKING_END)
@@ -471,4 +476,3 @@ t_tree				*parse(char *input)
 		free_list(arguments);
 	return (ast);
 }
- 	
