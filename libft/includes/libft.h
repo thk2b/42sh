@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/13 23:36:48 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/22 09:27:36 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/27 15:07:27 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,5 +127,6 @@ char			**ft_strv_add(char **strv, char *str);
 char			**ft_strv_remove(char **strv, size_t index);
 
 char			*ft_strffjoin(char *s1, char *s2);
+char			*ft_strfjoin(char *s1, char *s2);
 
 #endif
