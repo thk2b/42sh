@@ -20,11 +20,12 @@ int		check_token(t_nodes **cur, t_list **arguments)
 
 	// printf("check_token start\n");
 	//call the expand str on cur_token. returns a string?
+	expanded_str = NULL;
 	if (expand_str(&expanded_str, (*cur)->content))
 		return (1);
-	// ft_printf("%s\n", expanded_str);
+	ft_printf("expanded: %s\n", expanded_str);
 	//splits the string into a token list. Basically call split_args.
-	sub_lst = split_args(expanded_str);
+	sub_lst = split_args(expanded_str, 0);
 	//add the sub token list into the existing one.
 	if (sub_lst)
 	{
@@ -47,7 +48,7 @@ int		check_token(t_nodes **cur, t_list **arguments)
 	}
 	else
 	{
-		ft_printf("no expansion\n");
+		ft_printf("no expansion: %s\n", expand_str);
 		tmp = (*cur)->next;
 		if ((*cur)->prev)
 			(*cur)->prev->next = tmp;
