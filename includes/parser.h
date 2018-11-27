@@ -150,7 +150,7 @@ int				skip_to_end_of_line(const char *input, int *p, t_list **head);
 int				interpret_token(t_list **head, const char *input, int *p);
 t_list			*interpret_input(const char *input, int *token_completion);
 t_list			*split_args(char *input, int activate_errors);
-t_tree			*parse(char *input, int activate_errors);
+t_tree			*parse(char *input);
 int				is_op(char *str);
 
 
