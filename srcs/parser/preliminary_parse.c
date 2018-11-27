@@ -453,13 +453,13 @@ t_list				*split_args(char *input, int activate_errors)
 }
 
 
-t_tree				*parse(char *input, int activate_errors)
+t_tree				*parse(char *input)
 {
 	t_list				*arguments;
 	t_nodes				*traverse;
 	t_tree				*ast;
 
-	arguments = split_args(input, activate_errors);
+	arguments = split_args(input, 1);
 	if (arguments == NULL)
 		return (NULL);
 	//we need to go through the token list and do expansions here.
