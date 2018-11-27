@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 06:14:19 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/27 10:18:33 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/27 14:40:08 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int		exec_cmd(t_tree *tree, int use_current_process)
 	pid_t		pid;
 
 	// expand(tree->data);
+	strip_quotes(tree->data->argv);
 	if (tree->data->assign && !tree->data->argv)
 		store_assignments(tree->data->assign);
 	if (!tree->data->argv)

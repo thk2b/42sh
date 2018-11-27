@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 17:52:34 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/27 10:31:14 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/27 14:56:14 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int		split_assignment(char *str, char **key, char **value);
 int		expand_str(char **dst, char *str);
 char	*ft_strreplace(char *s, char *start, size_t r_len, char *by);
 int		expand(t_cmd *cmd);
+int		strip_quotes(char **argv);
 
 /*
 **	redirects.c
