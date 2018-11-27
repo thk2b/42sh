@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 06:14:19 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/22 09:23:33 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/27 10:18:33 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include <ft_printf.h>
 #include <libft.h>
 #include <unistd.h>
-#include <ft_sh.h>
 
 char	*search_cmd(char *exec_name)
 {
@@ -42,7 +41,7 @@ int		exec_cmd(t_tree *tree, int use_current_process)
 		store_assignments(tree->data->assign);
 	if (!tree->data->argv)
 		return (0);
-	if (builtin(tree->data->argv, &return_status) == 0) // if we execute builtin, stop
+	if (builtin(tree->data, &return_status) == 0) // if we execute builtin, stop
 		return (return_status);
 	if ((path = search_cmd(tree->data->argv[0])) == NULL)
 		return (127);

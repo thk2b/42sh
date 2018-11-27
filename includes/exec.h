@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 17:52:34 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/23 15:41:36 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/27 10:31:14 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int		expand(t_cmd *cmd);
 */
 
 int		init_redirects(t_redirect *redirect);
+int		reset_redirects(t_redirect *redirect);
 
 /*
 **	exec_cmd.c
