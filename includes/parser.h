@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 16:31:26 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/27 21:20:26 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/28 13:10:27 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ int				skip_whitespace(const char *input, int p);
 int			check_errors(char *content, char *s);
 int				classify_token(char c);
 void			init_token_info(t_token *info);
-int				pull_quote_content(t_list **head, const char *input, int *p, t_stack *stack);
+int				pull_quote_content(const char *input, int *p, t_stack *stack);
 int				pull_operator(t_list **head, const char *input, int *p, int errors);
 int				pull_token(t_list **head, const char *input, int *p, int errors);
 int				skip_to_end_of_line(const char *input, int *p, t_list **head);
