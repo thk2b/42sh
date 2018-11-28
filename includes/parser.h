@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 16:31:26 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/27 12:15:13 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/27 16:07:32 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,5 +200,6 @@ t_tree			*init_tree(void); // didn't end up using this function. scrap later
 **	expand_tokens.c
 */
 int		expand_tokens(t_list **arguments);
+void	token_expand(char **dst, char *str);
 
 #endif
