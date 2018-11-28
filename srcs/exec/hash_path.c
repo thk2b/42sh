@@ -99,6 +99,18 @@ int		store_cmd_path(char *key, char *value)
 	return (0);
 }
 
+static void	set_g_path_null(void)
+{
+	int	i;
+
+	i = 0;
+	while (i < NUM_PATH_SLOTS)
+	{
+		g_path[i] = NULL;
+		i++;
+	}
+}
+
 int			create_path_map(void)
 {
 	char			*path_var;
@@ -107,6 +119,7 @@ int			create_path_map(void)
 	DIR				*dirp;
 	int				i;
 
+	set_g_path_null();
 	if ((path_var = ft_getenv("PATH")) == NULL)
 		return (1);
 	if ((path_arr = ft_strsplit(path_var ,':')) == NULL && path_arr) // why && g_path?
