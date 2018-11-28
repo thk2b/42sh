@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   back_ticks.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acakste <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/26 08:58:37 by acakste           #+#    #+#             */
-/*   Updated: 2018/11/26 08:58:39 by acakste          ###   ########.fr       */
+/*   Updated: 2018/11/27 20:28:07 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int		exec_backticks(char **dst, char *str)
 
 	(void)dst;
 	(void)index;
-	// ft_printf("in back ticks\n");
+	ft_printf("in back ticks\n");
 	if ((sub_str = strsub_ticks(str)) == NULL)
 		return (0);
 	// ft_printf("substr: %s\n", sub_str);

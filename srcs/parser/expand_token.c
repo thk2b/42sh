@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/23 08:19:43 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/27 16:36:48 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/27 20:31:52 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ static char	*expand_str(char *str, char *param, int start, int lparam)
 
 	expansion = ft_getenv(param);
 	if (!expansion)
+		expansion = get_local_var(param);
+	if (!expansion)
 		expansion = ft_strnew(0);
 	else
 		expansion = ft_strdup(expansion);
@@ -105,6 +107,8 @@ char		*expand_param(char *str)
 	i = 0;
 	quote = 0;
 	l = 0;
+	if (exec_backticks(&str, str))
+		return (0);
 	while (str[i])
 	{
 		if (str[i] == '\'')
