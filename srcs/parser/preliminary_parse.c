@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/27 21:16:39 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/28 13:16:28 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -364,7 +364,7 @@ int					error_special(char *input, t_list **head)
 }
 
 
-int					pull_quote_content(t_list **head, const char *input, int *p, t_stack *stack)
+int					pull_quote_content(const char *input, int *p, t_stack *stack)
 {
 	int					tmp;
 	// char				*content;
@@ -377,6 +377,8 @@ int					pull_quote_content(t_list **head, const char *input, int *p, t_stack *st
 			pop(stack);
 		else if (input[tmp] == '\"' && peek(stack) == 1)
 			pop(stack);
+		else if (input[tmp] == '`' && peek(stack) == 3)
+			pop(stack);
 		tmp += 1;
 	}
 	if (!input[tmp])
@@ -384,11 +386,18 @@ int					pull_quote_content(t_list **head, const char *input, int *p, t_stack *st
 		*p = tmp;
 		return (1);
 	}
-	// content = ft_strdup_range(input, *p, tmp++);
 	*p = tmp;
-	(void)head;
-	// append(head, content);
 	return (0);
+}
+
+void			push_stack_elem(t_stack *stack, const char *input, int tmp)
+{
+	if (input[tmp] == 34)
+		push(stack, 1);
+	else if (input[tmp] == '\'')
+		push(stack, 2);
+	else if (input[tmp] == '`')
+		push(stack, 3);
 }
 
 
@@ -406,11 +415,9 @@ int					pull_token(t_list **head, const char *input, int *p, int errors)
 	{
 		if (classify_token(input[tmp]) == T_QUOTE)
 		{
-			if (input[tmp] == 34)
-				push(stack, 1);
-			else if (input[tmp] == '\'')
-				push(stack, 2);
-			if (pull_quote_content(head, input, &tmp, stack))
+
+			push_stack_elem(stack, input, tmp);
+			if (pull_quote_content(input, &tmp, stack))
 				break ;
 			type = classify_token(input[tmp]);
 		}
@@ -419,7 +426,6 @@ int					pull_token(t_list **head, const char *input, int *p, int errors)
 			tmp += 1;
 		}
 	}
-	free(stack);
 	content = ft_strdup_range(input, *p, type == T_QUOTE ? tmp : tmp - 1);
 	if (content && error_special(content, head) && errors)
 		return (-1);
@@ -476,14 +482,12 @@ t_list				*interpret_input(const char *input, int *token_completion,
 
 	p = 0;
 	arguments = NULL;
-	while (input[p]) // somewhere in here there is a leak
+	while (input[p])
 	{
 		if (IS_SPACE(input[p]))
 			p = skip_whitespace(input, p);
 		else
-		{
 			*token_completion = interpret_token(&arguments, input, &p, errors);
-		}
 		if (*token_completion == -1)
 			return (NULL);
 	}
@@ -493,7 +497,6 @@ t_list				*interpret_input(const char *input, int *token_completion,
 			free_list(arguments);
 		arguments = NULL;
 	}
-
 	return (arguments);
 }
 
@@ -503,8 +506,6 @@ t_list				*split_args(char *input, int activate_errors)
 	int					token_completion;
 
 	arguments = interpret_input(input, &token_completion, activate_errors);
-	// if (arguments)
-	// 	print_list(arguments);
 	// if (token_completion == SEEKING_END)
 	// {
 	// 	free_append(&input, "\n");
@@ -521,24 +522,13 @@ t_tree				*parse(char *input)
 	t_list				*arguments;
 	t_nodes				*traverse;
 	t_tree				*ast;
-	// static int	times = 0;
 
-	printf("PARSE__________\n");
 	arguments = split_args(input, 1);
 	if (arguments == NULL)
 		return (NULL);
 	//we need to go through the token list and do expansions here.
 	if (expand_tokens(&arguments))
-	{
-		printf("Early exit\n");
 		return (NULL);
-	}
-	// if (times == 1)
-	// 	while (1)
-	// 		;
-	// times++;
-	// printf("After expansion\n");
-
 	// t_nodes	*cur = arguments->head;
 	// ft_printf("___________\n");
 	// while (cur)
@@ -550,10 +540,6 @@ t_tree				*parse(char *input)
 	traverse = arguments->head;
 	ast = build_tree(traverse);
 	if (arguments)
-	{
-		printf("free_list\n");
 		free_list(arguments);
-		printf("after free_list\n");
-	}
 	return (ast);
 }
