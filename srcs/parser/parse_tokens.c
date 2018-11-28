@@ -6,7 +6,7 @@
 /*   By: dmendelo <dmendelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 10:18:05 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/11/28 13:45:15 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/28 15:07:50 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,7 +254,7 @@ int						pull_redirection(t_nodes **node, t_nodes *prev, t_cmd **cmd)
 		fd = ft_atoi(prev->content);
 	else
 		fd = STDOUT;
-	if (ft_strequ((*node)->next->content, "&"))
+	if ((*node)->next && ft_strequ((*node)->next->content, "&"))
 	{
 		redirection = pull_aggregation(node, prev, cmd, fd);
 	}
@@ -361,7 +361,6 @@ t_cmd					*create_cmd(t_nodes **tokens)
 		return (command);
 	}
 	append_struct(traverse, tokens, command);
-	// print_redirect_info((command)->redirects);
-	ft_putstrv(command->argv);
+	// ft_putstrv(command->argv);
 	return (command);
 }
