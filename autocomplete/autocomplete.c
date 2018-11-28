@@ -6,7 +6,7 @@
 /*   By: dmendelo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/26 17:28:33 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/11/26 20:04:32 by dmendelo         ###   ########.fr       */
+/*   Updated: 2018/11/27 18:08:39 by dmendelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@ typedef struct	s_list
 	char			*name;
 	struct s_list	*next;
 }				t_list;
+
+typedef struct	s_auto
+{
+	char		**expansion;
+	int			p;
+	char		*base;
+}				t_auto;
 
 void			print_strings(char **strings, int p)
 {
@@ -64,6 +71,19 @@ char		*replace_char(char *s, int old, int new)
 		p += 1;
 	}
 	return (ret);
+}
+
+void			free_2d(char **s)
+{
+	int				p;
+
+	p = 0;
+	while (s[p])
+	{
+		free(s[p]);
+		p += 1;
+	}
+	free(s);
 }
 
 char			*ft_strdup_range(const char *str, int begin, int end)
@@ -162,6 +182,7 @@ char			*search_env(char **env)
 {
 	WOW();
 	int			p = 0;
+
 	while (env[p])
 	{
 		printf("%s\n", env[p]);
@@ -237,6 +258,21 @@ int				count_list(t_list *list)
 	return (p);
 }
 
+void			free_list(t_list **head)
+{
+	t_list		*traverse;
+	t_list		*tmp;
+
+	traverse = *head;
+	while (traverse)
+	{
+		tmp = traverse;
+		traverse = traverse->next;
+		free(tmp);
+	}
+	*head = NULL;
+}
+
 char			**copy_list(t_list *list)
 {
 	int			count;
@@ -274,6 +310,7 @@ char			**search_directories(char *s, char **directories)
 {
 	t_list		*expansions;
 	int			p = 0;
+	char		**ret;
 
 	expansions = NULL;
 	while (search_directory(s, directories, p, &expansions))
@@ -281,7 +318,16 @@ char			**search_directories(char *s, char **directories)
 		p += 1;
 	}
 	print_list(expansions);
-	return (copy_list(expansions));
+	if (expansions)
+	{
+		ret = copy_list(expansions);
+	}
+	else
+	{
+		ret = NULL;
+	}
+	free_list(&expansions);
+	return ((ret) ? ret : NULL);
 	
 }
 
@@ -289,10 +335,18 @@ char			**autocomplete_path(char *s)
 {
 	char		*path = search_env(environ);
 
-	char		**directories = str_split(replace_char(path, ':', ' '));
+	char		*tmp = replace_char(path, ':', ' ');
+
+	char		**directories = str_split(tmp);
 
 	char		**expansions = search_directories(s, directories);
-//	return (directories);
+
+	free_2d(directories);
+	free(path);
+	free(tmp);
+
+	if (!expansions)
+		return (NULL);
 	return (expansions);
 }
 
@@ -315,22 +369,75 @@ char			**autocomplete_pwd(char *s)
 	pwd_null = get_pwd();
 	expansions = NULL;
 	search_directory(s, pwd_null, 0, &expansions);
-	return (copy_list(expansions));
+	free_2d(pwd_null);
+	if (expansions)
+	{
+		printf("returning expansions list\n");
+		return (copy_list(expansions));
+	}
+	else
+	{
+		printf("returning NULL\n");
+		return (NULL);
+	}
+}
+
+int				check_expansion(char *check, char **words, int len)
+{
+	int			p;
+
+	p = 0;
+	while (words[p])
+	{
+		if (strncmp(check, words[p], len))
+			return (0);
+		p += 1;
+	}
+	return (1);
+}
+
+char			*find_common_base(char **words, int len)
+{
+	char		*compare;
+	int			p;
+
+	p = 0;
+	compare = strndup(words[p], ++len);
+	if (check_expansion(words[p], words, len))
+		return (compare);
+	return (NULL);
 }
 
 char			**autocomplete(char *s, int mode)
 {
+	t_auto		*expansions;
+
+	expansions = malloc(sizeof(*expansions));
 	if (mode == EXE)
-		return (autocomplete_path(s));
+	{
+		expansions->expansion = autocomplete_path(s);
+	}
 	else
-		return (autocomplete_pwd(s));
+	{
+		expansions->expansion = autocomplete_pwd(s);
+	}
+	expansions->p = 0;
+	if (!expansions->expansion)
+	{
+		return (NULL);
+	}
+	if (!(expansions->base = find_common_base(expansions->expansion, strlen(s))))
+		expansions->base = strdup(s);
+	printf("common base = %s\n", expansions->base);
+
+	return (expansions->expansion);
 }
 
 int				main(int argc, char **argv)
 {
 	if (argc == 2)
 	{
-		print_strings(autocomplete(argv[1], ARG), 0);
+		print_strings(autocomplete(argv[1], EXE), 0);
 	}
 	return (0);
 }
