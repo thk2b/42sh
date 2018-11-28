@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/27 15:47:24 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/27 16:08:31 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,14 @@ void			error_message(char *line)
 //This is pretty messy.
 int				is_alpha_numeric(char c)
 {
-	// if (c >= '0' && c <= '9')
-	// 	return (1);
-	// if (c >= 'A' && c <= 'Z')
-	// 	return (1);
-	// if (c >= 'a' && c <= 'z')
-	// 	return (1);
-	// if (c == '-' || c == '.' || c == '=' || c == '/' || c == '$' || c == '~')
-	// 	return (1);
-	if (c != ' ')
+	if (c >= '0' && c <= '9')
+		return (1);
+	if (c >= 'A' && c <= 'Z')
+		return (1);
+	if (c >= 'a' && c <= 'z')
+		return (1);
+	if (c == '-' || c == '.' || c == '=' || c == '/' || c == '$' || c == '~'
+		|| c == '_')
 		return (1);
 	return (0);
 }
@@ -360,9 +359,10 @@ int					error_special(char *input, t_list **head)
 	int			i;
 
 	i = 0;
+	printf("input = %s\n", input);
 	while (input[i])
 	{
-		if ((*head) && is_red(input) && is_op((*head)->tail->content))
+		if ((head) && is_op(input) && is_red((*head)->tail->content))
 		{
 			error_message(input);
 			return (1);
