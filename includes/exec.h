@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 17:52:34 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/23 15:41:36 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/27 15:53:10 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include <ft_sh.h>
 # include <sys/stat.h>
 # define CREAT_PERMS (S_IRUSR | S_IWUSR | S_IRGRP | S_IRUSR)
+# define NUM_PATH_SLOTS 100
 
 typedef struct	s_table
 {
@@ -32,15 +33,17 @@ int		split_assignment(char *str, char **key, char **value);
 **	expand.c
 */
 
-int		expand_str(char **dst, char *str);
-char	*ft_strreplace(char *s, char *start, size_t r_len, char *by);
-int		expand(t_cmd *cmd);
+// int		expand_str(char **dst, char *str);
+// char	*ft_strreplace(char *s, char *start, size_t r_len, char *by);
+// int		expand(t_cmd *cmd);
+// int		strip_quotes(char **argv);
 
 /*
 **	redirects.c
 */
 
 int		init_redirects(t_redirect *redirect);
+int		reset_redirects(t_redirect *redirect);
 
 /*
 **	exec_cmd.c

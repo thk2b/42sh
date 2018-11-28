@@ -15,8 +15,9 @@ COMPILE		= $(CC) $(FLAGS) $(INCLUDES)
 SRCS		= $(addprefix srcs/, main.c errors.c \
 	$(addprefix builtins/, b_cd.c b_echo.c b_env.c b_setenv.c b_unsetenv.c builtin.c\
 				b_exit.c b_export.c b_unset.c)\
-	$(addprefix exec/, assignments.c exec_cmd.c exec_tree.c expand_str.c expand.c path.c redirects.c back_ticks.c)\
-	$(addprefix parser/, parse_tokens.c preliminary_parse.c tree2.c expand_tokens.c)\
+	$(addprefix exec/, assignments.c exec_cmd.c exec_tree.c expand_str.c strip_quotes.c\
+				expand.c path.c redirects.c back_ticks.c hash_path.c)\
+	$(addprefix parser/, parse_tokens.c preliminary_parse.c tree2.c expand_token.c expand_tokens.c)\
 	$(addprefix tokenizer/, )\
 	$(addprefix local_var/, local_var.c)\
 )

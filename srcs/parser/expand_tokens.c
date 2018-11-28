@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acakste <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/26 14:32:51 by acakste           #+#    #+#             */
-/*   Updated: 2018/11/26 14:32:52 by acakste          ###   ########.fr       */
+/*   Updated: 2018/11/27 16:07:51 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,10 @@ int		check_token(t_nodes **cur, t_list **arguments)
 	t_list	*sub_lst;
 	t_nodes	*tmp;
 
-	// printf("check_token start\n");
-	//call the expand str on cur_token. returns a string?
-	expanded_str = NULL;
-	if (expand_str(&expanded_str, (*cur)->content))
-		return (1);
-	// ft_printf("expanded: >%s<\n", expanded_str);
-	//splits the string into a token list. Basically call split_args.
+	token_expand(&expanded_str, (*cur)->content);
 	sub_lst = split_args(expanded_str, 0);
-	//add the sub token list into the existing one.
 	if (sub_lst)
 	{
-		// printf("sub lst exists :%s:\n", sub_lst->head->content);
 		if ((*cur)->prev)
 			(*cur)->prev->next = (sub_lst) ? sub_lst->head : NULL;
 		else
@@ -48,7 +40,6 @@ int		check_token(t_nodes **cur, t_list **arguments)
 	}
 	else
 	{
-		// ft_printf("no expansion: %s\n", expand_str);
 		tmp = (*cur)->next;
 		if ((*cur)->prev)
 			(*cur)->prev->next = tmp;

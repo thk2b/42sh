@@ -6,12 +6,13 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 17:55:29 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/19 15:49:56 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/27 10:19:11 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
+# include <parser.h>
 
 typedef struct	s_builtin
 {
@@ -27,7 +28,6 @@ int				b_setenv(char **av);
 int				b_unsetenv(char **av);
 int				b_unset(char **av);
 int				b_export(char **av);
-int				builtin(char **av, int *return_status);
-char			*ft_getenv(const char *name);
+int				builtin(t_cmd *cmd, int *return_status);
 
 #endif

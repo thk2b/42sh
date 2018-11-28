@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/26 21:27:09 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/27 15:47:24 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,15 @@ void			error_message(char *line)
 //This is pretty messy.
 int				is_alpha_numeric(char c)
 {
-	if (c >= '0' && c <= '9')
-		return (1);
-	if (c >= 'A' && c <= 'Z')
-		return (1);
-	if (c >= 'a' && c <= 'z')
-		return (1);
-	if (c == '-' || c == '.' || c == '=' || c == '/' || c == '$' || c == '~')
+	// if (c >= '0' && c <= '9')
+	// 	return (1);
+	// if (c >= 'A' && c <= 'Z')
+	// 	return (1);
+	// if (c >= 'a' && c <= 'z')
+	// 	return (1);
+	// if (c == '-' || c == '.' || c == '=' || c == '/' || c == '$' || c == '~')
+	// 	return (1);
+	if (c != ' ')
 		return (1);
 	return (0);
 }
@@ -238,7 +240,7 @@ int				classify_token(char c)
 	else if (c == ';')
 		return (T_SEMI);
 	else if (is_quote(c))
-		return (T_QUOTE);
+		return (T_ALPHANUM);
 	else if (is_bracket(c))
 		return (T_BRACKET);
 	else if (is_paren(c))
@@ -294,7 +296,7 @@ int					pull_operator(t_list **head, const char *input, int *p,
 	while (input[tmp] && type == classify_token(input[tmp]) && op_max--)
 		tmp += 1;
 	content = ft_strdup_range(input, *p, tmp - 1);
-	if ((is_op(content) && (!(*head))) || (ft_strequ(content, "&")))
+	if ((is_op(content) && (!(*head))))
 	{
 		if (errors)
 		{
@@ -336,21 +338,43 @@ int					check_redirections(char *input)
 	i = 0;
 	while (input[i])
 	{
-		if (IS_REDIRECT_LEFT(input[i]) && IS_REDIRECT_RIGHT(input[i + 1]))
+		if ((IS_REDIRECT_LEFT(input[i]) && IS_REDIRECT_RIGHT(input[i + 1])) ||
+			(IS_REDIRECT_RIGHT(input[i]) && IS_REDIRECT_LEFT(input[i + 1])))
 			return (1);
 		i++;
 	}
 	return (0);
 }
 
+int					is_red(char *input)
+{
+	if (ft_strequ(input, ">>") || ft_strequ(input, "<") ||
+	ft_strequ(input, "<<") || ft_strequ(input, "<<<") ||
+	ft_strequ(input, ">>") || ft_strequ(input, ">"))
+		return (1);
+	return (0);
+}
+
 int					error_special(char *input, t_list **head)
 {
+	int			i;
+
+	i = 0;
+	while (input[i])
+	{
+		if ((*head) && is_red(input) && is_op((*head)->tail->content))
+		{
+			error_message(input);
+			return (1);
+		}
+		i++;
+	}
 	if (check_semicolon(input) || check_redirections(input))
 	{
 		error_message(input);
 		return (1);
 	}
-	if ((IS_SEMI(*input) ) && !(*head)) // IS_SEMI() || IS_RED(*input)
+	if (((IS_SEMI(*input) || IS_RED(*input))) && !(head)) // IS_SEMI() || IS_RED(*input)
 	{
 		error_message(input);
 		return (1);
@@ -369,12 +393,6 @@ int					pull_token(t_list **head, const char *input, int *p, int errors)
 	while (input[tmp] && type == classify_token(input[tmp]))
 		tmp += 1;
 	type = classify_token(input[tmp]);
-	if (type == T_QUOTE)
-	{
-		tmp++;
-		while (input[tmp] && classify_token(input[tmp]) != T_QUOTE)
-			tmp++;
-	}
 	content = ft_strdup_range(input, *p, type == T_QUOTE ? tmp : tmp - 1);
 	if (content && error_special(content, head) && errors)
 		return (-1);
@@ -455,8 +473,8 @@ t_list				*split_args(char *input, int activate_errors)
 	int					token_completion;
 
 	arguments = interpret_input(input, &token_completion, activate_errors);
-	if (arguments)
-		print_list(arguments);
+	// if (arguments)
+	// 	print_list(arguments);
 	// if (token_completion == SEEKING_END)
 	// {
 	// 	free_append(&input, "\n");

@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 15:42:03 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/19 16:36:59 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/27 15:36:22 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 **	Returns 1 if a builtin was found, 0 if not
 */
 
-int		builtin(char **av, int *return_status)
+int		builtin(t_cmd *cmd, int *return_status)
 {
 	static t_builtin	builtins[] = {
 		{"cd", b_cd},
@@ -29,6 +29,7 @@ int		builtin(char **av, int *return_status)
 		{"unsetenv", b_unsetenv},
 		{"export", b_export},
 		{"unset", b_unset},
+		{"history", history_builtin},
 		{NULL, NULL}
 	};
 	int					i;
@@ -36,10 +37,14 @@ int		builtin(char **av, int *return_status)
 	i = 0;
 	while (builtins[i].name)
 	{
-		if (ft_strcmp(builtins[i].name, av[0]) == 0)
+		if (ft_strcmp(builtins[i].name, cmd->argv[0]) == 0)
 		{
-			*return_status = builtins[i].fn(av);
-			return (0); // exit or return ? we use child for builtins now
+			if (cmd->redirects)
+				init_redirects(cmd->redirects);
+			*return_status = builtins[i].fn(cmd->argv);
+			if (cmd->redirects)
+				reset_redirects(cmd->redirects);
+			return (0);
 		}
 		i++;
 	}
