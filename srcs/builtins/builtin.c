@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 15:42:03 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/27 10:24:34 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/27 15:36:22 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int		builtin(t_cmd *cmd, int *return_status)
 		{"unsetenv", b_unsetenv},
 		{"export", b_export},
 		{"unset", b_unset},
+		{"history", history_builtin},
 		{NULL, NULL}
 	};
 	int					i;
