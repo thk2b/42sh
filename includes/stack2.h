@@ -6,14 +6,14 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/09 13:37:30 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/27 20:38:01 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/27 21:23:00 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STACK_H
 # define STACK_H
 
-# include "parser.h"
+#include <stdlib.h>
 
 typedef struct s_node
 {

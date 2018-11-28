@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 16:31:26 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/27 20:40:20 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/27 21:20:26 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include "get_next_line.h"
 # include <errno.h>
 # include <ft_printf.h>
-# include <stack2.h>
+# include "stack2.h"
 
 # define IS_SPACE(x) (x == ' ' || x == '\t' || x == '\n')
 # define IS_OP(x) (x == '&' || x == '|')
