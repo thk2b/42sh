@@ -6,7 +6,7 @@
 /*   By: dmendelo <dmendelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 10:18:05 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/11/28 15:07:50 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/28 15:37:33 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,10 +150,8 @@ void					push_back(t_assign **head, char *value)
 int						pull_assignment(char *assignment, t_cmd **cmd)
 {
 	int					p;
-	int					begin;
 
 	p = 0;
-	begin = 0;
 	if ((*cmd)->argv == NULL)
 		push_back(&(*cmd)->assign, assignment);
 	else
@@ -261,8 +259,6 @@ int						pull_redirection(t_nodes **node, t_nodes *prev, t_cmd **cmd)
 	else if ((*node)->next)
 	{
 		redirection = new_redirection((*node)->content, fd, 0);
-		// if (is_op((*node)->next->content))
-		// 	printf("SALUT\n");
 		redirection->path = ft_strdup((*node)->next->content); // We now copy the value here since token list is freed
 		(*node) = (*node)->next;
 	}
@@ -321,6 +317,17 @@ int						append_word_argv(char *word, t_cmd **cmd)
 	return (0);
 }
 
+
+int					is_aggregation(char *s1, t_nodes *prev)
+{
+	if (prev)
+	{
+		if (!ft_strcmp(s1, "&") && !ft_strcmp(prev->content, ">"))
+			return (1);
+	}
+	return (0);
+}
+
 void					append_struct(t_nodes *traverse, t_nodes **tokens, t_cmd *command)
 {
 	t_nodes *prev;
@@ -328,7 +335,9 @@ void					append_struct(t_nodes *traverse, t_nodes **tokens, t_cmd *command)
 	prev = NULL;
 	while (traverse)
 	{
-		if (is_op(traverse->content))
+		if (is_aggregation(traverse->content, prev))
+			;
+		else if (is_op(traverse->content))
 			break ;
 		else if (is_assignment_word(traverse->content))
 			pull_assignment(traverse->content, &command);
@@ -336,10 +345,11 @@ void					append_struct(t_nodes *traverse, t_nodes **tokens, t_cmd *command)
 			pull_redirection(&traverse, prev, &command);
 		else if (is_word(traverse->content))
 			append_word_argv(traverse->content, &command);
+
 		prev = traverse;
 		traverse = traverse->next;
 	}
-	// print_redirect_info(command->redirects);
+	print_redirect_info(command->redirects);
 	*tokens = traverse;
 }
 
@@ -361,6 +371,5 @@ t_cmd					*create_cmd(t_nodes **tokens)
 		return (command);
 	}
 	append_struct(traverse, tokens, command);
-	// ft_putstrv(command->argv);
 	return (command);
 }

@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/28 15:07:24 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/28 15:19:57 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -405,7 +405,7 @@ int					check_input(const char *input)
 	i = 0;
 	while (tmp[i])
 		i++;
-	if (IS_OP(tmp[i - 1]) || IS_RED(tmp[i - 1]))
+	if (IS_SEMI(tmp[i - 1]) || IS_RED(tmp[i - 1]))
 	{
 		error_message(tmp + i - 1);
 		free(tmp);
