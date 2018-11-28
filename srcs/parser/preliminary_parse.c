@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/27 16:08:31 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/27 21:16:39 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,7 +239,7 @@ int				classify_token(char c)
 	else if (c == ';')
 		return (T_SEMI);
 	else if (is_quote(c))
-		return (T_ALPHANUM);
+		return (T_QUOTE);
 	else if (is_bracket(c))
 		return (T_BRACKET);
 	else if (is_paren(c))
@@ -261,25 +261,7 @@ void				init_token_info(t_token *info)
 	info->type = 0;
 }
 
-int					pull_quote_content(t_list **head, const char *input, int *p)
-{
-	int					tmp;
-	char				*content;
 
-	tmp = *p;
-	tmp += 1;
-	while (input[tmp] && classify_token(input[tmp]) != T_QUOTE)
-		tmp += 1;
-	if (!input[tmp])
-	{
-		*p = tmp;
-		return (END);
-	}
-	content = ft_strdup_range(input, *p, tmp++);
-	*p = tmp;
-	append(head, content);
-	return (END);
-}
 
 int					pull_operator(t_list **head, const char *input, int *p,
 					int errors)
@@ -359,10 +341,9 @@ int					error_special(char *input, t_list **head)
 	int			i;
 
 	i = 0;
-	printf("input = %s\n", input);
 	while (input[i])
 	{
-		if ((head) && is_op(input) && is_red((*head)->tail->content))
+		if ((head) && (*head) && is_op(input) && is_red((*head)->tail->content))
 		{
 			error_message(input);
 			return (1);
@@ -382,17 +363,62 @@ int					error_special(char *input, t_list **head)
 	return (0);
 }
 
+
+int					pull_quote_content(t_list **head, const char *input, int *p, t_stack *stack)
+{
+	int					tmp;
+	// char				*content;
+
+	tmp = *p;
+	tmp += 1;
+	while (input[tmp] && !is_empty(stack))
+	{
+		if (input[tmp] == '\'' && peek(stack) == 2)
+			pop(stack);
+		else if (input[tmp] == '\"' && peek(stack) == 1)
+			pop(stack);
+		tmp += 1;
+	}
+	if (!input[tmp])
+	{
+		*p = tmp;
+		return (1);
+	}
+	// content = ft_strdup_range(input, *p, tmp++);
+	*p = tmp;
+	(void)head;
+	// append(head, content);
+	return (0);
+}
+
+
 int					pull_token(t_list **head, const char *input, int *p, int errors)
 {
 	int					tmp;
 	int					type;
 	char				*content;
+	static t_stack				*stack;
 
+	stack = init_stack();
 	tmp = *p;
 	type = classify_token(input[tmp]);
-	while (input[tmp] && type == classify_token(input[tmp]))
-		tmp += 1;
-	type = classify_token(input[tmp]);
+	while (input[tmp] && (type == classify_token(input[tmp]) || classify_token(input[tmp]) == T_QUOTE))
+	{
+		if (classify_token(input[tmp]) == T_QUOTE)
+		{
+			if (input[tmp] == 34)
+				push(stack, 1);
+			else if (input[tmp] == '\'')
+				push(stack, 2);
+			if (pull_quote_content(head, input, &tmp, stack))
+				break ;
+			type = classify_token(input[tmp]);
+		}
+		else
+		{
+			tmp += 1;
+		}
+	}
 	content = ft_strdup_range(input, *p, type == T_QUOTE ? tmp : tmp - 1);
 	if (content && error_special(content, head) && errors)
 		return (-1);
@@ -423,10 +449,10 @@ int					interpret_token(t_list **head, const char *input, int *p,
 	{
 		info.status = skip_to_end_of_line(input, &tmp, head);//do something here
 	}
-	else if (info.type == T_QUOTE)
-	{
-		info.status = pull_quote_content(head, input, &tmp);
-	}
+	// else if (info.type == T_QUOTE)
+	// {
+	// 	info.status = pull_quote_content(head, input, &tmp);
+	// }
 	else if (info.type == T_AND || info.type == T_PIPE)
 	{
 		if ((info.status = pull_operator(head, input, &tmp, errors)) == -1)
