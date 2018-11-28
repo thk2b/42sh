@@ -30,45 +30,45 @@ int			path_init(void)
 	return (0);
 }
 
-static int	is_executable(char *path, char *exists)
-{
-	if (access(path, F_OK) == 0)
-		return ((*exists = 1));
-	return (access(path, X_OK) == 0);
-}
+// static int	is_executable(char *path, char *exists)
+// {
+// 	if (access(path, F_OK) == 0)
+// 		return ((*exists = 1));
+// 	return (access(path, X_OK) == 0);
+// }
 
-static void	build_exec_path(char *dst, char *path, char *name)
-{
-	size_t	len;
+// static void	build_exec_path(char *dst, char *path, char *name)
+// {
+// 	size_t	len;
 
-	ft_strncpy(dst, path, PATH_MAX - 1);
-	len = ft_strlen(path);
-	ft_strncpy(dst + len, "/", PATH_MAX - len - 1);
-	ft_strncpy(dst + len + 1, name, PATH_MAX - len - 2);
-	dst[PATH_MAX] = '\0';
-}
+// 	ft_strncpy(dst, path, PATH_MAX - 1);
+// 	len = ft_strlen(path);
+// 	ft_strncpy(dst + len, "/", PATH_MAX - len - 1);
+// 	ft_strncpy(dst + len + 1, name, PATH_MAX - len - 2);
+// 	dst[PATH_MAX] = '\0';
+// }
 
-char		*path_search(char *exec_name, char *exists)
-{
-	char	exec_path[PATH_MAX + 1];
-	size_t	i;
+// char		*path_search(char *exec_name, char *exists)
+// {
+// 	char	exec_path[PATH_MAX + 1];
+// 	size_t	i;
 
-	if (ft_strchr(exec_name, '/'))
-	{
-		if (is_executable(exec_name, exists))
-			return (ft_strdup(exec_name));
-		return (NULL);
-	}
-	i = 0;
-	while (g_path[i])
-	{
-		build_exec_path(exec_path, g_path[i], exec_name);
-		if (is_executable(exec_path, exists))
-			return (ft_strdup(exec_path));
-		i++;
-	}
-	return (NULL);
-}
+// 	if (ft_strchr(exec_name, '/'))
+// 	{
+// 		if (is_executable(exec_name, exists))
+// 			return (ft_strdup(exec_name));
+// 		return (NULL);
+// 	}
+// 	i = 0;
+// 	while (g_path[i])
+// 	{
+// 		build_exec_path(exec_path, g_path[i], exec_name);
+// 		if (is_executable(exec_path, exists))
+// 			return (ft_strdup(exec_path));
+// 		i++;
+// 	}
+// 	return (NULL);
+// }
 
 void		path_teardown(void)
 {

@@ -38,7 +38,7 @@ static int	init_environ(void)
 
 static int	init_shell(void)
 {
-	if (path_init())
+	if (create_path_map())
 		return (1);
 	if (init_environ())
 		return (1);

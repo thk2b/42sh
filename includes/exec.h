@@ -15,6 +15,7 @@
 # include <ft_sh.h>
 # include <sys/stat.h>
 # define CREAT_PERMS (S_IRUSR | S_IWUSR | S_IRGRP | S_IRUSR)
+# define NUM_PATH_SLOTS 100
 
 typedef struct	s_table
 {

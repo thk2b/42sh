@@ -22,6 +22,7 @@
 # include <parser.h>
 # include <exec.h>
 # include <tokenizer.h>
+# include <path.h>
 # include <local_var.h>
 # include <builtins.h>
 # include <env.h>
