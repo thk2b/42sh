@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hash_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acakste <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: acakste <acakste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/27 15:28:04 by acakste           #+#    #+#             */
-/*   Updated: 2018/11/27 15:28:05 by acakste          ###   ########.fr       */
+/*   Updated: 2018/11/27 19:49:58 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,9 @@ char	*get_cmd_path(char *key)
 		return (NULL);
 	cur = find_path_lst(key);
 	while (cur && ft_strcmp(cur->key, key))
+	{
 		cur = cur->next;
+	}
 	return ((cur) ? cur->value : NULL); // return a copy of the variable?
 }
 
@@ -99,18 +101,6 @@ int		store_cmd_path(char *key, char *value)
 	return (0);
 }
 
-static void	set_g_path_null(void)
-{
-	int	i;
-
-	i = 0;
-	while (i < NUM_PATH_SLOTS)
-	{
-		g_path[i] = NULL;
-		i++;
-	}
-}
-
 int			create_path_map(void)
 {
 	char			*path_var;
@@ -119,21 +109,20 @@ int			create_path_map(void)
 	DIR				*dirp;
 	int				i;
 
-	set_g_path_null();
 	if ((path_var = ft_getenv("PATH")) == NULL)
 		return (1);
 	if ((path_arr = ft_strsplit(path_var ,':')) == NULL && path_arr) // why && g_path?
 		return (error("no memory"));
-	i = 0;
-	while (path_arr[i])
+	i = -1;
+	while (path_arr[++i])
 	{
 		if ((dirp = opendir(path_arr[i])) == NULL)
-			return (1);
+			continue ;
 		while ((dp = readdir(dirp)) != NULL)
 			store_cmd_path(dp->d_name, path_arr[i]);
 		if (closedir(dirp) == -1)
 			return (1);
-		i++;
+		// i++;
 	}
 	ft_strvdel(path_arr);
 	return (0);
