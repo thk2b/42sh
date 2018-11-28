@@ -419,6 +419,7 @@ int					pull_token(t_list **head, const char *input, int *p, int errors)
 			tmp += 1;
 		}
 	}
+	free(stack);
 	content = ft_strdup_range(input, *p, type == T_QUOTE ? tmp : tmp - 1);
 	if (content && error_special(content, head) && errors)
 		return (-1);
@@ -475,12 +476,14 @@ t_list				*interpret_input(const char *input, int *token_completion,
 
 	p = 0;
 	arguments = NULL;
-	while (input[p])
+	while (input[p]) // somewhere in here there is a leak
 	{
 		if (IS_SPACE(input[p]))
 			p = skip_whitespace(input, p);
 		else
+		{
 			*token_completion = interpret_token(&arguments, input, &p, errors);
+		}
 		if (*token_completion == -1)
 			return (NULL);
 	}
@@ -490,6 +493,7 @@ t_list				*interpret_input(const char *input, int *token_completion,
 			free_list(arguments);
 		arguments = NULL;
 	}
+
 	return (arguments);
 }
 
@@ -517,13 +521,24 @@ t_tree				*parse(char *input)
 	t_list				*arguments;
 	t_nodes				*traverse;
 	t_tree				*ast;
+	// static int	times = 0;
 
+	printf("PARSE__________\n");
 	arguments = split_args(input, 1);
 	if (arguments == NULL)
 		return (NULL);
 	//we need to go through the token list and do expansions here.
 	if (expand_tokens(&arguments))
+	{
+		printf("Early exit\n");
 		return (NULL);
+	}
+	// if (times == 1)
+	// 	while (1)
+	// 		;
+	// times++;
+	// printf("After expansion\n");
+
 	// t_nodes	*cur = arguments->head;
 	// ft_printf("___________\n");
 	// while (cur)
@@ -535,6 +550,10 @@ t_tree				*parse(char *input)
 	traverse = arguments->head;
 	ast = build_tree(traverse);
 	if (arguments)
+	{
+		printf("free_list\n");
 		free_list(arguments);
+		printf("after free_list\n");
+	}
 	return (ast);
 }

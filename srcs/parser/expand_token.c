@@ -130,9 +130,15 @@ char		*expand_param(char *str)
 
 void		token_expand(char **dst, char *str)
 {
+	static int x = 0;
+
+	printf("token_expand\n");
 	if (!str)
 		return ;
 	if (*str == '~' && (*(str + 1) == '/' || !*(str + 1)))
 		str = expand_str(str, ft_strdup("HOME"), 0, 1);
+	if (x == 0)
+		printf("here\n");
 	*dst = expand_param(str);
+	x++;
 }
