@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 16:31:26 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/28 13:10:27 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/28 14:07:40 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,7 @@ int				pull_assignment(char *assignment, t_cmd **cmd);
 int				is_redirection(char *s);
 int				is_number(char *s);
 char			determine_redirection_type(char *o);
-t_redirect		*new_redirection(char *operator_, int fd);
+t_redirect		*new_redirection(char *operator_, int fd, int fd_dest);
 int				pull_redirection(t_nodes **node, t_nodes *prev, t_cmd **cmd);
 int				get_ptr_len(char **s);
 void			free_2d(char **s);
@@ -180,6 +180,8 @@ t_cmd			*create_cmd(t_nodes **tokens);
 void			print_assign_info(t_assign *s);
 void			print_redirect_info(t_redirect *r);
 void			print_command_info(t_cmd *cmd);
+int				is_red(char *input);
+void			error_message(char *line);
 
 
 /*
