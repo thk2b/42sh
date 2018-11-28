@@ -6,7 +6,7 @@
 /*   By: dmendelo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/26 17:28:33 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/11/27 18:08:39 by dmendelo         ###   ########.fr       */
+/*   Updated: 2018/11/27 19:28:27 by dmendelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,7 +222,7 @@ void			add_potential_expansions(t_list **head, char *s, int size, DIR *dirp)
 
 	while ((entry = readdir(dirp)))
 	{
-		if (!strncmp(s, entry->d_name, size))
+		if (!strncmp(s, entry->d_name, size) && entry->d_name[0] != '.')
 		{
 			enqueue(head, entry->d_name);
 		}
@@ -268,6 +268,7 @@ void			free_list(t_list **head)
 	{
 		tmp = traverse;
 		traverse = traverse->next;
+		free(tmp->name);
 		free(tmp);
 	}
 	*head = NULL;
@@ -363,9 +364,12 @@ char			**get_pwd(void)
 
 char			**autocomplete_pwd(char *s)
 {
+	WOW();
 	t_list		*expansions;
 	char		**pwd_null;
+	char		**ret;
 
+	ret = NULL;
 	pwd_null = get_pwd();
 	expansions = NULL;
 	search_directory(s, pwd_null, 0, &expansions);
@@ -373,7 +377,9 @@ char			**autocomplete_pwd(char *s)
 	if (expansions)
 	{
 		printf("returning expansions list\n");
-		return (copy_list(expansions));
+		ret = copy_list(expansions);
+		free_list(&expansions);
+		return (ret);
 	}
 	else
 	{
@@ -384,6 +390,7 @@ char			**autocomplete_pwd(char *s)
 
 int				check_expansion(char *check, char **words, int len)
 {
+	WOW();
 	int			p;
 
 	p = 0;
@@ -396,20 +403,41 @@ int				check_expansion(char *check, char **words, int len)
 	return (1);
 }
 
-char			*find_common_base(char **words, int len)
+int				compare_strings_n(char **words, int n)
 {
-	char		*compare;
+	WOW();
 	int			p;
 
 	p = 0;
-	compare = strndup(words[p], ++len);
-	if (check_expansion(words[p], words, len))
-		return (compare);
-	return (NULL);
+	while (words[p])
+	{
+		if (!words[p + 1])
+			break ;
+		if (strncmp(words[p], words[p + 1], n))
+			return (0);
+		p += 1;
+	}
+	return (1);
+}
+
+char			*find_common_base(char **words)
+{
+	WOW();
+	int			i;
+
+	if (words && !words[1])
+		return (NULL);
+	i = 1;
+	while (compare_strings_n(words, i))
+	{
+		i += 1;
+	}
+	return (strndup(words[0], --i));
 }
 
 char			**autocomplete(char *s, int mode)
 {
+	WOW();
 	t_auto		*expansions;
 
 	expansions = malloc(sizeof(*expansions));
@@ -426,18 +454,30 @@ char			**autocomplete(char *s, int mode)
 	{
 		return (NULL);
 	}
-	if (!(expansions->base = find_common_base(expansions->expansion, strlen(s))))
+	if (!(expansions->base = find_common_base(expansions->expansion)))
 		expansions->base = strdup(s);
 	printf("common base = %s\n", expansions->base);
-
+	free(expansions->base);
+//	free(expansions);
 	return (expansions->expansion);
 }
 
+/*
+ * members of struct can be returned instread of 2d pointer. Play around with it a little. Message me on slack if there are any issues.
+ * 
+ * It norms at most points but I just wanted to write it out as quickly as I could.
+ * remember to free the struct at the end!
+ */
 int				main(int argc, char **argv)
 {
 	if (argc == 2)
 	{
-		print_strings(autocomplete(argv[1], EXE), 0);
+		char **s = autocomplete(argv[1], ARG);
+		if (s)
+		{
+			print_strings(s, 0);
+			free_2d(s);
+		}
 	}
 	return (0);
 }
