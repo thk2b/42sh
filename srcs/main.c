@@ -47,7 +47,7 @@ static int	init_shell(void)
 
 static void	teardown_shell(void)
 {
-	path_teardown();
+	delete_path_map();
 }
 
 static void	free_assignments(t_assign *lst)
