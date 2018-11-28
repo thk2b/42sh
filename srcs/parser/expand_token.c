@@ -135,5 +135,4 @@ void		token_expand(char **dst, char *str)
 	if (*str == '~' && (*(str + 1) == '/' || !*(str + 1)))
 		str = expand_str(str, ft_strdup("HOME"), 0, 1);
 	*dst = expand_param(str);
-	x++;
 }
