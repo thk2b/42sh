@@ -29,16 +29,15 @@ static char	*strsub_ticks(char *str)
 	return (sub_str);
 }
 
-static int	set_up_tick_pipe(t_tree *root)
+static int	set_up_tick_pipe(t_tree *root, int *child_pid)
 {
-	int		child_pid;
 	int		fd[2];
 
 	if (pipe(fd) == -1)
 		return (-1);
-	if ((child_pid = fork()) == -1)
+	if ((*child_pid = fork()) == -1)
 		return (-1);
-	if (child_pid == 0)
+	if (*child_pid == 0)
 	{
 		if (close((fd)[0]) == -1)
 			_exit (1);
@@ -100,27 +99,27 @@ int		exec_backticks(char **dst, char *str)
 	char	*sub_str;
 	t_tree	*root;
 	int		fd;
-	// char	*line;
 	char	*res;
-	//dst is where to put the result
+	int		child_pid;
 
 	(void)dst;
 	(void)index;
-	ft_printf("in back ticks\n");
+	// ft_printf("in back ticks\n");
 	if ((sub_str = strsub_ticks(str)) == NULL)
 		return (0);
 	// ft_printf("substr: %s\n", sub_str);
 	if ((root = parse(sub_str)) == NULL)
 		return (1);
 	// ft_printf("\n\nback ticks:\n");
-	fd = set_up_tick_pipe(root);
+	fd = set_up_tick_pipe(root, &child_pid);
 	//need to create a new argv
 	res = build_str_from_pipe(fd);
 	if (close((fd)) == -1)
 		return (1);
+	waitpid(child_pid, &fd, 0);
 	*dst = create_res_str(str, res);
 	// printf("-------------\nDST is %s\nORG str is %s\nRES str is %s\n", *dst, str, res);
-	free(str);
+	// free(str); //previously had this
 	free(res);
 	// ft_printf("-------------\n");
 	return (0);

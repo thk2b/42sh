@@ -33,22 +33,11 @@ int		check_token(t_nodes **cur, t_list **arguments)
 	t_nodes	*tmp;
 	static 	int times = 0;
 
-	printf("Arguments:\n");
 	// print_token_lst((*arguments)->head);
 	token_expand(&expanded_str, (*cur)->content);
 	sub_lst = split_args(expanded_str, 0);
-	// if (times == 1)
-	// {
-	// 	printf("stop\n");
-	// 	while (1)
-	// 		;
-	// }
 	if (sub_lst) //don't need to do, if sub_lst inside
 	{
-		printf("Sub_lst:\n");
-		print_token_lst(sub_lst->head);
-		printf("1.\n");
-
 		if ((*cur)->prev)
 			(*cur)->prev->next = sub_lst->head;
 		else
