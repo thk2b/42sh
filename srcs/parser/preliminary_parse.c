@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/28 13:16:28 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/28 15:07:24 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -343,7 +343,7 @@ int					error_special(char *input, t_list **head)
 	i = 0;
 	while (input[i])
 	{
-		if ((head) && (*head) && is_op(input) && is_red((*head)->tail->content))
+		if ((head) && (*head) && is_red(input) && is_op((*head)->tail->content))
 		{
 			error_message(input);
 			return (1);
@@ -351,11 +351,6 @@ int					error_special(char *input, t_list **head)
 		i++;
 	}
 	if (check_semicolon(input) || check_redirections(input))
-	{
-		error_message(input);
-		return (1);
-	}
-	if (((IS_SEMI(*input) || IS_RED(*input))) && !(head)) // IS_SEMI() || IS_RED(*input)
 	{
 		error_message(input);
 		return (1);
@@ -401,12 +396,31 @@ void			push_stack_elem(t_stack *stack, const char *input, int tmp)
 }
 
 
+int					check_input(const char *input)
+{
+	int			i;
+	char		*tmp;
+
+	tmp = ft_strtrim(input);
+	i = 0;
+	while (tmp[i])
+		i++;
+	if (IS_OP(tmp[i - 1]) || IS_RED(tmp[i - 1]))
+	{
+		error_message(tmp + i - 1);
+		free(tmp);
+		return (1);
+	}
+	free(tmp);
+	return (0);
+}
+
 int					pull_token(t_list **head, const char *input, int *p, int errors)
 {
 	int					tmp;
 	int					type;
 	char				*content;
-	static t_stack				*stack;
+	static t_stack		*stack;
 
 	stack = init_stack();
 	tmp = *p;
@@ -415,16 +429,13 @@ int					pull_token(t_list **head, const char *input, int *p, int errors)
 	{
 		if (classify_token(input[tmp]) == T_QUOTE)
 		{
-
 			push_stack_elem(stack, input, tmp);
 			if (pull_quote_content(input, &tmp, stack))
 				break ;
 			type = classify_token(input[tmp]);
 		}
 		else
-		{
 			tmp += 1;
-		}
 	}
 	content = ft_strdup_range(input, *p, type == T_QUOTE ? tmp : tmp - 1);
 	if (content && error_special(content, head) && errors)
@@ -456,10 +467,6 @@ int					interpret_token(t_list **head, const char *input, int *p,
 	{
 		info.status = skip_to_end_of_line(input, &tmp, head);//do something here
 	}
-	// else if (info.type == T_QUOTE)
-	// {
-	// 	info.status = pull_quote_content(head, input, &tmp);
-	// }
 	else if (info.type == T_AND || info.type == T_PIPE)
 	{
 		if ((info.status = pull_operator(head, input, &tmp, errors)) == -1)
@@ -523,6 +530,8 @@ t_tree				*parse(char *input)
 	t_nodes				*traverse;
 	t_tree				*ast;
 
+	if (check_input(input))
+		return (NULL);
 	arguments = split_args(input, 1);
 	if (arguments == NULL)
 		return (NULL);
