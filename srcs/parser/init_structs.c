@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/28 18:15:42 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/28 19:00:01 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/28 20:14:16 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,11 @@ t_tree					*new_leaf(t_tree *parent, char type, t_cmd *data)
 	new->data = data;
 	new->type = type;
 	return (new);
+}
+
+void					init_token_info(t_token *info)
+{
+	info->content = NULL;
+	info->status = 0;
+	info->type = 0;
 }
