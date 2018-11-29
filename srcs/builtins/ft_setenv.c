@@ -39,19 +39,24 @@ int		ft_setenv(const char *name, const char *value, int overwrite)
 {
 	char	**current;
 	char	*str;
+	int		status;
 
 	current = ft_getenvp(name);
 	if (current && overwrite == 0)
 		return (-1);
 	MCK(str = ft_strcjoin(name, '=', value), -1);
 	if (current == NULL)
-		return (ft_putenv(str));
+		status = ft_putenv(str);
+	else
+	{
+		free(*current);
+		status = (*current = str) != 0;
+	}
 	if (ft_strcmp(name, "PATH") == 0)
 	{
 		delete_path_map();
 		if (create_path_map())
 			return (-1);
 	}
-	free(*current);
-	return ((*current = str) != 0);
+	return (status);
 }
