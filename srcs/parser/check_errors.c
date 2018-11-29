@@ -47,7 +47,7 @@ int					check_redirections(char *input)
 	return (0);
 }
 
-int					error_special(char *input, t_list **head)
+int					error_special(char *input, t_token_lst **head)
 {
 	int			i;
 

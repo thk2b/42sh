@@ -12,7 +12,7 @@
 
 #include "parser.h"
 
-int					interpret_token(t_list **head, const char *input, int *p,
+int					interpret_token(t_token_lst **head, const char *input, int *p,
 					int errors)
 {
 	int					tmp;
@@ -39,11 +39,11 @@ int					interpret_token(t_list **head, const char *input, int *p,
 	return (info.status);
 }
 
-t_list				*interpret_input(const char *input, int *token_completion,
+t_token_lst				*interpret_input(const char *input, int *token_completion,
 					int errors)
 {
 	int					p;
-	t_list				*arguments;
+	t_token_lst				*arguments;
 
 	p = 0;
 	arguments = NULL;
@@ -67,20 +67,20 @@ t_list				*interpret_input(const char *input, int *token_completion,
 	return (arguments);
 }
 
-t_list				*split_args(char *input, int activate_errors)
+t_token_lst				*split_args(char *input, int activate_errors)
 {
-	t_list				*arguments;
+	t_token_lst				*arguments;
 	int					token_completion;
 
 	arguments = interpret_input(input, &token_completion, activate_errors);
 	if (arguments)
-		print_list(arguments);
+		print_token_lst(arguments);
 	return (arguments);
 }
 
 t_tree				*parse(char *input)
 {
-	t_list				*arguments;
+	t_token_lst				*arguments;
 	t_nodes				*traverse;
 	t_tree				*ast;
 

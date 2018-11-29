@@ -82,11 +82,11 @@ typedef struct	s_nodes
 	struct s_nodes		*prev;
 }				t_nodes;
 
-typedef struct	s_list
+typedef struct	s_token_lst
 {
 	t_nodes				*head;
 	t_nodes				*tail;
-}				t_list;
+}				t_token_lst;
 
 typedef struct	s_assign
 {
@@ -125,7 +125,7 @@ typedef struct	s_token
 
 int				check_semicolon(char *input);
 int				check_redirections(char *input);
-int				error_special(char *input, t_list **head);
+int				error_special(char *input, t_token_lst **head);
 int				check_errors(char *content, char *s);
 int				check_input(const char *input);
 /*
@@ -139,11 +139,11 @@ int				is_quote(char c);
 int				is_bracket(char c);
 int				is_paren(char c);
 char			*ft_strdup_range(const char *str, int begin, int end);
-void			free_list(t_list *head);
-void			print_list(t_list *lst);
+void			free_list(t_token_lst *head);
+void			print_token_lst(t_token_lst *token);
 t_nodes			*new_node(char *new_data);
-t_list			*new_list(char *new_data);
-void			append(t_list **head_ref, char *new_data);
+t_token_lst			*new_list(char *new_data);
+void			append(t_token_lst **head_ref, char *new_data);
 char			*trip_join(const char *s1, const char c, const char *s2);
 void			free_append(char **s, char *end);
 int				skip_whitespace(const char *input, int p);
@@ -151,18 +151,19 @@ int				check_errors(char *content, char *s);
 int				classify_token(char c);
 void			init_token_info(t_token *info);
 int				pull_quote_content(const char *input, int *p, t_node **stack);
-int				pull_operator(t_list **head, const char *input,
+int				pull_operator(t_token_lst **head, const char *input,
 								int *p, int errors);
-int				pull_token(t_list **head, const char *input,
+int				pull_token(t_token_lst **head, const char *input,
 							int *p, int errors);
 int				skip_to_end_of_line(const char *input, int *p);
-int				interpret_token(t_list **head, const char *input,
+int				interpret_token(t_token_lst **head, const char *input,
 								int *p, int errors);
-t_list			*interpret_input(const char *input, int *token_completion,
+t_token_lst			*interpret_input(const char *input, int *token_completion,
 				int errors);
-t_list			*split_args(char *input, int activate_errors);
+t_token_lst			*split_args(char *input, int activate_errors);
 t_tree			*parse(char *input);
 int				is_op(char *str);
+void			print_list(t_token_lst *lst);
 
 /*
 ** grammar
@@ -209,10 +210,10 @@ t_tree			*new_leaf(t_tree *parent, char type, t_cmd *data);
 **	expand_tokens.c
 */
 
-int			remove_squote(int quote, char *str, int *i);
-int				expand_tokens(t_list **arguments);
+int				remove_squote(int quote, char *str, int *i);
+int				expand_tokens(t_token_lst **arguments);
 void			token_expand(char **dst, char *str);
-int			remove_dquote(int quote, char *str, int *i);
-int			remove_bslash(int quote, char *str, int *i);
+int				remove_dquote(int quote, char *str, int *i);
+int				remove_bslash(int quote, char *str, int *i);
 
 #endif

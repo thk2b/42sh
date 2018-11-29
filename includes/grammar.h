@@ -13,18 +13,18 @@
 #ifndef GRAMMAR_H
 # define GRAMMAR_H
 
-typedef struct			s_t_node
-{
-	char				*content;
-	int					type;
-	struct s_t_node		*next;
-}						t_t_node;
+// typedef struct			s_t_node
+// {
+// 	char				*content;
+// 	int					type;
+// 	struct s_t_node		*next;
+// }						t_t_node;
 
-typedef struct			s_token_list
-{
-	struct s_t_node		*head;
-	struct s_t_node		*tail;
-}						t_token_list;
+// typedef struct			s_token_list
+// {
+// 	struct s_t_node		*head;
+// 	struct s_t_node		*tail;
+// }						t_token_list;
 
 # define WORD 1
 # define ASSIGNMENT_WORD 2

@@ -12,7 +12,7 @@
 
 #include "parser.h"
 
-void			print_list(t_list *lst)
+void			print_token_lst(t_token_lst *lst)
 {
 	t_nodes			*node;
 	int				index;
@@ -37,19 +37,19 @@ t_nodes			*new_node(char *new_data)
 	return (node);
 }
 
-t_list			*new_list(char *new_data)
+t_token_lst			*new_list(char *new_data)
 {
-	t_list		*lst;
+	t_token_lst		*lst;
 	t_nodes		*node;
 
 	node = new_node(new_data);
-	lst = (t_list *)malloc(sizeof(t_list));
+	lst = (t_token_lst *)malloc(sizeof(t_token_lst));
 	lst->head = node;
 	lst->tail = node;
 	return (lst);
 }
 
-void			append(t_list **head_ref, char *new_data)
+void			append(t_token_lst **head_ref, char *new_data)
 {
 	t_nodes		*new;
 
@@ -64,7 +64,7 @@ void			append(t_list **head_ref, char *new_data)
 	(*head_ref)->tail = new;
 }
 
-void			free_list(t_list *head)
+void			free_list(t_token_lst *head)
 {
 	t_nodes	*tmp;
 	t_nodes *free_;
