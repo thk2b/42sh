@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/28 15:19:57 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/28 16:30:47 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -401,6 +401,8 @@ int					check_input(const char *input)
 	int			i;
 	char		*tmp;
 
+	if (!*input)
+		return (1);
 	tmp = ft_strtrim(input);
 	i = 0;
 	while (tmp[i])
@@ -530,7 +532,7 @@ t_tree				*parse(char *input)
 	t_nodes				*traverse;
 	t_tree				*ast;
 
-	printf("in parse\n");
+	// printf("in parse\n");
 	if (check_input(input))
 		return (NULL);
 	arguments = split_args(input, 1);
@@ -539,14 +541,14 @@ t_tree				*parse(char *input)
 	//we need to go through the token list and do expansions here.
 	if (expand_tokens(&arguments))
 		return (NULL);
-	t_nodes	*cur = arguments->head;
-	ft_printf("___________\n");
-	while (cur)
-	{
-		ft_printf("%s -> ", cur->content);
-		cur = cur->next;
-	}
-	ft_printf("\n___________\n");
+	// t_nodes	*cur = arguments->head;
+	// ft_printf("___________\n");
+	// while (cur)
+	// {
+	// 	ft_printf("%s -> ", cur->content);
+	// 	cur = cur->next;
+	// }
+	// ft_printf("\n___________\n");
 	traverse = arguments->head;
 	ast = build_tree(traverse);
 	if (arguments)

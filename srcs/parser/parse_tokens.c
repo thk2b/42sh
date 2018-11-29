@@ -6,7 +6,7 @@
 /*   By: dmendelo <dmendelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 10:18:05 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/11/28 15:37:33 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/28 16:35:45 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void				print_redirect_info(t_redirect *r)
 		printf("<<<");
 	printf("fd = %d\n", r->fd);
 	printf("fd dest = %d\n", r->fd_dest);
+	printf("close = %d\n", r->close);
 	printf("path = %s\n", r->path);
 }
 
@@ -194,7 +195,7 @@ char					determine_redirection_type(char *o)
 		return (0);
 }
 
-t_redirect				*new_redirection(char *operator_, int fd, int fd_dest)
+t_redirect				*new_redirection(char *operator_, int fd, int fd_dest, int close)
 {
 	char				type;
 	t_redirect			*new;
@@ -206,6 +207,7 @@ t_redirect				*new_redirection(char *operator_, int fd, int fd_dest)
 	new->fd_dest = fd_dest;
 	new->path = NULL;
 	new->next = NULL;
+	new->close = close;
 	return (new);
 }
 
@@ -224,20 +226,23 @@ void					push_back_test(t_redirect **redir, t_redirect *redirect)
 	head->next = redirect;
 }
 
-t_redirect				*pull_aggregation(t_nodes **node, t_nodes *prev,
-						t_cmd **cmd, int fd)
+t_redirect				*pull_aggregation(t_nodes **node, int fd)
 {
 	t_redirect *aggreg;
 	int			fd_dest;
+	int			close;
 
-	(void)prev;
-	(void)cmd;
+	close = 0;
 	fd_dest = 0;
 	aggreg = NULL;
 	if ((*node)->next->next && (*node)->next->next->content)
+	{
 		if (is_number((*node)->next->next->content))
 			fd_dest = ft_atoi((*node)->next->next->content);
-	aggreg = new_redirection((*node)->content, fd, fd_dest);
+		else if (!ft_strcmp((*node)->next->next->content, "-"))
+			close = 1;
+	}
+	aggreg = new_redirection((*node)->content, fd, fd_dest, close);
 	aggreg->path = NULL;
 	return (aggreg);
 }
@@ -254,11 +259,11 @@ int						pull_redirection(t_nodes **node, t_nodes *prev, t_cmd **cmd)
 		fd = STDOUT;
 	if ((*node)->next && ft_strequ((*node)->next->content, "&"))
 	{
-		redirection = pull_aggregation(node, prev, cmd, fd);
+		redirection = pull_aggregation(node, fd);
 	}
 	else if ((*node)->next)
 	{
-		redirection = new_redirection((*node)->content, fd, 0);
+		redirection = new_redirection((*node)->content, fd, 0, 0);
 		redirection->path = ft_strdup((*node)->next->content); // We now copy the value here since token list is freed
 		(*node) = (*node)->next;
 	}
@@ -313,7 +318,6 @@ int						append_word_argv(char *word, t_cmd **cmd)
 	if ((*cmd)->argv)
 		free_2d((*cmd)->argv);
 	(*cmd)->argv = argv;
-	// ft_putstrv((*cmd)->argv);
 	return (0);
 }
 
@@ -331,12 +335,14 @@ int					is_aggregation(char *s1, t_nodes *prev)
 void					append_struct(t_nodes *traverse, t_nodes **tokens, t_cmd *command)
 {
 	t_nodes *prev;
+	int		aggreg;
 
 	prev = NULL;
+	aggreg = 0;
 	while (traverse)
 	{
 		if (is_aggregation(traverse->content, prev))
-			;
+			aggreg = 1;
 		else if (is_op(traverse->content))
 			break ;
 		else if (is_assignment_word(traverse->content))
@@ -344,12 +350,19 @@ void					append_struct(t_nodes *traverse, t_nodes **tokens, t_cmd *command)
 		else if (is_redirection(traverse->content))
 			pull_redirection(&traverse, prev, &command);
 		else if (is_word(traverse->content))
-			append_word_argv(traverse->content, &command);
-
+		{
+			if (traverse->next && is_red(traverse->next->content))
+				;
+			else if (prev && ft_strequ(prev->content, "&") && aggreg)
+				;
+			else
+				append_word_argv(traverse->content, &command);
+		}
 		prev = traverse;
 		traverse = traverse->next;
 	}
 	print_redirect_info(command->redirects);
+	ft_putstrv(command ->argv);
 	*tokens = traverse;
 }
 
