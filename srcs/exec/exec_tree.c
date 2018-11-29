@@ -17,7 +17,7 @@ t_table		g_op[NUM_OP] = {
 	{T_OR, exec_or}, {T_SEMI, exec_semi}
 };
 
-int		exec_node(t_tree *cur, int use_current_process)
+int			exec_node(t_tree *cur, int use_current_process)
 {
 	int	i;
 
@@ -31,25 +31,6 @@ int		exec_node(t_tree *cur, int use_current_process)
 		i++;
 	}
 	return (1);
-}
-
-int		exec_semi(t_tree *tree, int use_current_process)
-{
-	int return_status[2];
-	// int	child_pid[2];
-
-	(void)use_current_process;
-	//if ((child_pid[0] = fork()) == -1)
-	//	return (1);
-	return_status[0] = exec_node(tree->left, 0);
-	// if (use_current_process == 0)
-	// 	if ((child_pid[1] = fork()) == -1)
-	// 		return (1);
-	// if (child_pid[1] == 0 || use_current_process == TRUE)
-	return_status[1] = exec_node(tree->right, 0);
-	// waitpid(child_pid[0], &return_status[0], 0);
-    // waitpid(child_pid[1], &return_status[1], 0);
-    return (return_status[1]);
 }
 
 static int	set_up_half_pipe(int fd_use, int fd_close, int stream, t_tree *next)
@@ -75,8 +56,8 @@ int			exec_pipe(t_tree *curr, int use_curr_proc)
 	if (child_pid[0] == 0)
 		set_up_half_pipe(fd[1], fd[0], 1, curr->left);
 	if (use_curr_proc == 0)
-			if ((child_pid[1] = fork()) == -1)
-				return (1);
+		if ((child_pid[1] = fork()) == -1)
+			return (1);
 	if (child_pid[1] == 0 || use_curr_proc == 1)
 		set_up_half_pipe(fd[0], fd[1], 0, curr->right);
 	if (close(fd[0]) == -1 || close(fd[1]) == -1)
@@ -85,78 +66,3 @@ int			exec_pipe(t_tree *curr, int use_curr_proc)
 	waitpid(child_pid[1], &return_status[1], 0);
 	return (return_status[1]);
 }
-
-//What will happen if the first exec fails. What happens to the use_current_process process? Will it terminate?
-int		exec_and(t_tree *tree, int use_current_process)
-{
-	int return_status[2];
-
-	(void)use_current_process;
-	// if ((child_pid[0] = fork()) == -1)
-	// 	return (1);
-	// if (child_pid[0] == 0)
-	return_status[0] = exec_node(tree->left, 0);
-	// waitpid(child_pid[0], &return_status[0], 0);
-	if (return_status[0] != 0)
-		return (return_status[0]);
-	// if (use_current_process == 0)
-	// 	if ((child_pid[1] = fork()) == -1)
-	// 		return (1);
-	// if (child_pid[1] == 0 || use_current_process == TRUE)
-	return_status[1] = exec_node(tree->right, 0);
-   	// waitpid(child_pid[1], &return_status[1], 0);
-    return (return_status[1]);
-}
-
-int		exec_or(t_tree *tree, int use_current_process)
-{
-	int return_status[2];
-
-	(void)use_current_process;
-	return_status[0] = exec_node(tree->left, 0);
-	if (return_status[0] == 0)
-		return (return_status[0]);
-	return_status[1] = exec_node(tree->right, 0);
-    return (return_status[1]);
-}
-
-/*
-int     exec_pipe(t_tree *curr, int use_curr_proc)
-{
-    int fd[2];
-    int return_status[2];
-    int child_pid[2];
-
-    if (pipe(fd) == -1) 
-        return (1);
-    if ((child_pid[0] = fork()) == -1)
-        return (1);
-    if (child_pid[0] == 0)
-    {
-        if (close(fd[0]) == -1)
-            _exit(1);
-        dup2(fd[1], 1);
-        if (close(fd[1]) == -1)
-            _exit(1);
-        _exit(exec_node(curr->left, 1));
-    }
-    if (use_curr_proc == 0)
-        if ((child_pid[1] = fork()) == -1)
-            return (1);
-    if (child_pid[1] == 0 || use_curr_proc == 1)
-    {
-        if (close(fd[1]) == -1)
-            _exit(1);
-        dup2(fd[0], 0);
-        if (close(fd[0]) == -1)
-            _exit(1);
-        _exit(exec_node(curr->right, 1));
-    }
-    if (close(fd[0]) == -1)
-        _exit(1);
-    if (close(fd[1]) == -1)
-        _exit(1);
-    waitpid(child_pid[0], &return_status[0], 0);
-    waitpid(child_pid[1], &return_status[1], 0);
-    return (return_status[1]);
-}*/
