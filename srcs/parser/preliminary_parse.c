@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/28 16:30:47 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/28 18:39:43 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -515,13 +515,6 @@ t_list				*split_args(char *input, int activate_errors)
 	int					token_completion;
 
 	arguments = interpret_input(input, &token_completion, activate_errors);
-	// if (token_completion == SEEKING_END)
-	// {
-	// 	free_append(&input, "\n");
-	// 	free(line);
-	// 	printf("--------------------------------\n");
-	// 	return (split_args());
-	// }
 	return (arguments);
 }
 
@@ -532,13 +525,11 @@ t_tree				*parse(char *input)
 	t_nodes				*traverse;
 	t_tree				*ast;
 
-	// printf("in parse\n");
 	if (check_input(input))
 		return (NULL);
 	arguments = split_args(input, 1);
 	if (arguments == NULL)
 		return (NULL);
-	//we need to go through the token list and do expansions here.
 	if (expand_tokens(&arguments))
 		return (NULL);
 	// t_nodes	*cur = arguments->head;

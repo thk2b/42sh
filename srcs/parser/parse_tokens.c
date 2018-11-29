@@ -6,42 +6,11 @@
 /*   By: dmendelo <dmendelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 10:18:05 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/11/28 18:33:16 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/28 18:54:33 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-
-void					push_back(t_assign **head, char *value)
-{
-	t_assign			*new;
-	t_assign			*traverse;
-
-	new = malloc(sizeof(*new));
-	new->value = ft_strdup(value); // We now copy the value here since token list is freed
-	new->next = NULL;
-	if (!(*head))
-	{
-		*head = new;
-		return ;
-	}
-	traverse = *head;
-	while (traverse && traverse->next)
-		traverse = traverse->next;
-	traverse->next = new;
-}
-
-int						pull_assignment(char *assignment, t_cmd **cmd)
-{
-	int					p;
-
-	p = 0;
-	if ((*cmd)->argv == NULL)
-		push_back(&(*cmd)->assign, assignment);
-	else
-		append_word_argv(assignment, cmd);
-	return (0);
-}
 
 int						is_number(char *s)
 {
@@ -79,16 +48,8 @@ int						append_word_argv(char *word, t_cmd **cmd)
 	return (0);
 }
 
-
-int					is_aggregation(char *s1, t_nodes *prev)
-{
-	if (prev)
-		if (!ft_strcmp(s1, "&") && !ft_strcmp(prev->content, ">"))
-			return (1);
-	return (0);
-}
-
-void					append_struct(t_nodes *traverse, t_nodes **tokens, t_cmd *command)
+void					append_struct(t_nodes *traverse,
+						t_nodes **tokens, t_cmd *command)
 {
 	t_nodes *prev;
 	int		aggreg;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_token.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pdeguing <pdeguing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/23 08:19:43 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/11/27 20:31:52 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/28 19:09:05 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #define NOT_QUOTE	!(quote & (Q_SQUOTE | Q_BSLASH))
 
-int		remove_squote(int quote, char *str, int *i)
+int			remove_squote(int quote, char *str, int *i)
 {
 	if (!(quote & (Q_BSLASH | Q_DQUOTE)))
 	{
@@ -29,7 +29,7 @@ int		remove_squote(int quote, char *str, int *i)
 	return (quote);
 }
 
-int		remove_dquote(int quote, char *str, int *i)
+int			remove_dquote(int quote, char *str, int *i)
 {
 	if (!(quote & (Q_BSLASH | Q_SQUOTE)))
 	{
@@ -44,7 +44,7 @@ int		remove_dquote(int quote, char *str, int *i)
 	return (quote);
 }
 
-int		remove_bslash(int quote, char *str, int *i)
+int			remove_bslash(int quote, char *str, int *i)
 {
 	if ((!(quote & (Q_BSLASH | Q_SQUOTE))
 				|| ((quote & Q_DQUOTE) && ft_strchr("\\\"\n", *str + 1))))
