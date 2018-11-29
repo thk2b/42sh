@@ -145,7 +145,7 @@ int				skip_whitespace(const char *input, int p);
 int			check_errors(char *content, char *s);
 int				classify_token(char c);
 void			init_token_info(t_token *info);
-int				pull_quote_content(const char *input, int *p, t_stack *stack);
+int				pull_quote_content(const char *input, int *p, t_node **stack);
 int				pull_operator(t_list **head, const char *input, int *p, int errors);
 int				pull_token(t_list **head, const char *input, int *p, int errors);
 int				skip_to_end_of_line(const char *input, int *p, t_list **head);
