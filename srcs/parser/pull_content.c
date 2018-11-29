@@ -48,7 +48,7 @@ static void			push_stack_elem(t_node **stack, const char *input, int tmp)
 		push(stack, 3);
 }
 
-int					pull_token(t_list **head, const char *input, int *p,
+int					pull_token(t_token_lst **head, const char *input, int *p,
 					int errors)
 {
 	int					tmp;
@@ -80,7 +80,7 @@ int					pull_token(t_list **head, const char *input, int *p,
 	return (END);
 }
 
-int					pull_operator(t_list **head, const char *input, int *p,
+int					pull_operator(t_token_lst **head, const char *input, int *p,
 					int errors)
 {
 	int					tmp;
