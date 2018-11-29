@@ -10,9 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
-#include "libft.h"
-#include <unistd.h>
+#include <path.h>
+#include <libft.h>
 
 char	**ft_getenvp(const char *name)
 {
@@ -40,13 +39,24 @@ int		ft_setenv(const char *name, const char *value, int overwrite)
 {
 	char	**current;
 	char	*str;
+	int		status;
 
 	current = ft_getenvp(name);
 	if (current && overwrite == 0)
 		return (-1);
 	MCK(str = ft_strcjoin(name, '=', value), -1);
 	if (current == NULL)
-		return (ft_putenv(str));
-	free(*current);
-	return ((*current = str) != 0);
+		status = ft_putenv(str);
+	else
+	{
+		free(*current);
+		status = (*current = str) != 0;
+	}
+	if (ft_strcmp(name, "PATH") == 0)
+	{
+		delete_path_map();
+		if (create_path_map())
+			return (-1);
+	}
+	return (status);
 }

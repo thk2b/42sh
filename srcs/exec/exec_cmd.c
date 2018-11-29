@@ -37,7 +37,6 @@ static int	fork_and_exec(t_tree *tree, int use_current_process, char *path)
 			return (error("fork"));
 	if (use_current_process || pid == 0)
 	{
-		printf("in parent. \n");
 		if (tree->data->redirects && init_redirects(tree->data->redirects))
 			return (1);
 		execve(path, tree->data->argv, environ);

@@ -10,9 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
-#include "libft.h"
-#include <unistd.h>
+#include <path.h>
+#include <libft.h>
 
 static int	get_env_index(const char *name)
 {
@@ -51,6 +50,12 @@ int			ft_unsetenv(const char *name)
 		{
 			environ[i] = environ[i + 1];
 			i++;
+		}
+		if (ft_strcmp(name, "PATH") == 0)
+		{
+			delete_path_map();
+			if (create_path_map())
+				return (-1);
 		}
 	}
 	return (found == 0);
