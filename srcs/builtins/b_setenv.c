@@ -22,11 +22,5 @@ int			b_setenv(char **av)
 		ft_setenv(av[1], av[2], 1);
 	else
 		ft_setenv(av[1], NULL, 1);
-	if (ft_strcmp("PATH", av[1]) == 0)
-	{
-		delete_path_map();
-		if (create_path_map())
-			return (1);
-	}
 	return (0);
 }

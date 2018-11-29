@@ -41,6 +41,7 @@ int			ft_unsetenv(const char *name)
 	int			i;
 	int			found;
 
+	ft_printf("unsetenv: %s\n", name);
 	found = 0;
 	while ((i = get_env_index(name)) != -1)
 	{
@@ -50,6 +51,13 @@ int			ft_unsetenv(const char *name)
 		{
 			environ[i] = environ[i + 1];
 			i++;
+		}
+		if (ft_strcmp(name, "PATH") == 0)
+		{
+			ft_printf("unseting the entire map\n");
+			delete_path_map();
+			if (create_path_map())
+				return (-1);
 		}
 	}
 	return (found == 0);
