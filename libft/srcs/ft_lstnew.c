@@ -6,11 +6,12 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/17 20:14:04 by tkobb             #+#    #+#             */
-/*   Updated: 2018/09/17 20:35:33 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/29 09:19:23 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h> /////////////
 
 t_list	*ft_lstnew(void const *content, size_t size)
 {
