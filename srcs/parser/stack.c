@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/09 13:37:09 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/27 20:38:16 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/28 20:17:43 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int			pop(t_node **top)
 	t_node	*tmp;
 	int		content;
 
-	content = 0; // could there ever be a problem where pop returns 0 it stack is empty?
+	content = 0;
 	tmp = *top;
 	if (*top)
 	{

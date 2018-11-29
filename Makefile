@@ -18,8 +18,9 @@ SRCS		= $(addprefix srcs/, main.c errors.c init_shell.c\
 	$(addprefix exec/, assignments.c exec_cmd.c exec_tree.c exec_semi_and_or.c expand_str.c\
 				redirects.c back_ticks.c hash_path_comp.c hash_path.c)\
 	$(addprefix parser/, parse_tokens.c preliminary_parse.c tree2.c \
-				expand_token.c expand_tokens.c utils.c assign.c \
-				stack.c print_infos.c init_structs.c redirections.c)\
+				expand_token.c expand_tokens.c utils.c assign.c quote.c list.c\
+				stack.c print_infos.c init_structs.c redirections.c\
+				check_errors.c utils2.c pull_content.c type_tokens.c)\
 	$(addprefix tokenizer/, )\
 	$(addprefix local_var/, local_var.c local_var_comp.c)\
 )

@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/28 18:12:54 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/28 18:13:51 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/28 19:20:40 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,25 +45,4 @@ void				print_assign_info(t_assign *s)
 			printf("value = %s\n", traverse->value);
 		traverse = traverse->next;
 	}
-}
-
-void				print_command_info(t_cmd *cmd)
-{
-	printf("---------------------------------------------\n");
-   if (!cmd)
-	   return ;
-   if (cmd->argv)
-   {
-		printf("------argv------\n");
-		ft_putstrv(cmd->argv);
-   }
-   if (cmd->redirects)
-   {
-		print_redirect_info(cmd->redirects);
-   }
-   if (cmd->assign)
-   {
-		print_assign_info(cmd->assign);
-   }
-	printf("---------------------------------------------\n");
 }
