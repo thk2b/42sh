@@ -22,3 +22,12 @@ Bonuses that need some more work:
 *	Advanced redirections: file output aggregation and heredoc
 *	Command History (a history file, ! expansion)?
 
+
+Test cases with problems. If it is fixed, don'tremove. Just put a checked box:
+*	[X]	/bin/ls -laF
+*	[]	cd to /nfs. Then type only cd. Error: cd: Bad address
+*	[]	"cd -"
+*	[]	"foo=bar" in parse_tokens.c
+*	[]	create a file with a tab in it. execute: `cat file`. 
+*	[]	setenv FOO bar; setenv FOO=baz bar; unsetenv FOO; # should not remove both variables.
+*	
