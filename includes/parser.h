@@ -47,7 +47,7 @@
 # define STDOUT 1
 # define STDERR 2
 
-typedef struct					s_redirect
+typedef struct	s_redirect
 {
 	char						type;
 	int							fd;
@@ -56,7 +56,7 @@ typedef struct					s_redirect
 	int							old_fd;
 	int							close;
 	struct s_redirect			*next;
-}								t_redirect;
+}				t_redirect;
 
 # define T_CMD					1
 # define T_PIPE					2
@@ -72,57 +72,48 @@ typedef struct					s_redirect
 # define T_SPACE				11
 # define T_COMMENT				12
 
-typedef struct			s_nodes
+typedef struct	s_nodes
 {
 	char				*content;
 	struct s_nodes		*next;
 	struct s_nodes		*prev;
-}						t_nodes;
+}				t_nodes;
 
-typedef struct			s_list
+typedef struct	s_list
 {
 	t_nodes				*head;
 	t_nodes				*tail;
-}						t_list;
+}				t_list;
 
-/*typedef struct					s_list
+typedef struct	s_assign
 {
-	char						*content;
-	struct s_list				*next;
-}
-t_list;
-*/
+	char			*value;
+	struct s_assign	*next;
+}				t_assign;
 
-typedef struct        	         s_assign
-{
-    char				*value;
-    struct s_assign		*next;
-}                                t_assign;
-
-typedef struct					s_tree
+typedef struct	s_tree
 {
 	char						type;
 	struct s_tree				*left;
 	struct s_tree				*right;
 	struct s_cmd				*data;
 	struct s_tree				*parent;
-}								t_tree;
+}				t_tree;
 
-typedef struct					s_cmd
+typedef struct	s_cmd
 {
 	t_redirect					*redirects;
 	t_assign					*assign;
 	char						**argv;
 	int							return_status;
-}								t_cmd;
+}				t_cmd;
 
-typedef struct					s_token
+typedef struct	s_token
 {
 	int							type;
 	int							status;
 	char						*content;
-}								t_token;
-
+}				t_token;
 
 /*
 ** lexing
@@ -143,21 +134,22 @@ void			append(t_list **head_ref, char *new_data);
 char			*trip_join(const char *s1, const char c, const char *s2);
 void			free_append(char **s, char *end);
 int				skip_whitespace(const char *input, int p);
-int			check_errors(char *content, char *s);
+int				check_errors(char *content, char *s);
 int				classify_token(char c);
 void			init_token_info(t_token *info);
 int				pull_quote_content(const char *input, int *p, t_node **stack);
-int				pull_operator(t_list **head, const char *input, int *p, int errors);
-int				pull_token(t_list **head, const char *input, int *p, int errors);
+int				pull_operator(t_list **head, const char *input,
+								int *p, int errors);
+int				pull_token(t_list **head, const char *input,
+							int *p, int errors);
 int				skip_to_end_of_line(const char *input, int *p, t_list **head);
-int				interpret_token(t_list **head, const char *input, int *p, int errors);
+int				interpret_token(t_list **head, const char *input,
+								int *p, int errors);
 t_list			*interpret_input(const char *input, int *token_completion,
 				int errors);
 t_list			*split_args(char *input, int activate_errors);
 t_tree			*parse(char *input);
 int				is_op(char *str);
-
-
 
 /*
 ** grammar
@@ -172,7 +164,8 @@ int				pull_assignment(char *assignment, t_cmd **cmd);
 int				is_redirection(char *s);
 int				is_number(char *s);
 char			determine_redirection_type(char *o);
-t_redirect		*new_redirection(char *operator_, int fd, int fd_dest, int close);
+t_redirect		*new_redirection(char *operator_, int fd,
+									int fd_dest, int close);
 int				pull_redirection(t_nodes **node, t_nodes *prev, t_cmd **cmd);
 int				get_ptr_len(char **s);
 void			free_2d(char **s);
@@ -184,7 +177,6 @@ void			print_command_info(t_cmd *cmd);
 int				is_red(char *input);
 void			error_message(char *line);
 
-
 /*
 ** AST
 */
@@ -194,16 +186,13 @@ t_tree			*insert(t_tree **root, t_cmd *data, char type);
 t_tree			*build_subtree(t_tree **current, t_tree **new_root);
 int				compare_precedence(char a, char b);
 void			print_tree(t_tree *tree);
-//void			print_operator_type(char type);
 char			get_type(char *s);
 t_tree			*new_leaf(t_tree *parent, char type, t_cmd *data);
-//t_tree			*init_tree(void); // didn't end up using this function. scrap later
-
 
 /*
 **	expand_tokens.c
 */
-int		expand_tokens(t_list **arguments);
-void	token_expand(char **dst, char *str);
+int				expand_tokens(t_list **arguments);
+void			token_expand(char **dst, char *str);
 
 #endif

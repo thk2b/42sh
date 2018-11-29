@@ -14,6 +14,7 @@
 # define LOCAL_VAR_H
 # define NUM_SLOTS 20
 # include <ft_sh.h>
+
 typedef struct	s_var
 {
 	char			*key;
@@ -21,11 +22,10 @@ typedef struct	s_var
 	struct s_var	*next;
 }				t_var;
 
-
 /*
 **	local_var/assigments.c
 */
-int		store_assignments(t_assign *lst);
+int				store_assignments(t_assign *lst);
 
 /*
 **	local_var/local_var.c

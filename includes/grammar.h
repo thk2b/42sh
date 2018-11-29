@@ -46,8 +46,4 @@ typedef struct			s_token_list
 # define RESERVED_UNTIL "until"
 # define RESERVED_FOR "for"
 
-// t_cmd				*create_cmd(t_list **lst);
-
-		
-
 #endif

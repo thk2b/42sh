@@ -32,7 +32,7 @@
 # define TRUE 1
 # define FALSE 0
 
-typedef	unsigned char t_bool;
+typedef	unsigned char	t_bool;
 
 /*
 **	Initialization
@@ -41,7 +41,6 @@ typedef	unsigned char t_bool;
 /*
 **	Runtime
 */
-
 
 /*
 **	Teardown

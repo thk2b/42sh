@@ -10,26 +10,19 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STACK_H
-# define STACK_H
+#ifndef STACK2_H
+# define STACK2_H
+# include <stdlib.h>
 
-#include <stdlib.h>
-
-typedef struct s_node
+typedef struct	s_node
 {
 	int				content;
-    struct s_node  *next;
-}               t_node;
+	struct s_node	*next;
+}				t_node;
 
-typedef struct s_stack
-{
-    struct s_node *top;
-}               t_stack;
-
-// t_stack     *init_stack(void);
-int			pop(t_node **top);
-void		push(t_node **top, int content);
-int			is_empty(t_node *top);
-int			peek(t_node *top);
+int				pop(t_node **top);
+void			push(t_node **top, int content);
+int				is_empty(t_node *top);
+int				peek(t_node *top);
 
 #endif
