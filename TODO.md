@@ -2,6 +2,8 @@ Thursday 29/11
 
 Please update this file when tasks are finished and tested thouroughly. 
 
+For the bonuses, there are some test cases in the correction sheet which should be tried.
+
 What we need to do (in priority order):
 *	Handle quotes and backticks in a functioning manner. (Theo is on it)
 *	Heredoc to finish that bonus. (Anton)
@@ -39,3 +41,5 @@ Test cases with problems. If it is fixed, don'tremove. Just put a checked box:
 *	[]	Command line arguments to 42sh should make it now run?
 *	[]	ctrl-c to kill a running exec kills the shell as well
 *	[]	no reprompt for: "base64 /dev/urandom | head -c 1000". because of mulitple line output?
+*	[]	parser splits words by "," and "=" even though it shouldn't. figure out exactly when to split.
+*	[]	ls; should not be syntax error
