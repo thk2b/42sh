@@ -12,7 +12,7 @@ FLAGS		= -Wall -Wextra -Werror #-g -fsanitize=address
 INCLUDES	= -I ./libft/includes -I ./includes
 COMPILE		= $(CC) $(FLAGS) $(INCLUDES)
 
-SRCS		= $(addprefix srcs/, main.c errors.c \
+SRCS		= $(addprefix srcs/, main.c errors.c init_shell.c\
 	$(addprefix builtins/, b_cd.c b_echo.c b_env.c b_setenv.c b_unsetenv.c builtin.c\
 				b_exit.c b_export.c b_unset.c)\
 	$(addprefix exec/, assignments.c exec_cmd.c exec_tree.c expand_str.c strip_quotes.c\

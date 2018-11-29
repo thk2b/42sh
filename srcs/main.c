@@ -23,29 +23,6 @@
 **	Teardown
 */
 
-
-static int	init_environ(void)
-{
-	extern char	**environ;
-	char		**env_cpy;
-
-	env_cpy = ft_strv_dup(environ);
-	if (!env_cpy)
-		return (1);
-	environ = env_cpy;
-	return (0);
-}
-
-static int	init_shell(void)
-{
-	if (create_path_map())
-		return (1);
-	if (init_environ())
-		return (1);
-	init_local_var();
-	return (0);
-}
-
 static void	teardown_shell(void)
 {
 	delete_path_map();
@@ -116,21 +93,16 @@ static int	process_command(int *status)
 
 	line = NULL;
 	line = ft_readline("\x1b[1;37m""42sh:""\x1b[0m"" $> ", 9, RL_DEFAULT);
-	//parser (calls the tokenizer internally) takes a line, and t_tree **root as argument
-		//token list should be cleaned inside parser.
 	if (!line)
 		return (0);
 	root = parse(line);
 	if (root)
 	{
-		//exex_node(root, 0); track return status.
 		return_status = exec_node(root, 0);
-		//clean the tree, clean line
 		free_tree(root);
 	}
 	else
 		return_status = 1;
-	//set return status
 	free(line);
 	*status = return_status;
 	return (0);
@@ -158,13 +130,11 @@ static int	execute_non_interactive_shell(char *line, int *status)
 
 int			check_stdin(void)
 {
-
 	if (isatty(0))
 		return (0);
 	return (1);
 /*	fd_set			readfds;
 	struct timeval	timeout;
-
 	timeout.tv_sec = 0;
 	timeout.tv_usec = 0;
 	FD_ZERO(&readfds);
@@ -198,8 +168,3 @@ int			main(void)
 	teardown_shell();
 	return (status);
 }
-
-/*
-**	TODO
-**	try assignments and redirects. Any leaks?
-*/

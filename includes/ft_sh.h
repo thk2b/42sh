@@ -35,8 +35,10 @@
 typedef	unsigned char	t_bool;
 
 /*
-**	Initialization
+**	init_shell.c
 */
+int		init_shell(void);
+int		init_environ(void);
 
 /*
 **	Runtime
