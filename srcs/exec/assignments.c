@@ -12,7 +12,6 @@
 
 #include <ft_sh.h>
 
-
 int		split_assignment(char *str, char **key, char **value)
 {
 	char	*equal;
@@ -23,10 +22,10 @@ int		split_assignment(char *str, char **key, char **value)
 		printf("no assignment inside\n");
 		return (1);
 	}
-	*key = ft_strsub(str, 0, equal - str);
-	*value = ft_strdup(equal + 1);
-	// if (!(*key))
-	// 	return (1);
+	if ((*key = ft_strsub(str, 0, equal - str)) == NULL)
+		return (1);
+	if ((*value = ft_strdup(equal + 1)) == NULL)
+		return (1);
 	return (0);
 }
 

@@ -49,10 +49,14 @@ int				exec_cmd(t_tree *tree, int use_current_process);
 **	exec_tree.c
 */
 int				exec_node(t_tree *tree, int use_current_process);
-int				exec_semi(t_tree *tree, int use_current_process);
 int				exec_pipe(t_tree *tree, int use_current_process);
+
+/*
+**	exec_semi_and_or.c
+*/
 int				exec_and(t_tree *tree, int use_current_process);
 int				exec_or(t_tree *tree, int use_current_process);
+int				exec_semi(t_tree *tree, int use_current_process);
 
 /*
 **	back_ticks.c
