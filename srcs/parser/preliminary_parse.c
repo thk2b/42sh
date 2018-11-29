@@ -359,20 +359,20 @@ int					error_special(char *input, t_list **head)
 }
 
 
-int					pull_quote_content(const char *input, int *p, t_stack *stack)
+int					pull_quote_content(const char *input, int *p, t_node **stack)
 {
 	int					tmp;
 	// char				*content;
 
 	tmp = *p;
 	tmp += 1;
-	while (input[tmp] && !is_empty(stack))
+	while (input[tmp] && !is_empty(*stack))
 	{
-		if (input[tmp] == '\'' && peek(stack) == 2)
+		if (input[tmp] == '\'' && peek(*stack) == 2)
 			pop(stack);
-		else if (input[tmp] == '\"' && peek(stack) == 1)
+		else if (input[tmp] == '\"' && peek(*stack) == 1)
 			pop(stack);
-		else if (input[tmp] == '`' && peek(stack) == 3)
+		else if (input[tmp] == '`' && peek(*stack) == 3)
 			pop(stack);
 		tmp += 1;
 	}
@@ -385,7 +385,7 @@ int					pull_quote_content(const char *input, int *p, t_stack *stack)
 	return (0);
 }
 
-void			push_stack_elem(t_stack *stack, const char *input, int tmp)
+void			push_stack_elem(t_node **stack, const char *input, int tmp)
 {
 	if (input[tmp] == 34)
 		push(stack, 1);
@@ -420,17 +420,17 @@ int					pull_token(t_list **head, const char *input, int *p, int errors)
 	int					tmp;
 	int					type;
 	char				*content;
-	static t_stack		*stack;
+	t_node				*stack;
 
-	stack = init_stack();
+	stack = NULL;
 	tmp = *p;
 	type = classify_token(input[tmp]);
 	while (input[tmp] && (type == classify_token(input[tmp]) || classify_token(input[tmp]) == T_QUOTE))
 	{
 		if (classify_token(input[tmp]) == T_QUOTE)
 		{
-			push_stack_elem(stack, input, tmp);
-			if (pull_quote_content(input, &tmp, stack))
+			push_stack_elem(&stack, input, tmp);
+			if (pull_quote_content(input, &tmp, &stack))
 				break ;
 			type = classify_token(input[tmp]);
 		}
@@ -530,6 +530,7 @@ t_tree				*parse(char *input)
 	t_nodes				*traverse;
 	t_tree				*ast;
 
+	printf("in parse\n");
 	if (check_input(input))
 		return (NULL);
 	arguments = split_args(input, 1);
@@ -538,14 +539,14 @@ t_tree				*parse(char *input)
 	//we need to go through the token list and do expansions here.
 	if (expand_tokens(&arguments))
 		return (NULL);
-	// t_nodes	*cur = arguments->head;
-	// ft_printf("___________\n");
-	// while (cur)
-	// {
-	// 	ft_printf("%s -> ", cur->content);
-	// 	cur = cur->next;
-	// }
-	// ft_printf("\n___________\n");
+	t_nodes	*cur = arguments->head;
+	ft_printf("___________\n");
+	while (cur)
+	{
+		ft_printf("%s -> ", cur->content);
+		cur = cur->next;
+	}
+	ft_printf("\n___________\n");
 	traverse = arguments->head;
 	ast = build_tree(traverse);
 	if (arguments)
