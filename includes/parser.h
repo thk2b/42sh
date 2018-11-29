@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 16:31:26 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/28 16:32:31 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/28 18:37:45 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 
 # define IS_SPACE(x) (x == ' ' || x == '\t' || x == '\n')
 # define IS_OP(x) (x == '&' || x == '|')
+# define IS_VALID_CHAR(c) (c == '_' || c == '=' || c == '.' || ft_isalnum(c))
 # define IS_SEMI(x) (x == ';')
 # define IS_RED(x) (x == '<' || x == '>')
 # define IS_REDIRECT_LEFT(x) (x == '<')
@@ -155,6 +156,8 @@ int				is_op(char *str);
 ** grammar
 */
 
+int				is_word(char *str);
+void			push_back_test(t_redirect **redir, t_redirect *redirect);
 t_cmd			*init_command(void);
 int				is_reserved_word(char *s);
 int				is_valid_name_char(char c);
@@ -176,6 +179,7 @@ void			print_redirect_info(t_redirect *r);
 void			print_command_info(t_cmd *cmd);
 int				is_red(char *input);
 void			error_message(char *line);
+int				is_aggregation(char *s1, t_nodes *prev);
 
 /*
 ** AST
