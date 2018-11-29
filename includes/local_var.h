@@ -32,10 +32,16 @@ int		store_assignments(t_assign *lst);
 */
 t_var			*find_lst(char *key);
 t_var			*create_var_elem(char *key, char *value);
-char			*get_local_var(char *key);
-t_var			*rm_local_var_inst(t_var *cur, char *key);
 int				rm_local_var(char *key);
 int				store_local_var(char *key, char *value);
+
+void			init_local_var();
+
+/*
+**	local_var/local_var_comp.c
+*/
 unsigned long	hash_var(char *key);
+char			*get_local_var(char *key);
+t_var			*rm_local_var_inst(t_var *cur, char *key);
 
 #endif
