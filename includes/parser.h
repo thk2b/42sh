@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 16:31:26 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/28 14:07:40 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/28 16:32:31 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct					s_redirect
 	int							fd_dest;
 	char						*path;
 	int							old_fd;
+	int							close;
 	struct s_redirect			*next;
 }								t_redirect;
 
@@ -171,7 +172,7 @@ int				pull_assignment(char *assignment, t_cmd **cmd);
 int				is_redirection(char *s);
 int				is_number(char *s);
 char			determine_redirection_type(char *o);
-t_redirect		*new_redirection(char *operator_, int fd, int fd_dest);
+t_redirect		*new_redirection(char *operator_, int fd, int fd_dest, int close);
 int				pull_redirection(t_nodes **node, t_nodes *prev, t_cmd **cmd);
 int				get_ptr_len(char **s);
 void			free_2d(char **s);
