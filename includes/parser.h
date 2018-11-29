@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 16:31:26 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/28 18:37:45 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/28 19:58:56 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,14 @@
 # include "stack2.h"
 
 # define IS_SPACE(x) (x == ' ' || x == '\t' || x == '\n')
+# define IS_QU(x) (x == '`' || x == '\'' || x == '\"')
 # define IS_OP(x) (x == '&' || x == '|')
 # define IS_VALID_CHAR(c) (c == '_' || c == '=' || c == '.' || ft_isalnum(c))
 # define IS_SEMI(x) (x == ';')
 # define IS_RED(x) (x == '<' || x == '>')
 # define IS_REDIRECT_LEFT(x) (x == '<')
 # define IS_REDIRECT_RIGHT(x) (x == '>')
+# define NOT_QUOTE !(quote & (Q_SQUOTE | Q_BSLASH))
 # define WOW() printf("->%s\n", __func__)
 # define REDIRECT_LEFT			1 //rename to heredoc?
 # define REDIRECT_RIGHT			2 //rename to redirect?
@@ -116,6 +118,16 @@ typedef struct	s_token
 	char						*content;
 }				t_token;
 
+
+/*
+** error
+*/
+
+int				check_semicolon(char *input);
+int				check_redirections(char *input);
+int				error_special(char *input, t_list **head);
+int				check_errors(char *content, char *s);
+int				check_input(const char *input);
 /*
 ** lexing
 */
@@ -143,7 +155,7 @@ int				pull_operator(t_list **head, const char *input,
 								int *p, int errors);
 int				pull_token(t_list **head, const char *input,
 							int *p, int errors);
-int				skip_to_end_of_line(const char *input, int *p, t_list **head);
+int				skip_to_end_of_line(const char *input, int *p);
 int				interpret_token(t_list **head, const char *input,
 								int *p, int errors);
 t_list			*interpret_input(const char *input, int *token_completion,
@@ -196,7 +208,11 @@ t_tree			*new_leaf(t_tree *parent, char type, t_cmd *data);
 /*
 **	expand_tokens.c
 */
+
+int			remove_squote(int quote, char *str, int *i);
 int				expand_tokens(t_list **arguments);
 void			token_expand(char **dst, char *str);
+int			remove_dquote(int quote, char *str, int *i);
+int			remove_bslash(int quote, char *str, int *i);
 
 #endif
