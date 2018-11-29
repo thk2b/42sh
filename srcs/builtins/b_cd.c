@@ -13,14 +13,8 @@
 #include <ft_sh.h>
 #include <env.h>
 
-int		b_cd(char **av)
+static int	special_cases(char *dst)
 {
-	char	*dst;
-	char	*curpwd;
-
-	if (av == NULL || av[0] == NULL)
-		return (1);
-	dst = av[1];
 	if (dst == NULL)
 	{
 		MCK(dst = ft_getenv("HOME"), 1);
@@ -34,6 +28,19 @@ int		b_cd(char **av)
 		}
 		ft_printf("%s\n", dst);
 	}
+	return (0);
+}
+
+int			b_cd(char **av)
+{
+	char	*dst;
+	char	*curpwd;
+
+	if (av == NULL || av[0] == NULL)
+		return (1);
+	dst = av[1];
+	if (special_cases(dst))
+		return (1);
 	MCK(curpwd = ft_getenv("PWD"), 1);
 	if (ft_setenv("OLDPWD", curpwd, 1))
 		;

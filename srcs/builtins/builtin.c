@@ -18,30 +18,31 @@
 **	Returns 1 if a builtin was found, 0 if not
 */
 
+static t_builtin	g_builtins[] = {
+	{"cd", b_cd},
+	{"exit", b_exit},
+	{"echo", b_echo},
+	{"env", b_env},
+	{"setenv", b_setenv},
+	{"unsetenv", b_unsetenv},
+	{"export", b_export},
+	{"unset", b_unset},
+	{"history", history_builtin},
+	{NULL, NULL}
+};
+
 int		builtin(t_cmd *cmd, int *return_status)
 {
-	static t_builtin	builtins[] = {
-		{"cd", b_cd},
-		{"exit", b_exit},
-		{"echo", b_echo},
-		{"env", b_env},
-		{"setenv", b_setenv},
-		{"unsetenv", b_unsetenv},
-		{"export", b_export},
-		{"unset", b_unset},
-		{"history", history_builtin},
-		{NULL, NULL}
-	};
-	int					i;
+	int	i;
 
 	i = 0;
-	while (builtins[i].name)
+	while (g_builtins[i].name)
 	{
-		if (ft_strcmp(builtins[i].name, cmd->argv[0]) == 0)
+		if (ft_strcmp(g_builtins[i].name, cmd->argv[0]) == 0)
 		{
 			if (cmd->redirects)
 				init_redirects(cmd->redirects);
-			*return_status = builtins[i].fn(cmd->argv);
+			*return_status = g_builtins[i].fn(cmd->argv);
 			if (cmd->redirects)
 				reset_redirects(cmd->redirects);
 			return (0);
