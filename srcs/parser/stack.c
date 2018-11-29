@@ -19,35 +19,39 @@ t_stack *init_stack(void)
     return (stack);
 }
 
-int		pop(t_stack *stack)
+int		pop(t_node **top)
 {
-    t_node *tmp = stack->top;
-    int		content = 0;
-    if (stack->top)
+    t_node  *tmp;
+    int		content;
+    
+    content = 0; // could there ever be a problem where pop returns 0 it stack is empty?
+    tmp = *top;
+    if (*top)
     {
-        content = stack->top->content;
-        stack->top = tmp->next;
+        content = (*top)->content;
+        *top = (*top)->next;
         free(tmp);
-        tmp = NULL;
     }
     return (content);
 }
 
-void push(t_stack *stack, int content)
+void push(t_node **top, int content)
 {
-    t_node *node = (t_node *)malloc(sizeof(t_node));
+    t_node *node;
+    
+    node = (t_node*)malloc(sizeof(t_node));
     node->content = content;
-    node->next = stack->top;
-    stack->top = node;
+    node->next = *top;
+    *top = node;
     return ;
 }
 
-int			is_empty(t_stack *stack)
+int			is_empty(t_node *top)
 {
-    return (stack->top == NULL);
+    return (top == NULL);
 }
 
-int			peek(t_stack *stack)
+int			peek(t_node *top)
 {
-    return (stack->top ? stack->top->content : 0);
+    return ((top) ? top->content : 0);
 }

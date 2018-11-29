@@ -26,10 +26,10 @@ typedef struct s_stack
     struct s_node *top;
 }               t_stack;
 
-t_stack *init_stack(void);
-int			pop(t_stack *stack);
-void		push(t_stack *stack, int content);
-int			is_empty(t_stack *stack);
-int			peek(t_stack *stack);
+// t_stack     *init_stack(void);
+int			pop(t_node **top);
+void		push(t_node **top, int content);
+int			is_empty(t_node *top);
+int			peek(t_node *top);
 
 #endif
