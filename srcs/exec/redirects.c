@@ -62,7 +62,6 @@ int					init_redirects(t_redirect *redirects)
 	cur = redirects;
 	while (cur)
 	{
-		// TODO: expand path
 		if (cur->type == REDIRECT_LEFT)
 		{
 			if (init_heredoc(cur))
@@ -85,7 +84,7 @@ int					reset_redirects(t_redirect *redirects)
 	cur = redirects;
 	while (cur)
 	{
-		if (dup2(cur->old_fd, cur->fd) == -1) 
+		if (dup2(cur->old_fd, cur->fd) == -1)
 			return (error("dup2"));
 		cur = cur->next;
 	}
