@@ -82,7 +82,6 @@ void			ft_putnbr_fd(int n, int fd);
 ** 	size_t			content_size;
 ** 	struct s_list	*next;
 ** }				t_list;
-** 
 ** t_list			*ft_lstnew(void const *content, size_t size);
 ** void			ft_lstdelone(t_list **lp, void(*del)(void*, size_t));
 ** void			ft_lstdel(t_list **lp, void (*del)(void*, size_t));

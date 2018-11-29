@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 07:31:07 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/27 13:37:08 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/28 19:38:29 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ static int			init_redirect(t_redirect *redirect, int append)
 	if ((redirect->old_fd = dup(redirect->fd)) == -1)
 		return (error("dup"));
 	flags = O_WRONLY | O_CREAT | (append ? O_APPEND : O_TRUNC);
-	if ((fd = open(redirect->path, flags, CREAT_PERMS)) == -1)
+	if (redirect->path == NULL)
+		fd = redirect->fd_dest;
+	else if ((fd = open(redirect->path, flags, CREAT_PERMS)) == -1)
 		return (error("open"));
 	if (dup2(fd, redirect->fd) == -1)
 		return (error("dup2"));
@@ -60,7 +62,6 @@ int					init_redirects(t_redirect *redirects)
 	cur = redirects;
 	while (cur)
 	{
-		// TODO: expand path
 		if (cur->type == REDIRECT_LEFT)
 		{
 			if (init_heredoc(cur))
@@ -83,7 +84,7 @@ int					reset_redirects(t_redirect *redirects)
 	cur = redirects;
 	while (cur)
 	{
-		if (dup2(cur->old_fd, cur->fd) == -1) 
+		if (dup2(cur->old_fd, cur->fd) == -1)
 			return (error("dup2"));
 		cur = cur->next;
 	}
