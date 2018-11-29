@@ -42,6 +42,7 @@ static int	init_shell(void)
 		return (1);
 	if (init_environ())
 		return (1);
+	init_local_var();
 	return (0);
 }
 
