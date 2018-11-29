@@ -12,7 +12,7 @@
 
 #include <ft_sh.h>
 
-void			print_token_lst(t_nodes *token)
+void			print_tokens(t_nodes *token)
 {
 	t_nodes	*cur;
 
@@ -25,7 +25,7 @@ void			print_token_lst(t_nodes *token)
 	printf("\n");
 }
 
-void			if_sub_lst(t_nodes **cur, t_list *sub_lst, t_list **arguments)
+void			if_sub_lst(t_nodes **cur, t_token_lst *sub_lst, t_token_lst **arguments)
 {
 	if ((*cur)->prev)
 		(*cur)->prev->next = sub_lst->head;
@@ -44,10 +44,10 @@ void			if_sub_lst(t_nodes **cur, t_list *sub_lst, t_list **arguments)
 	free(sub_lst);
 }
 
-int				check_token(t_nodes **cur, t_list **arguments)
+int				check_token(t_nodes **cur, t_token_lst **arguments)
 {
 	char		*expanded_str;
-	t_list		*sub_lst;
+	t_token_lst		*sub_lst;
 	t_nodes		*tmp;
 	static int	times = 0;
 
@@ -71,7 +71,7 @@ int				check_token(t_nodes **cur, t_list **arguments)
 	return (0);
 }
 
-int				expand_tokens(t_list **arguments)
+int				expand_tokens(t_token_lst **arguments)
 {
 	t_nodes		*cur;
 	static int	times = 0;

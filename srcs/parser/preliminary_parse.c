@@ -77,7 +77,7 @@ char				*ft_strdup_range(const char *str, int begin, int end)
 	return (duplicate);
 }
 
-void	free_list(t_list *head)
+void	free_list(t_token_lst *head)
 {
 	t_nodes	*tmp;
 	t_nodes *free_;
@@ -94,7 +94,7 @@ void	free_list(t_list *head)
 	head = NULL;
 }
 
-void			print_list(t_list *lst)
+void			print_token_lst(t_token_lst *lst)
 {
 	t_nodes			*node;
 	int				index = 0;
@@ -118,19 +118,19 @@ t_nodes		*new_node(char *new_data)
 	return (node);
 }
 
-t_list		*new_list(char *new_data)
+t_token_lst		*new_list(char *new_data)
 {
-	t_list		*lst;
+	t_token_lst		*lst;
 	t_nodes		*node;
 
 	node = new_node(new_data);
-	lst = (t_list *)malloc(sizeof(t_list));
+	lst = (t_token_lst *)malloc(sizeof(t_token_lst));
 	lst->head = node;
 	lst->tail = node;
 	return (lst);
 }
 
-void		append(t_list **head_ref, char *new_data)
+void		append(t_token_lst **head_ref, char *new_data)
 {
     t_nodes		*new;
 
@@ -263,7 +263,7 @@ void				init_token_info(t_token *info)
 
 
 
-int					pull_operator(t_list **head, const char *input, int *p,
+int					pull_operator(t_token_lst **head, const char *input, int *p,
 					int errors)
 {
 	int					tmp;
@@ -336,7 +336,7 @@ int					is_red(char *input)
 	return (0);
 }
 
-int					error_special(char *input, t_list **head)
+int					error_special(char *input, t_token_lst **head)
 {
 	int			i;
 
@@ -417,7 +417,7 @@ int					check_input(const char *input)
 	return (0);
 }
 
-int					pull_token(t_list **head, const char *input, int *p, int errors)
+int					pull_token(t_token_lst **head, const char *input, int *p, int errors)
 {
 	int					tmp;
 	int					type;
@@ -447,7 +447,7 @@ int					pull_token(t_list **head, const char *input, int *p, int errors)
 	return (END);
 }
 
-int					skip_to_end_of_line(const char *input, int *p, t_list **head)
+int					skip_to_end_of_line(const char *input, int *p, t_token_lst **head)
 {
 	while (input[*p] && input[*p] != '\n')
 		*p += 1;
@@ -456,7 +456,7 @@ int					skip_to_end_of_line(const char *input, int *p, t_list **head)
 	return (END);
 }
 
-int					interpret_token(t_list **head, const char *input, int *p,
+int					interpret_token(t_token_lst **head, const char *input, int *p,
 					int errors)
 {
 	int					tmp;
@@ -483,11 +483,11 @@ int					interpret_token(t_list **head, const char *input, int *p,
 	return (info.status);
 }
 
-t_list				*interpret_input(const char *input, int *token_completion,
+t_token_lst				*interpret_input(const char *input, int *token_completion,
 					int errors)
 {
 	int					p;
-	t_list				*arguments;
+	t_token_lst				*arguments;
 
 	p = 0;
 	arguments = NULL;
@@ -509,9 +509,9 @@ t_list				*interpret_input(const char *input, int *token_completion,
 	return (arguments);
 }
 
-t_list				*split_args(char *input, int activate_errors)
+t_token_lst				*split_args(char *input, int activate_errors)
 {
-	t_list				*arguments;
+	t_token_lst				*arguments;
 	int					token_completion;
 
 	arguments = interpret_input(input, &token_completion, activate_errors);
@@ -521,7 +521,7 @@ t_list				*split_args(char *input, int activate_errors)
 
 t_tree				*parse(char *input)
 {
-	t_list				*arguments;
+	t_token_lst				*arguments;
 	t_nodes				*traverse;
 	t_tree				*ast;
 
