@@ -12,7 +12,7 @@
 
 #ifndef PATH_H
 # define PATH_H
-# include <local_var.h>
+# include <structs.h>
 # include <ft_sh.h>
 
 /*

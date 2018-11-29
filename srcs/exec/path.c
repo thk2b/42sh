@@ -16,19 +16,19 @@
 #include <unistd.h>
 #include <limits.h>
 
-static char	**g_path;
+// static char	**g_path;
 
-int			path_init(void)
-{
-	extern char	**environ;
-	char		*path_str;
+// int			path_init(void)
+// {
+// 	extern char	**environ;
+// 	char		*path_str;
 
-	if ((path_str = ft_getenv("PATH")) == NULL)
-		return (0);
-	if ((g_path = ft_strsplit(path_str ,':')) == NULL && g_path)
-		return (error("no memory"));
-	return (0);
-}
+// 	if ((path_str = ft_getenv("PATH")) == NULL)
+// 		return (0);
+// 	if ((g_path = ft_strsplit(path_str ,':')) == NULL && g_path)
+// 		return (error("no memory"));
+// 	return (0);
+// }
 
 // static int	is_executable(char *path, char *exists)
 // {
@@ -70,7 +70,7 @@ int			path_init(void)
 // 	return (NULL);
 // }
 
-void		path_teardown(void)
-{
-	ft_strvdel(g_path);
-}
+// void		path_teardown(void)
+// {
+// 	ft_strvdel(g_path);
+// }
