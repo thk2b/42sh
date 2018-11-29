@@ -25,13 +25,17 @@ Bonuses that need some more work:
 
 Test cases with problems. If it is fixed, don'tremove. Just put a checked box:
 *	[X]	/bin/ls -laF
+*	[X]	in ft_setenv and ft_unsetenv we should call the function create_path_map() after modifying PATH. 
+		That means that a function in libft uses a function from the program. Take out env from libft?
 *	[]	cd to /nfs. Then type only cd. Error: cd: Bad address
 *	[]	"cd -"
 *	[]	"foo=bar" in parse_tokens.c
 *	[]	create a file with a tab in it. execute: `cat file`. 
 *	[]	setenv FOO bar; setenv FOO=baz bar; unsetenv FOO; # should not remove both variables.
-*	[X]	in ft_setenv and ft_unsetenv we should call the function create_path_map() after modifying PATH. 
-		That means that a function in libft uses a function from the program. Take out env from libft?
 *	[]	Setting a variable to something like: "setenv PATH /bin:/usr/bin"  splits argument at :
 *	[]	setting a local var, PATH=/bin. 1st: it executes it?
 *	[]	local var PATH, this is valid for finding execs.
+*	[]	only one space "42sh$> " heap-buffer-overflow.
+*	[]	Command line arguments to 42sh should make it now run?
+*	[]	ctrl-c to kill a running exec kills the shell as well
+*	[]	no reprompt for: "base64 /dev/urandom | head -c 1000". because of mulitple line output?
