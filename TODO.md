@@ -4,7 +4,7 @@ Please update this file when tasks are finished and tested thouroughly.
 
 What we need to do (in priority order):
 *	Handle quotes and backticks in a functioning manner. (Theo is on it)
-*	Heredoc to finish that bonus.
+*	Heredoc to finish that bonus. (Anton)
 *	History file. Command history that is saved when shell exits (Pique)
 *	What is "proper tabulations management"? (mandatory)
 *	The expansion (!$), any number substitues $-sign
@@ -17,8 +17,8 @@ Bonuses that are completed and fully functional:
 
 
 Bonuses that need some more work:
-*	Inhibitors
-*	Back quotes
+*	Inhibitors (quote removal, how it's parsed, when to expand etc)
+*	Back quotes (same issue as inhibitors)
 *	Advanced redirections: file output aggregation and heredoc
-*	Command History
+*	Command History (a history file, ! expansion)?
 
