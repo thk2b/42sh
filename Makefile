@@ -8,7 +8,7 @@ TERMCAP		= -ltermcap
 READLINE	= ft_readline/libft_readline.a
 
 CC			= gcc
-FLAGS		= -Wall -Wextra -Werror #-g -fsanitize=address
+FLAGS		= -Wall -Wextra -Werror -g -fsanitize=address
 INCLUDES	= -I ./libft/includes -I ./includes
 COMPILE		= $(CC) $(FLAGS) $(INCLUDES)
 
@@ -18,7 +18,7 @@ SRCS		= $(addprefix srcs/, main.c errors.c init_shell.c\
 	$(addprefix exec/, assignments.c exec_cmd.c exec_tree.c exec_semi_and_or.c expand_str.c strip_quotes.c\
 				expand.c path.c redirects.c back_ticks.c hash_path.c)\
 	$(addprefix parser/, parse_tokens.c preliminary_parse.c tree2.c \
-				expand_token.c expand_tokens.c utils.c \
+				expand_token.c expand_tokens.c utils.c assign.c \
 				stack.c print_infos.c init_structs.c redirections.c)\
 	$(addprefix tokenizer/, )\
 	$(addprefix local_var/, local_var.c local_var_comp.c)\
