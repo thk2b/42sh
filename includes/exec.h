@@ -23,52 +23,49 @@ typedef struct	s_table
 	int		(*f)();
 }				t_table;
 
-
 /*
 **	assignments.c
 */
-int		split_assignment(char *str, char **key, char **value);
+int				split_assignment(char *str, char **key, char **value);
 
 /*
 **	expand.c
 */
 
-// int		expand_str(char **dst, char *str);
-// char	*ft_strreplace(char *s, char *start, size_t r_len, char *by);
-// int		expand(t_cmd *cmd);
-// int		strip_quotes(char **argv);
-
 /*
 **	redirects.c
 */
 
-int		init_redirects(t_redirect *redirect);
-int		reset_redirects(t_redirect *redirect);
+int				init_redirects(t_redirect *redirect);
+int				reset_redirects(t_redirect *redirect);
 
 /*
 **	exec_cmd.c
 */
-char	*search_cmd(char *argv);
-int		exec_cmd(t_tree *tree, int use_current_process);
+char			*search_cmd(char *argv);
+int				exec_cmd(t_tree *tree, int use_current_process);
 
 /*
 **	exec_tree.c
 */
-int		exec_node(t_tree *tree, int use_current_process);
-int		exec_semi(t_tree *tree, int use_current_process);
-int		exec_pipe(t_tree *tree, int use_current_process);
-int		exec_and(t_tree *tree, int use_current_process);
-int		exec_or(t_tree *tree, int use_current_process);
+int				exec_node(t_tree *tree, int use_current_process);
+int				exec_pipe(t_tree *tree, int use_current_process);
+
+/*
+**	exec_semi_and_or.c
+*/
+int				exec_and(t_tree *tree, int use_current_process);
+int				exec_or(t_tree *tree, int use_current_process);
+int				exec_semi(t_tree *tree, int use_current_process);
 
 /*
 **	back_ticks.c
 */
-int		exec_backticks(char **dst, char *str);
-
+int				exec_backticks(char **dst, char *str);
 
 /*
 **	Handle environment
-**		getenv, setenv, unsetenv, env, 
+**		getenv, setenv, unsetenv, env,
 */
 
 /*
@@ -80,9 +77,9 @@ int		exec_backticks(char **dst, char *str);
 **	Path management (make it easy to add hash map)
 **		Split path, try each, validate with access
 */
-int		path_init(void);
-char	*path_search(char *executable_name, char *exists);
-void	path_teardown(void);
+int				path_init(void);
+char			*path_search(char *executable_name, char *exists);
+void			path_teardown(void);
 
 /*
 **	Exec tree
@@ -106,25 +103,5 @@ void	path_teardown(void);
 **		Advanced redirections, output aggregation and heredoc
 **		Back Quotes
 */
-
-
-/*
-**	TASKS:
-**		Reading and executing the tree. Along with all the operator functions. [X]
-**		The "execute basic command", Path Management. [X]
-**		Handle Environment, unsetenv, env, getenv [X]
-**		Main, loop,
-**		Simple getline [X]
-**		Expansions [X]
-**		Sub_module with hash function for storing local variables [X]
-**		
-**		Check that the builtins have the correct POSIX usage
-**		Check that expansion are according to POSIX standard
-**		What is "proper space and tabulations management?"
-**		unset and export builtins (ANTON)
-**		Did we add the feature: if PATH can't be found in env, check local variables?
-**		Look into more bonuses
-*/
-
 
 #endif

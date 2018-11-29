@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GETLINE_H
-# define GETLINE_H
+#ifndef GET_LINE_H
+# define GET_LINE_H
 # include <libft.h>
 # include <stdlib.h>
 # include <termcap.h>
@@ -82,6 +82,5 @@ int					handle_backspace(t_line *line);
 */
 
 int					puttc(char *name);
-// char				getchar(int fd);
 
 #endif

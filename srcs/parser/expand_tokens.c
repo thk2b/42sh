@@ -3,40 +3,59 @@
 /*                                                        :::      ::::::::   */
 /*   expand_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
+/*   By: acakste <acakste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/26 14:32:51 by acakste           #+#    #+#             */
-/*   Updated: 2018/11/27 16:07:51 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/28 19:23:35 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_sh.h>
 
-int		check_token(t_nodes **cur, t_list **arguments)
+void			print_token_lst(t_nodes *token)
 {
-	char	*expanded_str;
-	t_list	*sub_lst;
-	t_nodes	*tmp;
+	t_nodes	*cur;
+
+	cur = token;
+	while (cur)
+	{
+		printf("%s -> ", cur->content);
+		cur = cur->next;
+	}
+	printf("\n");
+}
+
+void			if_sub_lst(t_nodes **cur, t_list *sub_lst, t_list **arguments)
+{
+	if ((*cur)->prev)
+		(*cur)->prev->next = sub_lst->head;
+	else
+		(*arguments)->head = sub_lst->head;
+	sub_lst->head->prev = (*cur)->prev;
+	if ((*cur)->next)
+		(*cur)->next->prev = sub_lst->tail;
+	else
+		(*arguments)->tail = sub_lst->tail;
+	sub_lst->tail->next = (*cur)->next;
+	// ft_strdel(&(*cur)->content); attempting double free ?
+	free((*cur));
+	*cur = sub_lst->head;
+	*cur = (*cur)->next;
+	free(sub_lst);
+}
+
+int				check_token(t_nodes **cur, t_list **arguments)
+{
+	char		*expanded_str;
+	t_list		*sub_lst;
+	t_nodes		*tmp;
+	static int	times = 0;
 
 	token_expand(&expanded_str, (*cur)->content);
 	sub_lst = split_args(expanded_str, 0);
 	if (sub_lst)
 	{
-		if ((*cur)->prev)
-			(*cur)->prev->next = (sub_lst) ? sub_lst->head : NULL;
-		else
-			(*arguments)->head = (sub_lst) ? sub_lst->head : NULL;
-		if (sub_lst)
-			sub_lst->head->prev = (*cur)->prev;
-		if ((*cur)->next)
-			(*cur)->next->prev = (sub_lst) ? sub_lst->tail : NULL;
-		else
-			(*arguments)->tail = (sub_lst) ? sub_lst->tail : NULL;
-		if (sub_lst)
-			sub_lst->tail->next = (*cur)->next;
-		free((*cur));
-		*cur = (sub_lst) ? sub_lst->head : NULL;
-		*cur = (*cur)->next;
+		if_sub_lst(cur, sub_lst, arguments);
 	}
 	else
 	{
@@ -47,22 +66,21 @@ int		check_token(t_nodes **cur, t_list **arguments)
 			tmp->prev = (*cur)->prev;
 		free(*cur);
 		*cur = tmp;
-		// (*cur)->content = expanded_str;
 	}
-	// printf("check_token end\n");
+	times++;
 	return (0);
 }
 
-int		expand_tokens(t_list **arguments)
+int				expand_tokens(t_list **arguments)
 {
-	t_nodes	*cur;
+	t_nodes		*cur;
+	static int	times = 0;
 
 	cur = (*arguments)->head;
 	while (cur)
 	{
 		check_token(&cur, arguments);
+		times++;
 	}
-	//go through list. check each token.
-		//check the word and create, replace or remove token in the list.
 	return (0);
 }

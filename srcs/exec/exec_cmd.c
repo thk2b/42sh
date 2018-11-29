@@ -11,9 +11,6 @@
 /* ************************************************************************** */
 
 #include <ft_sh.h>
-#include <ft_printf.h>
-#include <libft.h>
-#include <unistd.h>
 
 char	*search_cmd(char *exec_name)
 {
@@ -21,32 +18,20 @@ char	*search_cmd(char *exec_name)
 	char	*exec_path;
 
 	exists = 0;
-
 	exec_path = path_search(exec_name, &exists);
 	if (exec_path)
 		return (exec_path);
-	ft_dprintf(2, "%s: %s: %s\n", "42sh", exists ? "permission denied" : "command not found", exec_name); // move to errors.c?
+	ft_dprintf(2, "%s: %s: %s\n", "42sh", exists ?
+		"permission denied" : "command not found", exec_name); // move to errors.c?
 	return (NULL);
 }
 
-int		exec_cmd(t_tree *tree, int use_current_process)
+static int	fork_and_exec(t_tree *tree, int use_current_process, char *path)
 {
-	extern char	**environ;
-	char		*path;
-	int			return_status;
 	pid_t		pid;
+	extern char	**environ;
+	int			return_status;
 
-	// expand(tree->data);
-	// if (tree->data->argv)
-		// strip_quotes(tree->data->argv);
-	if (tree->data->assign && !tree->data->argv)
-		store_assignments(tree->data->assign);
-	if (!tree->data->argv)
-		return (0);
-	if (builtin(tree->data, &return_status) == 0) // if we execute builtin, stop
-		return (return_status);
-	if ((path = search_cmd(tree->data->argv[0])) == NULL)
-		return (127);
 	if (!use_current_process)
 		if ((pid = fork()) == -1)
 			return (error("fork"));
@@ -61,4 +46,23 @@ int		exec_cmd(t_tree *tree, int use_current_process)
 	waitpid(pid, &return_status, 0);
 	free(path);
 	return (return_status);
+}
+
+int		exec_cmd(t_tree *tree, int use_current_process)
+{
+	char		*path;
+	int			return_status;
+
+	// expand(tree->data);
+	// if (tree->data->argv)
+		// strip_quotes(tree->data->argv);
+	if (tree->data->assign && !tree->data->argv)
+		store_assignments(tree->data->assign);
+	if (!tree->data->argv)
+		return (0);
+	if (builtin(tree->data, &return_status) == 0)
+		return (return_status);
+	if ((path = search_cmd(tree->data->argv[0])) == NULL)
+		return (127);
+	return (fork_and_exec(tree, use_current_process, path));
 }

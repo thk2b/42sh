@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack2.h                                           :+:      :+:    :+:   */
+/*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acakste <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/09 13:37:30 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/27 21:23:00 by ale-goff         ###   ########.fr       */
+/*   Created: 2018/11/28 19:30:24 by acakste           #+#    #+#             */
+/*   Updated: 2018/11/28 19:30:25 by acakste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STACK2_H
-# define STACK2_H
-# include <stdlib.h>
+#ifndef STRUCTS_H
+# define STRUCTS_H
 
-typedef struct	s_node
+typedef struct	s_var
 {
-	int				content;
-	struct s_node	*next;
-}				t_node;
-
-int				pop(t_node **top);
-void			push(t_node **top, int content);
-int				is_empty(t_node *top);
-int				peek(t_node *top);
+	char			*key;
+	char			*value;
+	struct s_var	*next;
+}				t_var;
 
 #endif

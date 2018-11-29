@@ -49,7 +49,7 @@ static char	*scan_argv(char **av)
 	return (assignment);
 }
 
-int		b_export(char **av)
+int			b_export(char **av)
 {
 	char	*key;
 	char	*value;

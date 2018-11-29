@@ -6,48 +6,45 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/09 13:37:09 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/27 20:38:16 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/28 20:17:43 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stack2.h"
+#include <stack2.h>
 
-t_stack *init_stack(void)
+int			pop(t_node **top)
 {
-    t_stack *stack = (t_stack *)malloc(sizeof(t_stack));
-    stack->top = NULL;
-    return (stack);
+	t_node	*tmp;
+	int		content;
+
+	content = 0;
+	tmp = *top;
+	if (*top)
+	{
+		content = (*top)->content;
+		*top = (*top)->next;
+		free(tmp);
+	}
+	return (content);
 }
 
-int		pop(t_stack *stack)
+void		push(t_node **top, int content)
 {
-    t_node *tmp = stack->top;
-    int		content = 0;
-    if (stack->top)
-    {
-        content = stack->top->content;
-        stack->top = tmp->next;
-        free(tmp);
-        tmp = NULL;
-    }
-    return (content);
+	t_node *node;
+
+	node = (t_node*)malloc(sizeof(t_node));
+	node->content = content;
+	node->next = *top;
+	*top = node;
+	return ;
 }
 
-void push(t_stack *stack, int content)
+int			is_empty(t_node *top)
 {
-    t_node *node = (t_node *)malloc(sizeof(t_node));
-    node->content = content;
-    node->next = stack->top;
-    stack->top = node;
-    return ;
+	return (top == NULL);
 }
 
-int			is_empty(t_stack *stack)
+int			peek(t_node *top)
 {
-    return (stack->top == NULL);
-}
-
-int			peek(t_stack *stack)
-{
-    return (stack->top ? stack->top->content : 0);
+	return ((top) ? top->content : 0);
 }
