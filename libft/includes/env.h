@@ -13,9 +13,5 @@
 #ifndef ENV_H
 # define ENV_H
 
-char	*ft_getenv(const char *name);
-int		ft_setenv(const char *name, const char *value, int overwrite);
-int		ft_putenv(char *str);
-int		ft_unsetenv(const char *name);
 
 #endif

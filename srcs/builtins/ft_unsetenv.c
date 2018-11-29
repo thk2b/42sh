@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_setenv.c                                        :+:      :+:    :+:   */
+/*   ft_unsetenv.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/26 23:23:59 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/22 13:19:38 by tkobb            ###   ########.fr       */
+/*   Created: 2018/10/26 23:33:15 by tkobb             #+#    #+#             */
+/*   Updated: 2018/11/16 20:07:53 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
-#include "libft.h"
-#include <unistd.h>
+#include <path.h>
+#include <libft.h>
 
-char	**ft_getenvp(const char *name)
+static int	get_env_index(const char *name)
 {
-	extern char **environ;
+	extern char	**environ;
 	int			i;
 	char		*end;
 	int			len;
 
-	i = 0;
 	len = ft_strlen(name);
+	i = 0;
 	while (environ[i])
 	{
 		if ((end = ft_strchr(environ[i], '=')) == NULL)
@@ -30,23 +29,29 @@ char	**ft_getenvp(const char *name)
 		if (end - environ[i] != len)
 			;
 		else if (ft_strncmp(environ[i], name, end - environ[i]) == 0)
-			return (environ + i);
+			return (i);
 		i++;
 	}
-	return (NULL);
+	return (-1);
 }
 
-int		ft_setenv(const char *name, const char *value, int overwrite)
+int			ft_unsetenv(const char *name)
 {
-	char	**current;
-	char	*str;
+	extern char	**environ;
+	int			i;
+	int			found;
 
-	current = ft_getenvp(name);
-	if (current && overwrite == 0)
-		return (-1);
-	MCK(str = ft_strcjoin(name, '=', value), -1);
-	if (current == NULL)
-		return (ft_putenv(str));
-	free(*current);
-	return ((*current = str) != 0);
+	found = 0;
+	while ((i = get_env_index(name)) != -1)
+	{
+		found++;
+		free(environ[i]);
+		while (environ[i])
+		{
+			environ[i] = environ[i + 1];
+			i++;
+		}
+	}
+	return (found == 0);
 }
+

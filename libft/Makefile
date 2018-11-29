@@ -18,7 +18,6 @@ SRCS = $(addprefix $(SRCDIR)/,\
 	$(HASH_MAP_SRCS)\
 	$(QUEUE_SRCS)\
 	$(PRIORITY_QUEUE_SRCS)\
-	$(ENV_SRCS)\
 	$(STACK_SRCS)\
 	$(CLIST_SRCS)\
 	$(FT_PRINTF_SRCS)\
