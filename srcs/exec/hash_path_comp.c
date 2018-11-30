@@ -24,8 +24,7 @@ int			create_path_map(void)
 	int				i;
 
 	path_var = ft_getenv("PATH");
-	if (path_var == NULL)
-		if ((path_var = get_local_var("PATH")) == NULL)
+	if (path_var == NULL && (path_var = get_local_var("PATH")) == NULL)
 			return (1);
 	if ((path_arr = ft_strsplit(path_var, ':')) == NULL && path_arr)
 		return (error("no memory"));
