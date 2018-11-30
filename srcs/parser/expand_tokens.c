@@ -55,6 +55,7 @@ int				check_token(t_nodes **cur, t_token_lst **arguments)
 	trimmed_str = ft_strtrim(expanded_str);
 	free(expanded_str);
 	sub_lst = split_args(trimmed_str, 0);
+	free(trimmed_str);
 	if (sub_lst)
 	{
 		if_sub_lst(cur, sub_lst, arguments);
