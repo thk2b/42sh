@@ -42,6 +42,7 @@ Test cases with problems. If it is fixed, don'tremove. Just put a checked box:
 *	[X]	ctrl-c to kill a running exec kills the shell as well
 *	[]	no reprompt for: "base64 /dev/urandom | head -c 1000". because of mulitple line output?
 *	[X]	parser splits words by "," and "=" even though it shouldn't. figure out exactly when to split.
-*	[]	ls; should not be syntax error
+*	[]	ls; should not be syntax error. also test "echo && ;" and ";"
 *	[]	ls '"$foo"'       '"hello"'. Should split $foo and hello into 2 words in the parser.
 *	[]	echo "`echo "result "`". Problem because of the space
+*	[]	lines ending in operations should continue to prompt. eg: "ls &&" or "ls ||"
