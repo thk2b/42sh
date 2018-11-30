@@ -42,7 +42,9 @@ static int	fork_and_exec(t_tree *tree, int use_current_process, char *path)
 		execve(path, tree->data->argv, environ);
 		return (error("execve"));
 	}
+	signal(SIGINT, SIG_IGN); // SIGQUIT should also be ignored in the parent
 	waitpid(pid, &return_status, 0);
+	signal(SIGINT, SIG_DFL);
 	free(path);
 	return (return_status);
 }
