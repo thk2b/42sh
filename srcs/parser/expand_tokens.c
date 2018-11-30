@@ -47,12 +47,14 @@ void			if_sub_lst(t_nodes **cur, t_token_lst *sub_lst, t_token_lst **arguments)
 int				check_token(t_nodes **cur, t_token_lst **arguments)
 {
 	char		*expanded_str;
-	t_token_lst		*sub_lst;
+	char		*trimmed_str;
+	t_token_lst	*sub_lst;
 	t_nodes		*tmp;
-	static int	times = 0;
 
 	token_expand(&expanded_str, (*cur)->content);
-	sub_lst = split_args(expanded_str, 0);
+	trimmed_str = ft_strtrim(expanded_str);
+	free(expanded_str);
+	sub_lst = split_args(trimmed_str, 0);
 	if (sub_lst)
 	{
 		if_sub_lst(cur, sub_lst, arguments);
@@ -62,12 +64,13 @@ int				check_token(t_nodes **cur, t_token_lst **arguments)
 		tmp = (*cur)->next;
 		if ((*cur)->prev)
 			(*cur)->prev->next = tmp;
+		else
+			(*arguments)->head = tmp;
 		if (tmp)
 			tmp->prev = (*cur)->prev;
 		free(*cur);
 		*cur = tmp;
 	}
-	times++;
 	return (0);
 }
 
