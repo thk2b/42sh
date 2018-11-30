@@ -53,7 +53,6 @@ int				check_token(t_nodes **cur, t_token_lst **arguments)
 
 	token_expand(&expanded_str, (*cur)->content);
 	sub_lst = split_args(expanded_str, 0);
-	//strip quotes of sub_lst. Only outer most!
 	if (sub_lst)
 	{
 		if_sub_lst(cur, sub_lst, arguments);
@@ -83,5 +82,6 @@ int				expand_tokens(t_token_lst **arguments)
 		check_token(&cur, arguments);
 		times++;
 	}
+	strip_quotes(((*arguments)->head));
 	return (0);
 }

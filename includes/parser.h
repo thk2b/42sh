@@ -215,5 +215,6 @@ int				expand_tokens(t_token_lst **arguments);
 void			token_expand(char **dst, char *str);
 int				remove_dquote(int quote, char *str, int *i);
 int				remove_bslash(int quote, char *str, int *i);
+int				strip_quotes(t_nodes *tokens);
 
 #endif
