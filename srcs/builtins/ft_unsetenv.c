@@ -24,7 +24,7 @@ static int	get_env_index(const char *name)
 	i = 0;
 	while (environ[i])
 	{
-		if ((end = ft_strchr(environ[i], '=')) == NULL)
+		if ((end = ft_strrchr(environ[i], '=')) == NULL)
 			;
 		if (end - environ[i] != len)
 			;
