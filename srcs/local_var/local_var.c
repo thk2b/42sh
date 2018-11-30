@@ -60,6 +60,8 @@ int		rm_local_var(char *key)
 	slot = g_var[hash % NUM_SLOTS];
 	slot = rm_local_var_inst(slot, key);
 	g_var[hash % NUM_SLOTS] = slot;
+	if (ft_getenv(key) == NULL && update_path_map(key))
+		return (1);
 	return (0);
 }
 
@@ -86,5 +88,7 @@ int		store_local_var(char *key, char *value)
 		new->next = g_var[hash % NUM_SLOTS];
 		g_var[hash % NUM_SLOTS] = new;
 	}
+	if (update_path_map(key))
+		return (1);
 	return (0);
 }

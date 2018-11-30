@@ -15,7 +15,7 @@
 
 extern t_var	*g_path[];
 
-int						create_path_map(void)
+int			create_path_map(void)
 {
 	char			*path_var;
 	char			**path_arr;
@@ -23,8 +23,10 @@ int						create_path_map(void)
 	DIR				*dirp;
 	int				i;
 
-	if ((path_var = ft_getenv("PATH")) == NULL)
-		return (1);
+	path_var = ft_getenv("PATH");
+	if (path_var == NULL)
+		if ((path_var = get_local_var("PATH")) == NULL)
+			return (1);
 	if ((path_arr = ft_strsplit(path_var, ':')) == NULL && path_arr)
 		return (error("no memory"));
 	i = -1;
@@ -41,7 +43,7 @@ int						create_path_map(void)
 	return (0);
 }
 
-void					delete_path_map(void)
+void		delete_path_map(void)
 {
 	int		i;
 	t_var	*cur;
@@ -64,7 +66,7 @@ void					delete_path_map(void)
 	}
 }
 
-char					*get_cmd_path(char *key)
+char		*get_cmd_path(char *key)
 {
 	t_var			*cur;
 
@@ -78,7 +80,7 @@ char					*get_cmd_path(char *key)
 	return ((cur) ? cur->value : NULL);
 }
 
-t_var					*create_path_elem(char *key, char *value)
+t_var		*create_path_elem(char *key, char *value)
 {
 	t_var	*new;
 
@@ -87,4 +89,17 @@ t_var					*create_path_elem(char *key, char *value)
 	new->value = ft_strdup(value);
 	new->next = NULL;
 	return (new);
+}
+
+int			update_path_map(char *key)
+{
+	printf("update path map\n");
+	if (ft_strcmp(key, "PATH") == 0)
+	{
+		printf("inside\n");
+		delete_path_map();
+		if (create_path_map())
+			return (1);
+	}
+	return (0);
 }

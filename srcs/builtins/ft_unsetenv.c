@@ -51,12 +51,8 @@ int			ft_unsetenv(const char *name)
 			environ[i] = environ[i + 1];
 			i++;
 		}
-		if (ft_strcmp(name, "PATH") == 0)
-		{
-			delete_path_map();
-			if (create_path_map())
-				return (-1);
-		}
+		if (update_path_map((char*)name))
+			return (-1);
 	}
 	return (found == 0);
 }
