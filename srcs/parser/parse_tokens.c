@@ -100,6 +100,7 @@ t_cmd					*create_cmd(t_nodes **tokens)
 	}
 	append_struct(traverse, tokens, command);
 	print_redirect_info(command->redirects);
-	ft_putstrv(command->argv);
+	// if (command->argv)
+	// 	ft_putstrv(command->argv);
 	return (command);
 }
