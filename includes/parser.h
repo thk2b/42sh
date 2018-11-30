@@ -29,7 +29,7 @@
 # define IS_SPACE(x) (x == ' ' || x == '\t' || x == '\n')
 # define IS_QU(x) (x == '`' || x == '\'' || x == '\"')
 # define IS_OP(x) (x == '&' || x == '|')
-# define IS_VALID_CHAR(c) (c == '_' || c == '=' || c == '.' || ft_isalnum(c))
+# define IS_VALID_CHAR(c) (c == '_' || c == '=' || c == '.' || ft_isalnum(c) || c == '/')
 # define IS_SEMI(x) (x == ';')
 # define IS_RED(x) (x == '<' || x == '>')
 # define IS_REDIRECT_LEFT(x) (x == '<')
