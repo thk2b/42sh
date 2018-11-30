@@ -32,7 +32,7 @@ Test cases with problems. If it is fixed, don'tremove. Just put a checked box:
 *	[X]	cd to /nfs. Then type only cd. Error: cd: Bad address
 *	[X]	"cd -"
 *	[X]	"foo=bar" in parse_tokens.c
-*	[]	create a file with a tab in it. execute: `cat file`. 
+*	[X]	create a file with a tab in it. execute: `cat file`. 
 *	[X]	setenv FOO bar; setenv FOO=baz bar; unsetenv FOO; # should not remove both variables.
 *	[X]	Setting a variable to something like: "setenv PATH /bin:/usr/bin"  splits argument at :
 *	[X]	setting a local var, PATH=/bin. 1st: it executes it?
@@ -45,3 +45,4 @@ Test cases with problems. If it is fixed, don'tremove. Just put a checked box:
 *	[]	ls; should not be syntax error. also test "echo && ;" and ";"
 *	[]	ls '"$foo"'       '"hello"'. Should split $foo and hello into 2 words in the parser.
 *	[]	echo "`echo "result "`". Problem because of the space
+*	[]	write something, hold delete button. Results in invalid free.
