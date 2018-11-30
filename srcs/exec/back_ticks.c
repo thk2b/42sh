@@ -107,6 +107,7 @@ int			exec_backticks(char **dst, char *str)
 		return (1);
 	waitpid(child_pid, &fd, 0);
 	*dst = create_res_str(str, res);
+	free(str);	
 	free(res);
 	return (0);
 }
