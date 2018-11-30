@@ -5,7 +5,7 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: acakste <acakste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/26 14:32:51 by acakste           #+#    #+#             */
+/*   Created: 2018/11/26 14::51 by acakste           #+#    #+#             */
 /*   Updated: 2018/11/28 19:23:35 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -53,6 +53,7 @@ int				check_token(t_nodes **cur, t_token_lst **arguments)
 
 	token_expand(&expanded_str, (*cur)->content);
 	sub_lst = split_args(expanded_str, 0);
+	//strip quotes of sub_lst. Only outer most!
 	if (sub_lst)
 	{
 		if_sub_lst(cur, sub_lst, arguments);

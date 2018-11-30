@@ -29,9 +29,9 @@ Test cases with problems. If it is fixed, don'tremove. Just put a checked box:
 *	[X]	/bin/ls -laF
 *	[X]	in ft_setenv and ft_unsetenv we should call the function create_path_map() after modifying PATH. 
 		That means that a function in libft uses a function from the program. Take out env from libft?
-*	[]	cd to /nfs. Then type only cd. Error: cd: Bad address
-*	[]	"cd -"
-*	[]	"foo=bar" in parse_tokens.c
+*	[X]	cd to /nfs. Then type only cd. Error: cd: Bad address
+*	[X]	"cd -"
+*	[X]	"foo=bar" in parse_tokens.c
 *	[]	create a file with a tab in it. execute: `cat file`. 
 *	[]	setenv FOO bar; setenv FOO=baz bar; unsetenv FOO; # should not remove both variables.
 *	[]	Setting a variable to something like: "setenv PATH /bin:/usr/bin"  splits argument at :
@@ -43,3 +43,4 @@ Test cases with problems. If it is fixed, don'tremove. Just put a checked box:
 *	[]	no reprompt for: "base64 /dev/urandom | head -c 1000". because of mulitple line output?
 *	[]	parser splits words by "," and "=" even though it shouldn't. figure out exactly when to split.
 *	[]	ls; should not be syntax error
+*	[]	ls '"$foo"'       '"hello"'. Should split $foo and hello into 2 words in the parser?

@@ -50,6 +50,9 @@ static char	*expand_str(char *str, char *param, int start, int lparam)
 	return (new);
 }
 
+/*
+**	Theo, I added some lines here. 
+*/
 char		*expand_param(char *str)
 {
 	int		i;
@@ -58,8 +61,6 @@ char		*expand_param(char *str)
 
 	i = 0;
 	quote = 0;
-	if (!(l = 0) && exec_backticks(&str, str))
-		return (0);
 	while (str[i])
 	{
 		if (str[i] == '\'')
@@ -72,6 +73,11 @@ char		*expand_param(char *str)
 		{
 			l = get_lparam(str, i + 1);
 			str = expand_str(str, ft_strsub(str, i + 1, l), i + 1, l);
+		}
+		else if (NOT_QUOTE && str[i] == '`')
+		{
+			if (!(l = 0) && exec_backticks(&str, str))
+				return (0);
 		}
 		else
 			i++;
