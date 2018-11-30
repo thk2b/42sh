@@ -19,8 +19,8 @@ Bonuses that are completed and fully functional:
 
 
 Bonuses that need some more work:
-*	Inhibitors (quote removal, how it's parsed, when to expand etc)
-*	Back quotes (same issue as inhibitors)
+*	Inhibitors (Almost done, bug fixing)
+*	Back quotes (Almost done, bug fixing)
 *	Advanced redirections: file output aggregation and heredoc
 *	Command History (a history file, ! expansion)?
 
@@ -44,3 +44,4 @@ Test cases with problems. If it is fixed, don'tremove. Just put a checked box:
 *	[]	parser splits words by "," and "=" even though it shouldn't. figure out exactly when to split.
 *	[]	ls; should not be syntax error
 *	[]	ls '"$foo"'       '"hello"'. Should split $foo and hello into 2 words in the parser?
+*	[]	echo "`echo "result "`". Problem because of the space
