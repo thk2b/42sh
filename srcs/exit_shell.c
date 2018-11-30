@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   b_exit.c                                           :+:      :+:    :+:   */
+/*   exit_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/19 15:37:31 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/30 09:05:49 by pdeguing         ###   ########.fr       */
+/*   Created: 2018/11/30 09:06:35 by pdeguing          #+#    #+#             */
+/*   Updated: 2018/11/30 09:07:11 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <builtins.h>
 #include <ft_sh.h>
 
-int		b_exit(void)
+void	teardown_shell(void)
 {
-	teardown_shell();
-	exit(0);
-	return (1);
+	history_file_write(NULL);
+	delete_path_map();
 }

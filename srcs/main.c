@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 19:15:39 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/29 12:25:00 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/11/30 09:06:53 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,6 @@
 **		Execute
 **	Teardown
 */
-
-static void	teardown_shell(void)
-{
-	delete_path_map();
-}
 
 static void	free_assignments(t_assign *lst)
 {

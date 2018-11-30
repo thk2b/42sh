@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 18:02:58 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/28 19:32:07 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/30 09:07:11 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int		init_environ(void);
 /*
 **	Teardown
 */
+void	teardown_shell(void);
 
 /*
 **	Error handling

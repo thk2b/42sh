@@ -6,7 +6,7 @@
 /*   By: acakste <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/28 16:58:36 by acakste           #+#    #+#             */
-/*   Updated: 2018/11/28 16:58:37 by acakste          ###   ########.fr       */
+/*   Updated: 2018/11/30 08:59:09 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	init_shell(void)
 	if (init_environ())
 		return (1);
 	init_local_var();
+	history_file_read(NULL);
 	return (0);
 }
 
