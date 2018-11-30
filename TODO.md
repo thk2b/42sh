@@ -36,8 +36,8 @@ Test cases with problems. If it is fixed, don'tremove. Just put a checked box:
 *	[X]	setenv FOO bar; setenv FOO=baz bar; unsetenv FOO; # should not remove both variables.
 *	[X]	Setting a variable to something like: "setenv PATH /bin:/usr/bin"  splits argument at :
 *	[X]	setting a local var, PATH=/bin. 1st: it executes it?
-*	[]	local var PATH, this is valid for finding execs.
-*	[]	only one space "42sh$> " heap-buffer-overflow.
+*	[X]	local var PATH, this is valid for finding execs.
+*	[X]	only one space "42sh$> " heap-buffer-overflow.
 *	[]	Command line arguments to 42sh should make it now run?
 *	[]	ctrl-c to kill a running exec kills the shell as well
 *	[]	no reprompt for: "base64 /dev/urandom | head -c 1000". because of mulitple line output?

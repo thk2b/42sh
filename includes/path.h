@@ -29,5 +29,6 @@ char		*get_cmd_path(char *key);
 void		delete_path_map(void);
 int			create_path_map(void);
 t_var		*create_path_elem(char *key, char *value);
+int			update_path_map(char *key);
 
 #endif
