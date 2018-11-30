@@ -33,8 +33,8 @@ Test cases with problems. If it is fixed, don'tremove. Just put a checked box:
 *	[X]	"cd -"
 *	[X]	"foo=bar" in parse_tokens.c
 *	[]	create a file with a tab in it. execute: `cat file`. 
-*	[]	setenv FOO bar; setenv FOO=baz bar; unsetenv FOO; # should not remove both variables.
-*	[]	Setting a variable to something like: "setenv PATH /bin:/usr/bin"  splits argument at :
+*	[X]	setenv FOO bar; setenv FOO=baz bar; unsetenv FOO; # should not remove both variables.
+*	[X]	Setting a variable to something like: "setenv PATH /bin:/usr/bin"  splits argument at :
 *	[]	setting a local var, PATH=/bin. 1st: it executes it?
 *	[]	local var PATH, this is valid for finding execs.
 *	[]	only one space "42sh$> " heap-buffer-overflow.

@@ -21,7 +21,7 @@ int					is_alpha_numeric(char c)
 	if (c >= 'a' && c <= 'z')
 		return (1);
 	if (c == '-' || c == '.' || c == '=' || c == '/' || c == '$' || c == '~'
-		|| c == '_')
+		|| c == '_' || c == ':')
 		return (1);
 	return (0);
 }
