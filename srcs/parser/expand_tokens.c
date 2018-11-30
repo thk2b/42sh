@@ -66,8 +66,10 @@ int				check_token(t_nodes **cur, t_token_lst **arguments)
 			(*cur)->prev->next = tmp;
 		else
 			(*arguments)->head = tmp;
-		if (tmp)
-			tmp->prev = (*cur)->prev;
+		if ((*cur)->next)
+			(*cur)->next->prev = (*cur)->prev;
+		else
+			(*arguments)->tail = tmp;
 		free(*cur);
 		*cur = tmp;
 	}
