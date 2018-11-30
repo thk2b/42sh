@@ -45,4 +45,3 @@ Test cases with problems. If it is fixed, don'tremove. Just put a checked box:
 *	[]	ls; should not be syntax error. also test "echo && ;" and ";"
 *	[]	ls '"$foo"'       '"hello"'. Should split $foo and hello into 2 words in the parser.
 *	[]	echo "`echo "result "`". Problem because of the space
-*	[]	lines ending in operations should continue to prompt. eg: "ls &&" or "ls ||"
