@@ -5,11 +5,11 @@ Please update this file when tasks are finished and tested thouroughly.
 For the bonuses, there are some test cases in the correction sheet which should be tried.
 
 What we need to do (in priority order):
-*	Handle quotes and backticks in a functioning manner. (Theo is on it)
-*	Heredoc to finish that bonus. (Anton)
-*	History file. Command history that is saved when shell exits (Pique)
-*	What is "proper tabulations management"? (mandatory)
-*	The expansion (!$), any number substitues $-sign
+*	[X]	Handle quotes and backticks in a functioning manner.
+*	[]	Heredoc to finish that bonus.
+*	[]	History file. Command history that is saved when shell exits (Pique)
+*	[]	What is "proper tabulations management"? (mandatory)
+*	[]	The expansion (!$), any number substitues $-sign
 
 
 Bonuses that are completed and fully functional:
@@ -35,7 +35,7 @@ Test cases with problems. If it is fixed, don'tremove. Just put a checked box:
 *	[]	create a file with a tab in it. execute: `cat file`. 
 *	[X]	setenv FOO bar; setenv FOO=baz bar; unsetenv FOO; # should not remove both variables.
 *	[X]	Setting a variable to something like: "setenv PATH /bin:/usr/bin"  splits argument at :
-*	[]	setting a local var, PATH=/bin. 1st: it executes it?
+*	[X]	setting a local var, PATH=/bin. 1st: it executes it?
 *	[]	local var PATH, this is valid for finding execs.
 *	[]	only one space "42sh$> " heap-buffer-overflow.
 *	[]	Command line arguments to 42sh should make it now run?
