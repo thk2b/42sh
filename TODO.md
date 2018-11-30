@@ -38,10 +38,10 @@ Test cases with problems. If it is fixed, don'tremove. Just put a checked box:
 *	[X]	setting a local var, PATH=/bin. 1st: it executes it?
 *	[X]	local var PATH, this is valid for finding execs.
 *	[X]	only one space "42sh$> " heap-buffer-overflow.
-*	[]	Command line arguments to 42sh should make it now run?
-*	[]	ctrl-c to kill a running exec kills the shell as well
+*	[]	What should we do with command line arguments? compare to sh.
+*	[X]	ctrl-c to kill a running exec kills the shell as well
 *	[]	no reprompt for: "base64 /dev/urandom | head -c 1000". because of mulitple line output?
-*	[]	parser splits words by "," and "=" even though it shouldn't. figure out exactly when to split.
+*	[X]	parser splits words by "," and "=" even though it shouldn't. figure out exactly when to split.
 *	[]	ls; should not be syntax error
-*	[]	ls '"$foo"'       '"hello"'. Should split $foo and hello into 2 words in the parser?
+*	[]	ls '"$foo"'       '"hello"'. Should split $foo and hello into 2 words in the parser.
 *	[]	echo "`echo "result "`". Problem because of the space
