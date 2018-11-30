@@ -14,6 +14,9 @@
 
 void	teardown_shell(void)
 {
+	extern char	**environ;
+
 	history_file_write(NULL);
 	delete_path_map();
+	ft_strvdel(environ);
 }
