@@ -18,7 +18,6 @@ int			remove_squote(int quote, char *str, int *i)
 	(void)str;
 	if (!(quote & (Q_BSLASH | Q_DQUOTE)))
 	{
-		// ft_strcpy(str, str + 1);
 		quote ^= Q_SQUOTE;
 		*i = *i + 1;
 	}
@@ -35,7 +34,6 @@ int			remove_dquote(int quote, char *str, int *i)
 	(void)str;
 	if (!(quote & (Q_BSLASH | Q_SQUOTE)))
 	{
-		// ft_strcpy(str, str + 1);
 		quote ^= Q_DQUOTE;
 		*i = *i + 1;
 	}
@@ -53,7 +51,6 @@ int			remove_bslash(int quote, char *str, int *i)
 	if ((!(quote & (Q_BSLASH | Q_SQUOTE))
 				|| ((quote & Q_DQUOTE) && ft_strchr("\\\"\n", *str + 1))))
 	{
-		// ft_strcpy(str, str + 1);
 		quote |= Q_BSLASH;
 		*i = *i + 1;
 	}
