@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 17:52:34 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/27 15:53:10 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/30 18:12:21 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int				split_assignment(char *str, char **key, char **value);
 
 int				init_redirects(t_redirect *redirect);
 int				reset_redirects(t_redirect *redirect);
+int				init_heredoc(t_redirect *redirect);
 
 /*
 **	exec_cmd.c

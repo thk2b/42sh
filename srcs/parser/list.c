@@ -21,10 +21,15 @@ void			print_token_lst(t_token_lst *lst)
 	i = 0;
 	while (node)
 	{
+<<<<<<< HEAD
 		printf("index[%d] = %s\n", i, node->content);
 		i++;
+=======
+		printf("%s ->", node->content);
+>>>>>>> 3e4384849571bede889c0de5cada9951b21aa430
 		node = node->next;
 	}
+	printf("\n");
 }
 
 t_nodes			*new_node(char *new_data)

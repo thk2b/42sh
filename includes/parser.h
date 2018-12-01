@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 16:31:26 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/28 19:58:56 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/30 15:55:40 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,10 +211,11 @@ t_tree			*new_leaf(t_tree *parent, char type, t_cmd *data);
 */
 
 int				remove_squote(int quote, char *str, int *i);
-int				expand_tokens(t_token_lst **arguments);
+int				expand_tokens(t_token_lst **arguments, char not_backticks);
 void			token_expand(char **dst, char *str);
 int				remove_dquote(int quote, char *str, int *i);
 int				remove_bslash(int quote, char *str, int *i);
 int				strip_quotes(t_nodes *tokens);
+int				strip_str_quotes(char *str);
 
 #endif
