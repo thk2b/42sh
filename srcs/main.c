@@ -53,7 +53,7 @@ static void	free_redirects(t_redirect *lst)
 	}
 }
 
-static void	free_tree(t_tree *root)
+void	free_tree(t_tree *root)
 {
 	int			i;
 
@@ -104,7 +104,7 @@ static int	process_command(int *status)
 	return (0);
 }
 
-static int	execute_non_interactive_shell(char *line, int *status)
+int	execute_non_interactive_shell(char *line, int *status)
 {
 	t_tree	*root;
 	int		return_status;
@@ -149,14 +149,14 @@ int			main(void)
 	char	*line;
 
 	line = NULL;
-	if (check_stdin())
-	{
-		get_next_line(0, &line);
-		init_shell();
-		execute_non_interactive_shell(line, &status);
-		teardown_shell();
-		return (status);
-	}
+	// if (check_stdin())
+	// {
+	// 	get_next_line(0, &line);
+	// 	init_shell();
+	// 	execute_non_interactive_shell(line, &status);
+	// 	teardown_shell();
+	// 	return (status);
+	// }
 	status = 0;
 	init_shell();
 	while (process_command(&status) == 0)

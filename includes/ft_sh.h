@@ -48,6 +48,7 @@ int		init_environ(void);
 **	Teardown
 */
 void	teardown_shell(void);
+void	free_tree(t_tree *root);
 
 /*
 **	Error handling
