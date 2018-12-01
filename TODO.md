@@ -44,7 +44,7 @@ Test cases with problems. If it is fixed, don'tremove. Just put a checked box:
 *	[X]	parser splits words by "," and "=" even though it shouldn't. figure out exactly when to split.
 *	[]	ls; should not be syntax error. also test "echo && ;" and ";"
 *	[X]	ls '"$foo"'       '"hello"'. Should split $foo and hello into 2 words in the parser.
-*	[X]	echo "`echo "result "`". Problem because of the space
+*	[]	echo "`echo "result "`". One extra space. What?
 *	[]	write something, hold delete button. Results in invalid free.
 *	[]	deleting a line longer than the window is a bit buggy.
 *	[]	"ls \" doesn't work.
