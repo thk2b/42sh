@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/30 17:13:09 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/01 15:31:24 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,25 @@ t_token_lst			*split_args(char *input, int activate_errors)
 	int					token_completion;
 
 	arguments = interpret_input(input, &token_completion, activate_errors);
+	if (arguments)
+		print_token_lst(arguments);
 	return (arguments);
+}
+
+void				remove_back_slash(char *input)
+{
+	int			i;
+
+	i = 0;
+	while (input[i])
+	{
+		if (i > 0 && input[i - 1] == '\\' && input[i] == '\n')
+		{
+			ft_memmove(input + i, input + i + 1, ft_strlen(input) - i);
+			return ;
+		}
+		i++;
+	}
 }
 
 t_tree				*parse(char *input)
@@ -82,6 +100,7 @@ t_tree				*parse(char *input)
 	t_nodes				*traverse;
 	t_tree				*ast;
 
+	remove_back_slash(input);
 	if (check_input(input))
 		return (NULL);
 	arguments = split_args(input, 1);

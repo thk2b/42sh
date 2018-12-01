@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/28 19:48:13 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/30 15:51:55 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/01 13:12:06 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ int					check_input(const char *input)
 	if (!*input)
 		return (1);
 	tmp = ft_strtrim(input);
+	if (!*tmp)
+		return (1);
 	i = 0;
 	while (tmp[i])
 		i++;

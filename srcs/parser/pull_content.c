@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/28 20:05:12 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/30 17:55:57 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/01 15:35:37 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,26 @@ int					pull_quote_content(const char *input, int *p,
 static void			push_stack_elem(t_node **stack, const char *input, int tmp)
 {
 	if (input[tmp] == 34)
-		push(stack, 1);
+	{
+		if (tmp > 0 && input[tmp - 1] == '\\')
+			;
+		else
+			push(stack, 1);
+	}
 	else if (input[tmp] == '\'')
-		push(stack, 2);
+	{
+		if (tmp > 0 && input[tmp - 1] == '\\')
+			;
+		else
+			push(stack, 1);
+	}
 	else if (input[tmp] == '`')
-		push(stack, 3);
+	{
+		if (tmp > 0 && input[tmp - 1] == '\\')
+			;
+		else
+			push(stack, 1);
+	}
 }
 
 int					pull_token(t_token_lst **head, const char *input, int *p,
@@ -68,6 +83,8 @@ int					pull_token(t_token_lst **head, const char *input, int *p,
 	while (input[tmp] && (type == classify_token(input[tmp]) ||
 	classify_token(input[tmp]) == T_QUOTE))
 	{
+		if (input[tmp] == '\\' && input[tmp + 1] == 34)
+			tmp += 2;
 		if (classify_token(input[tmp]) == T_QUOTE)
 		{
 			push_stack_elem(&stack, input, tmp);
@@ -76,9 +93,7 @@ int					pull_token(t_token_lst **head, const char *input, int *p,
 			type = classify_token(input[tmp]);
 		}
 		else
-		{
 			tmp += 1;
-		}
 	}
 	content = ft_strdup_range(input, *p, tmp - 1);
 	if (content && error_special(content, head) && errors)
