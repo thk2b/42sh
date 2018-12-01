@@ -48,3 +48,5 @@ Test cases with problems. If it is fixed, don'tremove. Just put a checked box:
 *	[]	write something, hold delete button. Results in invalid free.
 *	[]	deleting a line longer than the window is a bit buggy.
 *	[]	"ls \" doesn't work.
+*	[]	"Il doit etre possible de copier/coller une partie ou toute la ligne de commande avec un raccourcie clavier."
+*	[]	autocompletion of a path. like "/tm" and tab press
