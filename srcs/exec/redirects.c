@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 07:31:07 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/28 19:38:29 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/30 16:02:32 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int			init_redirect(t_redirect *redirect, int append)
 **	the file becomes stdin
 */
 
-static int			init_heredoc(t_redirect *redirect)
+static int			init_infile(t_redirect *redirect)
 {
 	int	fd;
 
@@ -55,6 +55,33 @@ static int			init_heredoc(t_redirect *redirect)
 	return (0);
 }
 
+static int			init_heredoc(t_redirect *redirect)
+{
+	int		fd[2];
+	char	*line;
+	int		cmp;
+
+	if (pipe(fd) == -1)
+		return (error("pipe"));
+	while ((line = ft_readline("> ", 2, RL_DEFAULT)))
+	{
+		if ((cmp = ft_strcmp(line, redirect->path)))
+		{
+			int len = ft_strlen(line);
+			line[len - 1] = '\n';
+			write(fd[1], line, len);
+		}
+		free(line);
+		if (cmp == 0)
+			break;
+	}
+	if (dup2(fd[0], 0) == -1)
+		return (error("dup2"));
+	close(fd[0]);
+	close(fd[1]);
+	return (0);
+}
+
 int					init_redirects(t_redirect *redirects)
 {
 	t_redirect	*cur;
@@ -63,6 +90,11 @@ int					init_redirects(t_redirect *redirects)
 	while (cur)
 	{
 		if (cur->type == REDIRECT_LEFT)
+		{
+			if (init_infile(cur))
+				return (1);
+		}
+		else if (cur->type == HEREDOC_DOC)
 		{
 			if (init_heredoc(cur))
 				return (1);
