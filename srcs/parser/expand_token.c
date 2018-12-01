@@ -50,7 +50,6 @@ static char	*expand_str(char *str, char *param, int start, int lparam)
 	return (new);
 }
 
-
 static int	scan_str(char **str, int quote, int i, int l)
 {
 	int	len;
@@ -80,13 +79,10 @@ static int	scan_str(char **str, int quote, int i, int l)
 	return (0);
 }
 
-/*
-**	Theo, I added some lines here. 
-*/
 char		*expand_param(char *str)
 {
 	if (scan_str(&str, 0, 0, 0))
-		return (NULL);	
+		return (NULL);
 	return (str);
 }
 

@@ -38,9 +38,9 @@ t_nodes			*new_node(char *new_data)
 	return (node);
 }
 
-t_token_lst			*new_list(char *new_data)
+t_token_lst		*new_list(char *new_data)
 {
-	t_token_lst		*lst;
+	t_token_lst	*lst;
 	t_nodes		*node;
 
 	node = new_node(new_data);

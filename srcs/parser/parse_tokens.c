@@ -48,6 +48,17 @@ int						append_word_argv(char *word, t_cmd **cmd)
 	return (0);
 }
 
+static void				handle_word(t_nodes *traverse, int aggreg,
+									t_nodes *prev, t_cmd **command)
+{
+	if (traverse->next && is_red(traverse->next->content) && aggreg)
+		;
+	else if (prev && ft_strequ(prev->content, "&") && aggreg)
+		;
+	else
+		append_word_argv(traverse->content, command);
+}
+
 void					append_struct(t_nodes *traverse,
 						t_nodes **tokens, t_cmd *command)
 {
@@ -67,14 +78,7 @@ void					append_struct(t_nodes *traverse,
 		else if (is_redirection(traverse->content))
 			pull_redirection(&traverse, prev, &command);
 		else if (is_word(traverse->content))
-		{
-			if (traverse->next && is_red(traverse->next->content) && aggreg)
-				;
-			else if (prev && ft_strequ(prev->content, "&") && aggreg)
-				;
-			else
-				append_word_argv(traverse->content, &command);
-		}
+			handle_word(traverse, aggreg, prev, &command);
 		prev = traverse;
 		traverse = traverse->next;
 	}
@@ -100,7 +104,5 @@ t_cmd					*create_cmd(t_nodes **tokens)
 	}
 	append_struct(traverse, tokens, command);
 	print_redirect_info(command->redirects);
-	// if (command->argv)
-	// 	ft_putstrv(command->argv);
 	return (command);
 }

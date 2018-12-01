@@ -25,7 +25,7 @@ void			print_tokens(t_nodes *token)
 	printf("\n");
 }
 
-void			if_sub_lst(t_nodes **cur, t_token_lst *sub_lst, t_token_lst **arguments)
+static void		if_sub_lst(t_nodes **cur, t_token_lst *sub_lst, t_token_lst **arguments)
 {
 	if ((*cur)->prev)
 		(*cur)->prev->next = sub_lst->head;
@@ -44,12 +44,28 @@ void			if_sub_lst(t_nodes **cur, t_token_lst *sub_lst, t_token_lst **arguments)
 	free(sub_lst);
 }
 
+static void		else_sub_lst(t_nodes **cur, t_token_lst **arguments)
+{
+	t_nodes	*tmp;
+
+	tmp = (*cur)->next;
+	if ((*cur)->prev)
+		(*cur)->prev->next = tmp;
+	else
+		(*arguments)->head = tmp;
+	if ((*cur)->next)
+		(*cur)->next->prev = (*cur)->prev;
+	else
+		(*arguments)->tail = tmp;
+	free(*cur);
+	*cur = tmp;
+}
+
 int				check_token(t_nodes **cur, t_token_lst **arguments)
 {
 	char		*expanded_str;
 	char		*trimmed_str;
 	t_token_lst	*sub_lst;
-	t_nodes		*tmp;
 
 	token_expand(&expanded_str, (*cur)->content);
 	trimmed_str = ft_strtrim(expanded_str);
@@ -57,23 +73,9 @@ int				check_token(t_nodes **cur, t_token_lst **arguments)
 	sub_lst = split_args(trimmed_str, 0);
 	free(trimmed_str);
 	if (sub_lst)
-	{
 		if_sub_lst(cur, sub_lst, arguments);
-	}
 	else
-	{
-		tmp = (*cur)->next;
-		if ((*cur)->prev)
-			(*cur)->prev->next = tmp;
-		else
-			(*arguments)->head = tmp;
-		if ((*cur)->next)
-			(*cur)->next->prev = (*cur)->prev;
-		else
-			(*arguments)->tail = tmp;
-		free(*cur);
-		*cur = tmp;
-	}
+		else_sub_lst(cur, arguments);
 	return (0);
 }
 

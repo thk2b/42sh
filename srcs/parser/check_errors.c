@@ -103,7 +103,7 @@ int					check_input(const char *input)
 	i = 0;
 	while (tmp[i])
 		i++;
-	if (i > 0 && (IS_SEMI(tmp[0]) || IS_RED(tmp[i - 1]))) // what is the purpose of this?
+	if (i > 0 && (IS_SEMI(tmp[0]) || IS_RED(tmp[i - 1])))
 	{
 		error_message(tmp + i - 1);
 		free(tmp);
