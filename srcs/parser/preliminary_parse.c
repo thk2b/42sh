@@ -73,8 +73,6 @@ t_token_lst				*split_args(char *input, int activate_errors)
 	int					token_completion;
 
 	arguments = interpret_input(input, &token_completion, activate_errors);
-	if (arguments)
-		print_token_lst(arguments);
 	return (arguments);
 }
 
@@ -89,7 +87,7 @@ t_tree				*parse(char *input)
 	arguments = split_args(input, 1);
 	if (arguments == NULL)
 		return (NULL);
-	if (expand_tokens(&arguments))
+	if (expand_tokens(&arguments, 1))
 		return (NULL);
 	traverse = arguments->head;
 	ast = build_tree(traverse);

@@ -89,6 +89,22 @@ static char	*build_str_from_pipe(int fd)
 	return (res);
 }
 
+static t_tree	*parse_backticks(char *input)
+{
+	t_token_lst	*arguments;
+	t_tree		*ast;
+	t_nodes		*traverse;
+
+	arguments = split_args(input, 1);
+	if (expand_tokens(&arguments, 0))
+		return (NULL);
+	traverse = arguments->head;
+	ast = build_tree(traverse);
+	if (arguments)
+		free_list(arguments);
+	return (ast);
+}
+
 int			exec_backticks(char **dst, char *str)
 {
 	char	*sub_str;
@@ -99,7 +115,7 @@ int			exec_backticks(char **dst, char *str)
 
 	if ((sub_str = strsub_ticks(str)) == NULL)
 		return (0);
-	if ((root = parse(sub_str)) == NULL)
+	if ((root = parse_backticks(sub_str)) == NULL)
 		return (1);
 	free(sub_str);
 	fd = set_up_tick_pipe(root, &child_pid);

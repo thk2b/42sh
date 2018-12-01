@@ -77,7 +77,7 @@ int				check_token(t_nodes **cur, t_token_lst **arguments)
 	return (0);
 }
 
-int				expand_tokens(t_token_lst **arguments)
+int				expand_tokens(t_token_lst **arguments, char not_backtick)
 {
 	t_nodes		*cur;
 	static int	times = 0;
@@ -88,6 +88,7 @@ int				expand_tokens(t_token_lst **arguments)
 		check_token(&cur, arguments);
 		times++;
 	}
-	strip_quotes(((*arguments)->head));
+	if (not_backtick)
+		strip_quotes(((*arguments)->head));
 	return (0);
 }
