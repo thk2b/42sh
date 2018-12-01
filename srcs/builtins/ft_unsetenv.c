@@ -56,4 +56,3 @@ int			ft_unsetenv(const char *name)
 	}
 	return (found == 0);
 }
-

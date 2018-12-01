@@ -41,17 +41,16 @@ int		init_shell(void);
 int		init_environ(void);
 
 /*
-**	Runtime
-*/
-
-/*
-**	Teardown
+**	main.c
 */
 void	teardown_shell(void);
 void	free_tree(t_tree *root);
 
 /*
-**	Error handling
+**	free_structs.c
 */
+void	free_assignments(t_assign *lst);
+void	free_redirects(t_redirect *lst);
+void	free_tree(t_tree *root);
 
 #endif
