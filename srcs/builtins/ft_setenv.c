@@ -50,7 +50,8 @@ int		ft_setenv(const char *name, const char *value, int overwrite)
 	else
 	{
 		free(*current);
-		status = (*current = str) != 0;
+		*current = str;
+		status = *current != 0;
 	}
 	if (update_path_map((char*)name))
 		return (-1);

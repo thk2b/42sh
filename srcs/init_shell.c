@@ -34,4 +34,3 @@ int	init_shell(void)
 	history_file_read(NULL);
 	return (0);
 }
-

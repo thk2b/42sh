@@ -42,6 +42,6 @@ int			exec_semi(t_tree *tree, int use_current_process)
 
 	(void)use_current_process;
 	return_status[0] = exec_node(tree->left, 0);
-	return_status[1] = exec_node(tree->right, 0); // what do we think of this?
+	return_status[1] = exec_node(tree->right, 0);
 	return (return_status[1]);
 }

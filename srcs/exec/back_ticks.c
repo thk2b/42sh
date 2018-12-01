@@ -51,81 +51,37 @@ static int	set_up_tick_pipe(t_tree *root, int *child_pid)
 	return (fd[0]);
 }
 
-static char	*create_res_str(char *init_str, char *new_str)
-{
-	char	*first_tick;
-	char	*end_tick;
-	char	*full_res;
-
-	if ((first_tick = ft_strchr(init_str, '`')) == NULL)
-		return (NULL);
-	if ((end_tick = ft_strchr(first_tick + 1, '`')) == NULL)
-		return (NULL);
-	full_res = ft_strreplace(init_str, first_tick,
-						(end_tick + 1) - first_tick, new_str);
-	return (full_res);
-}
-
-static char	*build_str_from_pipe(int fd)
-{
-	char	*res;
-	char	*tmp;
-	char	*line;
-
-	res = ft_strdup("");
-	while (get_next_line((fd), &line) == 1)
-	{
-		if ((*res))
-		{
-			tmp = res;
-			res = ft_strjoin(res, " ");
-			free(tmp);
-		}
-		tmp = res;
-		res = ft_strjoin(res, line);
-		free(tmp);
-		free(line);
-	}
-	return (res);
-}
-
-static t_tree	*parse_backticks(char *input)
-{
-	t_token_lst	*arguments;
-	t_tree		*ast;
-	t_nodes		*traverse;
-
-	arguments = split_args(input, 1);
-	if (expand_tokens(&arguments, 0))
-		return (NULL);
-	traverse = arguments->head;
-	ast = build_tree(traverse);
-	if (arguments)
-		free_list(arguments);
-	return (ast);
-}
-
-int			exec_backticks(char **dst, char *str)
+static int	backtick_sub(char *str, t_tree **root, char **res)
 {
 	char	*sub_str;
-	t_tree	*root;
 	int		fd;
-	char	*res;
 	int		child_pid;
 
 	if ((sub_str = strsub_ticks(str)) == NULL)
 		return (0);
-	if ((root = parse_backticks(sub_str)) == NULL)
-		return (1);
+	if ((*root = parse_backticks(sub_str)) == NULL)
+		return (-1);
 	free(sub_str);
-	fd = set_up_tick_pipe(root, &child_pid);
-	res = build_str_from_pipe(fd);
+	fd = set_up_tick_pipe(*root, &child_pid);
+	*res = build_str_from_pipe(fd);
 	if (close((fd)) == -1)
-		return (1);
+		return (-1);
 	waitpid(child_pid, &fd, 0);
-	*dst = create_res_str(str, res);
-	free_tree(root);
-	free(str);	
-	free(res);
 	return (0);
+}
+
+int			exec_backticks(char **dst, char *str)
+{
+	t_tree	*root;
+	char	*res;
+	int		len;
+
+	if (backtick_sub(str, &root, &res) == -1)
+		return (1);
+	*dst = create_res_str(str, res);
+	len = ft_strlen(res);
+	free_tree(root);
+	ft_strdel(&str);
+	ft_strdel(&res);
+	return (len);
 }

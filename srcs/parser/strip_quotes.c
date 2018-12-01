@@ -58,7 +58,7 @@ static int		strip_bslash(int quote, char *str, int *i)
 	return (quote);
 }
 
-int		strip_str_quotes(char *str)
+int				strip_str_quotes(char *str)
 {
 	int		i;
 	int		quote;

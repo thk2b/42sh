@@ -31,11 +31,11 @@ static int			read_heredoc(int stop_eof, int *fds, char *end)
 			free(line);
 		}
 		if (cmp == 0)
-			return 0;
+			return (0);
 		else if (ret == 0)
-			return 0;
+			return (0);
 	}
-	return 0;
+	return (0);
 }
 
 int					init_heredoc(t_redirect *redirect)
