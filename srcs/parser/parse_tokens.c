@@ -6,7 +6,7 @@
 /*   By: dmendelo <dmendelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 10:18:05 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/11/28 18:54:33 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/01 13:10:16 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int						append_word_argv(char *word, t_cmd **cmd)
 static void				handle_word(t_nodes *traverse, int aggreg,
 									t_nodes *prev, t_cmd **command)
 {
-	if (traverse->next && is_red(traverse->next->content) && aggreg)
+	if (traverse->next && is_red(traverse->next->content))
 		;
 	else if (prev && ft_strequ(prev->content, "&") && aggreg)
 		;
