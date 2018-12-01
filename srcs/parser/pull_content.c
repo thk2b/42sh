@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/28 20:05:12 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/28 20:06:30 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/11/30 16:52:07 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int					pull_quote_content(const char *input, int *p,
 	{
 		if (input[tmp] == '\'' && peek(*stack) == 2)
 			pop(stack);
-		else if (input[tmp] == '\"' && peek(*stack) == 1)
+		if (input[tmp] == '\"' && peek(*stack) == 1)
 			pop(stack);
-		else if (input[tmp] == '`' && peek(*stack) == 3)
+		if (input[tmp] == '`' && peek(*stack) == 3)
 			pop(stack);
 		tmp += 1;
 	}
@@ -65,12 +65,15 @@ int					pull_token(t_token_lst **head, const char *input, int *p,
 		if (classify_token(input[tmp]) == T_QUOTE)
 		{
 			push_stack_elem(&stack, input, tmp);
-			if (pull_quote_content(input, &tmp, &stack))
+			printf("input[tmp] = %c\n", input[tmp]);
+			if (pull_quote_content(input, &tmp, &stack) == 0)
 				break ;
 			type = classify_token(input[tmp]);
 		}
 		else
+		{
 			tmp += 1;
+		}
 	}
 	content = ft_strdup_range(input, *p, type == T_QUOTE ? tmp : tmp - 1);
 	if (content && error_special(content, head) && errors)
