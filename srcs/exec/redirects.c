@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 07:31:07 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/30 18:12:30 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/30 18:17:58 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int					init_redirects(t_redirect *redirects)
 			if (init_infile(cur))
 				return (1);
 		}
-		else if (cur->type == HEREDOC_DOC)
+		else if (cur->type == HEREDOC_DOC || cur->type == HEREDOC_STR)
 		{
 			if (init_heredoc(cur))
 				return (1);
