@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/28 19:28:26 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/29 11:41:04 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/30 17:14:22 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,14 @@
 void			print_token_lst(t_token_lst *lst)
 {
 	t_nodes			*node;
-	int				index;
+	int				i;
 
 	node = lst->head;
-	index = 0;
+	i = 0;
 	while (node)
 	{
+		printf("index[%d] = %s\n", i, node->content);
+		i++;
 		node = node->next;
 	}
 }
