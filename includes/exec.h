@@ -65,6 +65,13 @@ int				exec_semi(t_tree *tree, int use_current_process);
 int				exec_backticks(char **dst, char *str);
 
 /*
+**	back_ticks_comp.c
+*/
+char			*create_res_str(char *init_str, char *new_str);
+char			*build_str_from_pipe(int fd);
+t_tree			*parse_backticks(char *input);
+
+/*
 **	Handle environment
 **		getenv, setenv, unsetenv, env,
 */

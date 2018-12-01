@@ -29,16 +29,17 @@
 # define IS_SPACE(x) (x == ' ' || x == '\t' || x == '\n')
 # define IS_QU(x) (x == '`' || x == '\'' || x == '\"')
 # define IS_OP(x) (x == '&' || x == '|')
-# define IS_VALID_CHAR(c) (c == '_' || c == '=' || c == '.' || ft_isalnum(c) || c == '/')
+# define IS_WORD_CHAR(c) (c == '_' || c == '=' || c == '.' || c == '/')
+# define IS_VALID_CHAR(c) (IS_WORD_CHAR(c) || ft_isalnum(c))
 # define IS_SEMI(x) (x == ';')
 # define IS_RED(x) (x == '<' || x == '>')
 # define IS_REDIRECT_LEFT(x) (x == '<')
 # define IS_REDIRECT_RIGHT(x) (x == '>')
 # define NOT_QUOTE !(quote & (Q_SQUOTE | Q_BSLASH))
 # define WOW() printf("->%s\n", __func__)
-# define REDIRECT_LEFT			1 //rename to heredoc?
-# define REDIRECT_RIGHT			2 //rename to redirect?
-# define REDIRECT_APPEND_RIGHT	3 //rename to redirect_append?
+# define REDIRECT_LEFT			1
+# define REDIRECT_RIGHT			2
+# define REDIRECT_APPEND_RIGHT	3
 # define HEREDOC_DOC			4
 # define HEREDOC_STR			5
 # define AGGREG_RED				6
@@ -118,7 +119,6 @@ typedef struct	s_token
 	char						*content;
 }				t_token;
 
-
 /*
 ** error
 */
@@ -142,7 +142,7 @@ char			*ft_strdup_range(const char *str, int begin, int end);
 void			free_list(t_token_lst *head);
 void			print_token_lst(t_token_lst *token);
 t_nodes			*new_node(char *new_data);
-t_token_lst			*new_list(char *new_data);
+t_token_lst		*new_list(char *new_data);
 void			append(t_token_lst **head_ref, char *new_data);
 char			*trip_join(const char *s1, const char c, const char *s2);
 void			free_append(char **s, char *end);
@@ -158,9 +158,9 @@ int				pull_token(t_token_lst **head, const char *input,
 int				skip_to_end_of_line(const char *input, int *p);
 int				interpret_token(t_token_lst **head, const char *input,
 								int *p, int errors);
-t_token_lst			*interpret_input(const char *input, int *token_completion,
+t_token_lst		*interpret_input(const char *input, int *token_completion,
 				int errors);
-t_token_lst			*split_args(char *input, int activate_errors);
+t_token_lst		*split_args(char *input, int activate_errors);
 t_tree			*parse(char *input);
 int				is_op(char *str);
 void			print_list(t_token_lst *lst);
