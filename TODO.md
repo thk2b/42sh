@@ -46,4 +46,5 @@ Test cases with problems. If it is fixed, don'tremove. Just put a checked box:
 *	[]	ls '"$foo"'       '"hello"'. Should split $foo and hello into 2 words in the parser.
 *	[]	echo "`echo "result "`". Problem because of the space
 *	[]	write something, hold delete button. Results in invalid free.
-*	[]	deleting a line longer than the window is a bit buggy. 
+*	[]	deleting a line longer than the window is a bit buggy.
+*	[]	"ls \" doesn't work.
