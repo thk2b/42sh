@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_tokens.c                                    :+:      :+:    :+:   */
+/*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acakste <acakste@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acakste <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/26 14::51 by acakste           #+#    #+#             */
-/*   Updated: 2018/11/28 19:23:35 by ale-goff         ###   ########.fr       */
+/*   Created: 2018/12/01 12:44:52 by acakste           #+#    #+#             */
+/*   Updated: 2018/12/01 12:44:55 by acakste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ void			print_tokens(t_nodes *token)
 	printf("\n");
 }
 
-static void		if_sub_lst(t_nodes **cur, t_token_lst *sub_lst, t_token_lst **arguments)
+static void		if_sub_lst(t_nodes **cur, t_token_lst *sub_lst,
+							t_token_lst **arguments)
 {
 	if ((*cur)->prev)
 		(*cur)->prev->next = sub_lst->head;
