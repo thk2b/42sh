@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 07:31:07 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/30 16:02:32 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/11/30 16:38:17 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,26 +55,38 @@ static int			init_infile(t_redirect *redirect)
 	return (0);
 }
 
-static int			init_heredoc(t_redirect *redirect)
+static int			read_heredoc(int stop_eof, int *fds, char *end)
 {
-	int		fd[2];
 	char	*line;
 	int		cmp;
+	int		len;
 
-	if (pipe(fd) == -1)
-		return (error("pipe"));
 	while ((line = ft_readline("> ", 2, RL_DEFAULT)))
 	{
-		if ((cmp = ft_strcmp(line, redirect->path)))
+		if (stop_eof && ft_strcmp(line, "exit") == 0)
+			cmp = 0;
+		else if ((cmp = ft_strcmp(line, end)))
 		{
-			int len = ft_strlen(line);
-			line[len - 1] = '\n';
-			write(fd[1], line, len);
+			len = ft_strlen(line);
+			line[len] = '\n';
+			write(fds[1], line, len + 1);
 		}
 		free(line);
 		if (cmp == 0)
-			break;
+			return 0;
 	}
+	return 0;
+}
+
+static int			init_heredoc(t_redirect *redirect)
+{
+	int		fd[2];
+	int		is_eof;
+
+	if (pipe(fd) == -1)
+		return (error("pipe"));
+	is_eof = ft_strcmp(redirect->path, "EOF") == 0;
+	read_heredoc(is_eof, fd, redirect->path);
 	if (dup2(fd[0], 0) == -1)
 		return (error("dup2"));
 	close(fd[0]);
