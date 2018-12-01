@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 07:31:07 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/30 18:17:58 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/12/01 14:31:39 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ static int			init_redirect(t_redirect *redirect, int append)
 	int		fd;
 	int		flags;
 
+	if (redirect->close)
+		return (close(redirect->fd));
 	if ((redirect->old_fd = dup(redirect->fd)) == -1)
 		return (error("dup"));
 	flags = O_WRONLY | O_CREAT | (append ? O_APPEND : O_TRUNC);
