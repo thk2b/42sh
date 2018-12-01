@@ -96,7 +96,7 @@ static t_tree	*parse_backticks(char *input)
 	t_nodes		*traverse;
 
 	arguments = split_args(input, 1);
-	if (expand_tokens(&arguments, 0))
+	if (expand_tokens(&arguments, 1))
 		return (NULL);
 	traverse = arguments->head;
 	ast = build_tree(traverse);
@@ -105,27 +105,37 @@ static t_tree	*parse_backticks(char *input)
 	return (ast);
 }
 
-int			exec_backticks(char **dst, char *str)
+static int	backtick_sub(char *str, t_tree **root, char **res)
 {
 	char	*sub_str;
-	t_tree	*root;
 	int		fd;
-	char	*res;
 	int		child_pid;
 
 	if ((sub_str = strsub_ticks(str)) == NULL)
 		return (0);
-	if ((root = parse_backticks(sub_str)) == NULL)
-		return (1);
+	if ((*root = parse_backticks(sub_str)) == NULL)
+		return (-1);
 	free(sub_str);
-	fd = set_up_tick_pipe(root, &child_pid);
-	res = build_str_from_pipe(fd);
+	fd = set_up_tick_pipe(*root, &child_pid);
+	*res = build_str_from_pipe(fd);
 	if (close((fd)) == -1)
-		return (1);
+		return (-1);
 	waitpid(child_pid, &fd, 0);
-	*dst = create_res_str(str, res);
-	free_tree(root);
-	free(str);	
-	free(res);
 	return (0);
+}
+
+int			exec_backticks(char **dst, char *str)
+{
+	t_tree	*root;
+	char	*res;
+	int		len;
+
+	if (backtick_sub(str, &root, &res) == -1)
+		return (1);
+	*dst = create_res_str(str, res);
+	len = ft_strlen(res);
+	free_tree(root);
+	ft_strdel(&str);
+	ft_strdel(&res);
+	return (len);
 }

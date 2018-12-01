@@ -50,38 +50,43 @@ static char	*expand_str(char *str, char *param, int start, int lparam)
 	return (new);
 }
 
+
+static int	scan_str(char **str, int quote, int i, int l)
+{
+	int	len;
+
+	while ((*str)[i])
+	{
+		if ((*str)[i] == '\'')
+			quote = remove_squote(quote, *str + i, &i);
+		else if ((*str)[i] == '\"')
+			quote = remove_dquote(quote, *str + i, &i);
+		else if ((*str)[i] == '\\')
+			quote = remove_bslash(quote, *str + i, &i);
+		else if (NOT_QUOTE && (*str)[i] == '$' && ft_isalnum((*str)[i + 1]))
+		{
+			l = get_lparam(*str, i + 1);
+			*str = expand_str(*str, ft_strsub(*str, i + 1, l), i + 1, l);
+		}
+		else if (NOT_QUOTE && (*str)[i] == '`')
+		{
+			if ((len = exec_backticks(str, *str)) == -1)
+				return (1);
+			i += len;
+		}
+		else
+			i++;
+	}
+	return (0);
+}
+
 /*
 **	Theo, I added some lines here. 
 */
 char		*expand_param(char *str)
 {
-	int		i;
-	int		quote;
-	int		l;
-
-	i = 0;
-	quote = 0;
-	while (str[i])
-	{
-		if (str[i] == '\'')
-			quote = remove_squote(quote, str + i, &i);
-		else if (str[i] == '\"')
-			quote = remove_dquote(quote, str + i, &i);
-		else if (str[i] == '\\')
-			quote = remove_bslash(quote, str + i, &i);
-		else if (NOT_QUOTE && str[i] == '$' && ft_isalnum(str[i + 1]))
-		{
-			l = get_lparam(str, i + 1);
-			str = expand_str(str, ft_strsub(str, i + 1, l), i + 1, l);
-		}
-		else if (NOT_QUOTE && str[i] == '`')
-		{
-			if (!(l = 0) && exec_backticks(&str, str))
-				return (0);
-		}
-		else
-			i++;
-	}
+	if (scan_str(&str, 0, 0, 0))
+		return (NULL);	
 	return (str);
 }
 
