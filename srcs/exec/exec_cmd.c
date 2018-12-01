@@ -54,9 +54,6 @@ int		exec_cmd(t_tree *tree, int use_current_process)
 	char		*path;
 	int			return_status;
 
-	// expand(tree->data);
-	// if (tree->data->argv)
-		// strip_quotes(tree->data->argv);
 	if (tree->data->assign && !tree->data->argv)
 		store_assignments(tree->data->assign);
 	if (!tree->data->argv)
