@@ -51,3 +51,6 @@ Test cases with problems. If it is fixed, don'tremove. Just put a checked box:
 *	[]	"Il doit etre possible de copier/coller une partie ou toute la ligne de commande avec un raccourcie clavier."
 *	[]	autocompletion of a path. like "/tm" and tab press
 *	[X]	ls `echo '$PATH'`
+*	[]	ls\
+*	[]	2>&-
+*	[]	with a redirection like 2>&1, 2 gets passed as an argument
