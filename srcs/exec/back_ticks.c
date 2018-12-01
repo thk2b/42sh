@@ -101,12 +101,14 @@ int			exec_backticks(char **dst, char *str)
 		return (0);
 	if ((root = parse(sub_str)) == NULL)
 		return (1);
+	free(sub_str);
 	fd = set_up_tick_pipe(root, &child_pid);
 	res = build_str_from_pipe(fd);
 	if (close((fd)) == -1)
 		return (1);
 	waitpid(child_pid, &fd, 0);
 	*dst = create_res_str(str, res);
+	free_tree(root);
 	free(str);	
 	free(res);
 	return (0);

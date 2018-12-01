@@ -92,10 +92,8 @@ t_var		*create_path_elem(char *key, char *value)
 
 int			update_path_map(char *key)
 {
-	printf("update path map\n");
 	if (ft_strcmp(key, "PATH") == 0)
 	{
-		printf("inside\n");
 		delete_path_map();
 		if (create_path_map())
 			return (1);
