@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/28 18:18:59 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/28 19:00:12 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/01 22:42:51 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,13 @@ int						pull_redirection(t_nodes **node, t_nodes *prev,
 	if (prev && prev->content && is_number(prev->content))
 		fd = ft_atoi(prev->content);
 	else
-		fd = STDOUT;
+	{
+		if (ft_strequ((*node)->content, "<") || ft_strequ((*node)->content, "<<") ||
+			ft_strequ((*node)->content, "<<<"))
+			fd = STDIN;
+		else
+			fd = STDOUT;
+	}
 	if ((*node)->next && ft_strequ((*node)->next->content, "&"))
 	{
 		redirection = pull_aggregation(node, fd);
