@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/28 20:05:12 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/12/01 16:30:31 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/01 16:47:48 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,13 @@ int					pull_quote_content(const char *input, int *p,
 	return (!input[tmp] ? 1 : 0);
 }
 
+static int			word_alpha(int tmp, const char *input)
+{
+	while (is_alpha_numeric(input[tmp]))
+		tmp += 1;
+	return (tmp);
+}
+
 int					pull_token(t_token_lst **head, const char *input, int *p,
 					int errors)
 {
@@ -78,8 +85,8 @@ int					pull_token(t_token_lst **head, const char *input, int *p,
 	while (input[tmp] && (type == classify_token(input[tmp]) ||
 	classify_token(input[tmp]) == T_QUOTE))
 	{
-		if (tmp > 0 && input[tmp] == '\\')
-			tmp += 2;
+		if (input[tmp] == '\\')
+			tmp = word_alpha(tmp, input);
 		if (classify_token(input[tmp]) == T_QUOTE)
 		{
 			push_stack_elem(&stack, input, tmp);
