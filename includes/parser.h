@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 16:31:26 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/30 15:55:40 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/12/01 18:03:01 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,7 @@ void			print_redirect_info(t_redirect *r);
 void			print_command_info(t_cmd *cmd);
 int				is_red(char *input);
 void			error_message(char *line);
-int				is_aggregation(char *s1, t_nodes *prev);
+int				is_aggregation(char *s1, char *s2, char *s3);
 
 /*
 ** AST
