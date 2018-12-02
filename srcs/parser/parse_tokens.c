@@ -6,7 +6,7 @@
 /*   By: dmendelo <dmendelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 10:18:05 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/12/01 18:58:27 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/01 20:14:36 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,13 @@ void					append_struct(t_nodes *traverse,
 			is_aggregation(traverse->content,traverse->next->content,
 			traverse->next->next->content))
 			aggreg = 1;
-		if (is_word(traverse->content))
+		if (traverse->type == T_CMD)
 			handle_word(traverse, aggreg, &command);
-		else if (is_op(traverse->content))
+		else if (traverse->type > 1 && traverse->type < 6)
 			break ;
 		else if (is_assignment_word(traverse->content))
 			pull_assignment(traverse->content, &command);
-		else if (is_redirection(traverse->content))
+		else if (traverse->type == T_RED)
 			pull_redirection(&traverse, prev, &command);
 		prev = traverse;
 		traverse = traverse->next;
@@ -95,7 +95,7 @@ t_cmd					*create_cmd(t_nodes **tokens)
 	command = init_command();
 	status = 0;
 	prev = NULL;
-	if (traverse && is_op(traverse->content))
+	if (traverse && traverse->type > 1) //is_op(traverse->content))
 	{
 		status = append_word_argv(traverse->content, &command);
 		*tokens = traverse->next;

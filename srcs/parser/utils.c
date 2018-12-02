@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/28 18:21:05 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/12/01 18:12:36 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/01 20:08:33 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ void					free_2d(char **s)
 
 int						is_word(char *str)
 {
-	if (ft_strchr(str, '|') || ft_strchr(str, '&') ||
-		ft_strchr(str, '>') || ft_strchr(str, '<'))
+	if (ft_strequ(str, "|") || ft_strequ(str, "&&") ||
+		ft_strequ(str, ">") || ft_strequ(str, "<"))
 		return (0);
 	return (1);
 }
