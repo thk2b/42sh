@@ -6,11 +6,36 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/28 20:05:12 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/12/01 15:35:37 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/01 16:03:03 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+
+static void			push_stack_elem(t_node **stack, const char *input, int tmp)
+{
+	if (input[tmp] == 34)
+	{
+		if (tmp > 0 && input[tmp - 1] == '\\')
+			;
+		else
+			push(stack, 1);
+	}
+	else if (input[tmp] == '\'')
+	{
+		if (tmp > 0 && input[tmp - 1] == '\\')
+			;
+		else
+			push(stack, 2);
+	}
+	else if (input[tmp] == '`')
+	{
+		if (tmp > 0 && input[tmp - 1] == '\\')
+			;
+		else
+			push(stack, 3);
+	}
+}
 
 int					pull_quote_content(const char *input, int *p,
 					t_node **stack)
@@ -35,38 +60,8 @@ int					pull_quote_content(const char *input, int *p,
 		}
 		tmp += 1;
 	}
-	if (!input[tmp])
-	{
-		*p = tmp;
-		return (1);
-	}
 	*p = tmp;
-	return (0);
-}
-
-static void			push_stack_elem(t_node **stack, const char *input, int tmp)
-{
-	if (input[tmp] == 34)
-	{
-		if (tmp > 0 && input[tmp - 1] == '\\')
-			;
-		else
-			push(stack, 1);
-	}
-	else if (input[tmp] == '\'')
-	{
-		if (tmp > 0 && input[tmp - 1] == '\\')
-			;
-		else
-			push(stack, 1);
-	}
-	else if (input[tmp] == '`')
-	{
-		if (tmp > 0 && input[tmp - 1] == '\\')
-			;
-		else
-			push(stack, 1);
-	}
+	return (!input[tmp] ? 1 : 0);
 }
 
 int					pull_token(t_token_lst **head, const char *input, int *p,
@@ -83,8 +78,6 @@ int					pull_token(t_token_lst **head, const char *input, int *p,
 	while (input[tmp] && (type == classify_token(input[tmp]) ||
 	classify_token(input[tmp]) == T_QUOTE))
 	{
-		if (input[tmp] == '\\' && input[tmp + 1] == 34)
-			tmp += 2;
 		if (classify_token(input[tmp]) == T_QUOTE)
 		{
 			push_stack_elem(&stack, input, tmp);
