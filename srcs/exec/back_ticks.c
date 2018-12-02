@@ -77,7 +77,7 @@ int			exec_backticks(char **dst, char *str)
 	int		len;
 
 	if (backtick_sub(str, &root, &res) == -1)
-		return (1);
+		return (-1);
 	*dst = create_res_str(str, res);
 	len = ft_strlen(res);
 	free_tree(root);

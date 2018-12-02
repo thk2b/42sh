@@ -18,10 +18,7 @@ int		split_assignment(char *str, char **key, char **value)
 
 	equal = ft_strchr(str, '=');
 	if (!equal)
-	{
-		printf("no assignment inside\n");
 		return (1);
-	}
 	if ((*key = ft_strsub(str, 0, equal - str)) == NULL)
 		return (1);
 	if ((*value = ft_strdup(equal + 1)) == NULL)
