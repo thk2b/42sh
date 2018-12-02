@@ -22,7 +22,7 @@ int					is_alpha_numeric(char c)
 		return (1);
 	if (c == '-' || c == '.' || c == '=' || c == '/' || c == '$' || c == '~'
 		|| c == '_' || c == ':' || c == ',' ||
-		c == '\n' || c == '\'')
+		c == '\n' /*  WHY THIS? -> || c == '\''*/)
 		return (1);
 	return (0);
 }

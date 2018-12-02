@@ -52,9 +52,9 @@ Test cases with problems. If it is fixed, don'tremove. Just put a checked box:
 *	[X]	leak caused by push_stack_elem
 *	[X]	ls "\foo". problem in strip quotes.
 *	[X]	echo ls -l > a
+*	[X]	'echo hello'. Should be one token, two atm.
 
 Sunday Dec 2nd:
-*	[]	'echo hello'. Should be one token, two atm.
 *	[]	execute: ls \ and press enter on prompt. should exec normal ls
 *	[]	2>&-
 *	[]	with a redirection like 2>&1, 2 gets passed as an argument
@@ -63,3 +63,4 @@ Sunday Dec 2nd:
 *	[]	"echo && ;"
 *	[]	"; cat" error message is weird.
 *	[]	deleting a line longer than the window is a bit buggy.
+*	[]	echo "hello"| cat -e
