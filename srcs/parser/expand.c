@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acakste <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: acakste <acakste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/01 12:44:52 by acakste           #+#    #+#             */
-/*   Updated: 2018/12/01 12:44:55 by acakste          ###   ########.fr       */
+/*   Updated: 2018/12/01 17:52:29 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ int				check_token(t_nodes **cur, t_token_lst **arguments)
 	{
 		trimmed_str = ft_strtrim(expanded_str);
 		free(expanded_str);
-		if (check_input(trimmed_str))
-			return (1);
+		// if (check_input(trimmed_str)) this is wrong
+			// return (1);
 		sub_lst = split_args(trimmed_str, 0);
 		free(trimmed_str);
 	}
