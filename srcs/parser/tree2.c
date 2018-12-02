@@ -6,7 +6,7 @@
 /*   By: dmendelo <dmendelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/20 09:45:55 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/11/28 18:59:30 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/01 20:11:06 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@ char					get_type(char *s)
 		return (T_OR);
 	else if (!ft_strcmp(s, ";"))
 		return (T_SEMI);
-	else
-		return (T_CMD);
+	else if (is_red(s))
+		return (T_RED);
+	return (T_CMD);
 }
 
 int						compare_precedence(char a, char b)
@@ -99,7 +100,8 @@ t_tree					*build_tree(t_nodes *tokens)
 	root = ast;
 	while (tokens && tokens->content)
 	{
-		type = get_type(tokens->content);
+		type = tokens->type;
+		printf("type = %d\n", type);
 		if (type == T_CMD)
 			new = create_cmd(&tokens);
 		else

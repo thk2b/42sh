@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 16:31:26 by tkobb             #+#    #+#             */
-/*   Updated: 2018/12/01 18:03:01 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/01 20:10:18 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # include "stack2.h"
 
 # define IS_SPACE(x) (x == ' ' || x == '\t' || x == '\n')
-# define IS_QU(x) (x == '`' || x == '\'' || x == '\"')
+# define IS_QU(x) (x == '`' || x == '\'' || x == '\"' || x == '\\')
 # define IS_OP(x) (x == '&' || x == '|')
 # define IS_WORD_CHAR(c) (c == '_' || c == '=' || c == '.' || c == '/')
 # define IS_VALID_CHAR(c) (IS_WORD_CHAR(c) || ft_isalnum(c))
@@ -67,6 +67,7 @@ typedef struct	s_redirect
 # define T_AND					3
 # define T_OR					4
 # define T_SEMI					5
+# define T_RED					6
 
 # define T_ALPHANUM				6
 # define T_QUOTE				7
@@ -81,6 +82,7 @@ typedef struct	s_nodes
 	char				*content;
 	struct s_nodes		*next;
 	struct s_nodes		*prev;
+	char				type;
 }				t_nodes;
 
 typedef struct	s_token_lst

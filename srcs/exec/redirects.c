@@ -6,16 +6,12 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 07:31:07 by tkobb             #+#    #+#             */
-/*   Updated: 2018/12/01 17:02:26 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/12/01 22:45:49 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_sh.h>
 #include <fcntl.h>
-
-/*
-**	the file becomes stdout
-*/
 
 static int			init_redirect(t_redirect *redirect, int append)
 {
@@ -36,10 +32,6 @@ static int			init_redirect(t_redirect *redirect, int append)
 	return (0);
 }
 
-/*
-**	the file becomes stdin
-*/
-
 static int			init_infile(t_redirect *redirect)
 {
 	int	fd;
@@ -48,8 +40,6 @@ static int			init_infile(t_redirect *redirect)
 		return (error("dup"));
 	if ((fd = open(redirect->path, O_RDONLY)) == -1)
 	{
-		close(STDIN);
-		close(STDOUT);
 		return (error(redirect->path));
 	}
 	if (dup2(fd, 0) == -1)

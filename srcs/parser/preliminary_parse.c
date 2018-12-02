@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/12/01 15:31:24 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/01 19:26:49 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,7 @@ t_token_lst			*interpret_input(const char *input,
 	while (input[p])
 	{
 		if (IS_SPACE(input[p]))
-		{
 			p = skip_whitespace(input, p);
-		}
 		else
 			*token_completion = interpret_token(&arguments, input, &p, errors);
 		if (*token_completion == -1)

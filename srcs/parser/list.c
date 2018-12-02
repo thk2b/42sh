@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/28 19:28:26 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/12/01 13:09:43 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/01 20:01:14 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ t_nodes			*new_node(char *new_data)
 
 	node = (t_nodes *)malloc(sizeof(t_nodes));
 	node->content = new_data;
+	node->type = get_type(new_data);
 	node->next = NULL;
 	node->prev = NULL;
 	return (node);

@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/28 20:05:12 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/12/01 18:56:50 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/01 19:19:49 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int					pull_token(t_token_lst **head, const char *input, int *p,
 		if (classify_token(input[tmp]) == T_QUOTE)
 		{
 			push_stack_elem(&stack, input, tmp);
-			if (pull_quote_content(input, &tmp, &stack) == 0)
+			if (pull_quote_content(input, &tmp, &stack))
 				break ;
 			type = classify_token(input[tmp]);
 		}
