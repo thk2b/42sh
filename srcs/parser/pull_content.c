@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/28 20:05:12 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/12/01 16:47:48 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/01 18:56:50 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,10 @@ int					pull_token(t_token_lst **head, const char *input, int *p,
 	stack = NULL;
 	tmp = *p;
 	type = classify_token(input[tmp]);
-	while (input[tmp] && (type == classify_token(input[tmp]) ||
-	classify_token(input[tmp]) == T_QUOTE))
+	while (input[tmp] && ((type == classify_token(input[tmp]) ||
+	classify_token(input[tmp]) == T_QUOTE)))
 	{
-		if (input[tmp] == '\\')
+		if (input[tmp] == 92)
 			tmp = word_alpha(tmp, input);
 		if (classify_token(input[tmp]) == T_QUOTE)
 		{

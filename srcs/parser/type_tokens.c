@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/28 20:07:01 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/11/28 20:11:39 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/01 18:37:42 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int					skip_to_end_of_line(const char *input, int *p)
 
 int					is_op(char *str)
 {
-	if (ft_strequ(str, "&") || ft_strequ(str, "&&") || ft_strequ(str, "||") ||
+	if (ft_strequ(str, "&&") || ft_strequ(str, "||") ||
 		ft_strequ(str, "|") || ft_strequ(str, ";"))
 		return (1);
 	return (0);
