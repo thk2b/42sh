@@ -24,6 +24,8 @@ char					get_type(char *s)
 		return (T_SEMI);
 	else if (is_red(s))
 		return (T_RED);
+	else if (is_assignment_word(s))
+		return (T_ASS);
 	return (T_CMD);
 }
 
@@ -101,14 +103,15 @@ t_tree					*build_tree(t_nodes *tokens)
 	while (tokens && tokens->content)
 	{
 		type = tokens->type;
-		printf("type = %d\n", type);
-		if (type == T_CMD)
+		if (type == T_CMD || type == T_ASS)
 			new = create_cmd(&tokens);
 		else
 		{
 			new = NULL;
 			tokens = tokens->next;
 		}
+		if (type == T_ASS)
+			type = T_CMD;
 		ast = insert(&ast, new, type);
 	}
 	if (ast && ast->type != T_SEMI)

@@ -21,7 +21,7 @@ void			print_token_lst(t_token_lst *lst)
 	i = 0;
 	while (node)
 	{
-		printf("index[%d] = %s\n", i, node->content);
+		printf("index[%d] (type: %d) = %s\n", i, node->type, node->content);
 		i++;
 		node = node->next;
 	}

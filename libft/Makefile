@@ -1,6 +1,6 @@
 NAME = libft.a
 
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -g -fsanitize=address -fsanitize=undefined
 
 SRCDIR = srcs
 INCLUDEDIR = includes

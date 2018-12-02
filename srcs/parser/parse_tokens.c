@@ -72,9 +72,9 @@ void					append_struct(t_nodes *traverse,
 			aggreg = 1;
 		if (traverse->type == T_CMD)
 			handle_word(traverse, aggreg, &command);
-		else if (traverse->type > 1 && traverse->type < 6)
+		else if (traverse->type > T_CMD && traverse->type < T_RED)
 			break ;
-		else if (is_assignment_word(traverse->content))
+		else if (traverse->type == T_ASS)
 			pull_assignment(traverse->content, &command);
 		else if (traverse->type == T_RED)
 			pull_redirection(&traverse, prev, &command);
@@ -95,7 +95,7 @@ t_cmd					*create_cmd(t_nodes **tokens)
 	command = init_command();
 	status = 0;
 	prev = NULL;
-	if (traverse && traverse->type > 1) //is_op(traverse->content))
+	if (traverse && traverse->type > T_CMD && traverse->type <= T_SEMI) //is_op(traverse->content))
 	{
 		status = append_word_argv(traverse->content, &command);
 		*tokens = traverse->next;

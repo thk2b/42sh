@@ -68,14 +68,15 @@ typedef struct	s_redirect
 # define T_OR					4
 # define T_SEMI					5
 # define T_RED					6
+# define T_ASS					7
 
-# define T_ALPHANUM				6
-# define T_QUOTE				7
-# define T_BRACKET				8
-# define T_PAREN				9
-# define T_BACKTICK				10
-# define T_SPACE				11
-# define T_COMMENT				12
+# define T_ALPHANUM				8
+# define T_QUOTE				9
+# define T_BRACKET				10
+# define T_PAREN				11
+# define T_BACKTICK				12
+# define T_SPACE				13
+# define T_COMMENT				14
 
 typedef struct	s_nodes
 {
