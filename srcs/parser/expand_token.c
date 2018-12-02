@@ -88,9 +88,12 @@ char		*expand_param(char *str)
 
 void		token_expand(char **dst, char *str)
 {
+	char	*str_cpy;
+
 	if (!str)
 		return ;
-	if (*str == '~' && (*(str + 1) == '/' || !*(str + 1)))
-		str = expand_str(str, ft_strdup("HOME"), 0, 1);
-	*dst = expand_param(str);
+	str_cpy = ft_strdup(str);
+	if (*str_cpy == '~' && (*(str_cpy + 1) == '/' || !*(str_cpy + 1)))
+		str_cpy = expand_str(str_cpy, ft_strdup("HOME"), 0, 1);
+	*dst = expand_param(str_cpy);
 }

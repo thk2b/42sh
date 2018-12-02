@@ -70,19 +70,28 @@ int				check_token(t_nodes **cur, t_token_lst **arguments)
 
 	token_expand(&expanded_str, (*cur)->content);
 	sub_lst = NULL;
-	if (expanded_str)
+	// printf("expanded: >%s<\n", expanded_str);
+	// printf("cur content: >%s<\n", (*cur)->content);
+	if (ft_strcmp(expanded_str, (*cur)->content))
 	{
+		printf("1\n");
+		free((*cur)->content);
 		trimmed_str = ft_strtrim(expanded_str);
-		free(expanded_str);
-		// if (check_input(trimmed_str)) this is wrong
-			// return (1);
-		sub_lst = split_args(trimmed_str, 0);
+		if (check_input(trimmed_str)) //this is wrong
+			return (1);
+		sub_lst = split_args(trimmed_str, 1);
 		free(trimmed_str);
+		if (sub_lst)
+			if_sub_lst(cur, sub_lst, arguments);
+		else
+			else_sub_lst(cur, arguments);
 	}
-	if (sub_lst)
-		if_sub_lst(cur, sub_lst, arguments);
 	else
-		else_sub_lst(cur, arguments);
+	{
+		printf("2\n");
+		*cur = (*cur)->next;
+	}
+	free(expanded_str);
 	return (0);
 }
 
@@ -94,11 +103,13 @@ int				expand_tokens(t_token_lst **arguments, char not_backtick)
 	cur = (*arguments)->head;
 	while (cur)
 	{
+		// printf("ex: %s\n", cur->content);
 		if (check_token(&cur, arguments))
 			return (1);
 		times++;
 	}
 	if (not_backtick)
 		strip_quotes(((*arguments)->head));
+	printf("%s\n", (*arguments)->head->content);
 	return (0);
 }
