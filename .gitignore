@@ -6,3 +6,5 @@
 .nfs*
 .vscode/*
 42sh
+.42sh_history
+42sh.dSym
