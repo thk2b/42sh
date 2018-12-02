@@ -52,7 +52,7 @@ Test cases with problems. If it is fixed, don'tremove. Just put a checked box:
 *	[X]	leak caused by push_stack_elem
 *	[X]	ls "\foo". problem in strip quotes.
 *	[X]	echo ls -l > a
-*	[X]	'echo hello'. Should be one token, two atm.
+*	[]	'echo hello'. Should be one token, two atm.
 
 Sunday Dec 2nd:
 *	[]	execute: ls \ and press enter on prompt. should exec normal ls
