@@ -62,6 +62,18 @@ static void		else_sub_lst(t_nodes **cur, t_token_lst **arguments)
 	*cur = tmp;
 }
 
+static void		set_type_to_cmd(t_token_lst **sub_lst)
+{
+	t_nodes *cur;
+
+	cur = (*sub_lst)->head;
+	while (cur)
+	{
+		cur->type = T_CMD;
+		cur = cur->next;
+	}
+}
+
 int				check_token(t_nodes **cur, t_token_lst **arguments)
 {
 	char		*expanded_str;
@@ -79,7 +91,8 @@ int				check_token(t_nodes **cur, t_token_lst **arguments)
 		trimmed_str = ft_strtrim(expanded_str);
 		if (check_input(trimmed_str)) //this is wrong
 			return (1);
-		sub_lst = split_args(trimmed_str, 1);
+		sub_lst = split_args(trimmed_str, 0);
+		set_type_to_cmd(&sub_lst);
 		free(trimmed_str);
 		if (sub_lst)
 			if_sub_lst(cur, sub_lst, arguments);
