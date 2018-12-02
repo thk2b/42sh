@@ -56,3 +56,6 @@ Test cases with problems. If it is fixed, don'tremove. Just put a checked box:
 *	[]	with a redirection like 2>&1, 2 gets passed as an argument
 *	[]	leak caused by push_stack_elem
 *	[]	ls "\foo". problem in strip quotes.
+*	[]	ls \ ls
+*	[]	echo ls -l > a
+*	[]	foo=bar. assignments no longer work
