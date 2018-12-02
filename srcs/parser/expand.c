@@ -69,10 +69,16 @@ int				check_token(t_nodes **cur, t_token_lst **arguments)
 	t_token_lst	*sub_lst;
 
 	token_expand(&expanded_str, (*cur)->content);
-	trimmed_str = ft_strtrim(expanded_str);
-	free(expanded_str);
-	sub_lst = split_args(trimmed_str, 0);
-	free(trimmed_str);
+	sub_lst = NULL;
+	if (expanded_str)
+	{
+		trimmed_str = ft_strtrim(expanded_str);
+		free(expanded_str);
+		if (check_input(trimmed_str))
+			return (1);
+		sub_lst = split_args(trimmed_str, 0);
+		free(trimmed_str);
+	}
 	if (sub_lst)
 		if_sub_lst(cur, sub_lst, arguments);
 	else
@@ -88,7 +94,8 @@ int				expand_tokens(t_token_lst **arguments, char not_backtick)
 	cur = (*arguments)->head;
 	while (cur)
 	{
-		check_token(&cur, arguments);
+		if (check_token(&cur, arguments))
+			return (1);
 		times++;
 	}
 	if (not_backtick)

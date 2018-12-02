@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   strip_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acakste <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 07:07:58 by acakste           #+#    #+#             */
-/*   Updated: 2018/11/30 07:07:59 by acakste          ###   ########.fr       */
+/*   Updated: 2018/12/01 17:45:56 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ static int		strip_dquote(int quote, char *str, int *i)
 
 static int		strip_bslash(int quote, char *str, int *i)
 {
-	if ((!(quote & (Q_BSLASH | Q_SQUOTE))
-				|| ((quote & Q_DQUOTE) && ft_strchr("\\\"\n", *str + 1))))
+	if (!(quote & Q_BSLASH) && (!quote || ((quote &
+	Q_DQUOTE) && ft_strchr("\\\"\n", *(str + 1)))))
 	{
 		ft_strcpy(str, str + 1);
 		quote |= Q_BSLASH;
