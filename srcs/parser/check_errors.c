@@ -107,7 +107,10 @@ int					check_input(const char *input)
 		i++;
 	if (i > 0 && (IS_SEMI(tmp[0]) || IS_RED(tmp[i - 1])))
 	{
-		error_message(tmp + i - 1);
+		if (IS_RED(tmp[i - 1]))
+			error_message(tmp + i - 1);
+		else
+			error_message(";");
 		free(tmp);
 		return (1);
 	}
