@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/12/01 19:26:49 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/02 15:43:38 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int					interpret_token(t_token_lst **head, const char *input,
 }
 
 t_token_lst			*interpret_input(const char *input,
-							int *token_completion, int errors)
+					int *token_completion, int errors)
 {
 	int					p;
 	t_token_lst			*arguments;
@@ -71,8 +71,6 @@ t_token_lst			*split_args(char *input, int activate_errors)
 	int					token_completion;
 
 	arguments = interpret_input(input, &token_completion, activate_errors);
-	if (arguments)
-		print_token_lst(arguments);
 	return (arguments);
 }
 
