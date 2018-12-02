@@ -38,20 +38,21 @@ Test cases with problems. If it is fixed, don'tremove. Just put a checked box:
 *	[X]	setting a local var, PATH=/bin. 1st: it executes it?
 *	[X]	local var PATH, this is valid for finding execs.
 *	[X]	only one space "42sh$> " heap-buffer-overflow.
-*	[]	What should we do with command line arguments? compare to sh.
+*	[X]	What should we do with command line arguments? compare to sh.
 *	[X]	ctrl-c to kill a running exec kills the shell as well
-*	[]	no reprompt for: "base64 /dev/urandom | head -c 1000". because of mulitple line output?
+*	[X]	no reprompt for: "base64 /dev/urandom | head -c 1000". because of mulitple line output?
 *	[X]	parser splits words by "," and "=" even though it shouldn't. figure out exactly when to split.
-*	[]	ls; should not be syntax error. also test "echo && ;" and ";"
+*	[X]	ls; should not be syntax error.
 *	[X]	ls '"$foo"'       '"hello"'. Should split $foo and hello into 2 words in the parser.
 *	[X]	echo "`echo "result "`". One extra space.
-*	[]	write something, hold delete button. Results in invalid free.
-*	[]	deleting a line longer than the window is a bit buggy.
-*	[]	"ls \" doesn't work.
-*	[]	"Il doit etre possible de copier/coller une partie ou toute la ligne de commande avec un raccourcie clavier."
-*	[]	autocompletion of a path. like "/tm" and tab press
+*	[X]	write something, hold delete button. Results in invalid free.
+*	[X]	"Il doit etre possible de copier/coller une partie ou toute la ligne de commande avec un raccourcie clavier."
+*	[X]	autocompletion of a path. like "/tm" and tab press
 *	[X]	ls `echo '$PATH'`
-*	[]	ls\
+
+Sunday Dec 2nd:
+*	[]	ls `'echo $PATH'`
+*	[]	"ls \" and press enter on prompt. should exec normal ls
 *	[]	2>&-
 *	[]	with a redirection like 2>&1, 2 gets passed as an argument
 *	[]	leak caused by push_stack_elem
@@ -59,3 +60,6 @@ Test cases with problems. If it is fixed, don'tremove. Just put a checked box:
 *	[]	ls \ ls
 *	[]	echo ls -l > a
 *	[]	foo=bar. assignments no longer work
+*	[]	"echo && ;"
+*	[]	"; cat"
+*	[]	deleting a line longer than the window is a bit buggy.
