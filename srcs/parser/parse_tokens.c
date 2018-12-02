@@ -6,7 +6,7 @@
 /*   By: dmendelo <dmendelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 10:18:05 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/12/01 17:49:19 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/01 18:40:42 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,9 @@ int						append_word_argv(char *word, t_cmd **cmd)
 	return (0);
 }
 
-static void				handle_word(t_nodes *traverse, int aggreg,
-									t_nodes *prev, t_cmd **command)
+static void				handle_word(t_nodes *traverse, int aggreg, t_cmd **command)
 {
-	if (traverse->next && is_red(traverse->next->content))
-		;
-	else if (prev && ft_strequ(prev->content, "&") && aggreg)
+	if (aggreg)
 		;
 	else
 		append_word_argv(traverse->content, command);
@@ -69,16 +66,18 @@ void					append_struct(t_nodes *traverse,
 	aggreg = 0;
 	while (traverse)
 	{
-		if (is_aggregation(traverse->content, prev))
+		if (traverse->next && traverse->next->next &&
+			is_aggregation(traverse->content,traverse->next->content,
+			traverse->next->next->content))
 			aggreg = 1;
+		if (is_word(traverse->content))
+			handle_word(traverse, aggreg, &command);
 		else if (is_op(traverse->content))
 			break ;
 		else if (is_assignment_word(traverse->content))
 			pull_assignment(traverse->content, &command);
 		else if (is_redirection(traverse->content))
 			pull_redirection(&traverse, prev, &command);
-		else if (is_word(traverse->content))
-			handle_word(traverse, aggreg, prev, &command);
 		prev = traverse;
 		traverse = traverse->next;
 	}
