@@ -50,13 +50,13 @@ Test cases with problems. If it is fixed, don'tremove. Just put a checked box:
 *	[X]	autocompletion of a path. like "/tm" and tab press
 *	[X]	ls `echo '$PATH'`
 *	[X]	leak caused by push_stack_elem
+*	[X]	ls "\foo". problem in strip quotes.
 
 Sunday Dec 2nd:
 *	[]	ls `'echo $PATH'`
 *	[]	"ls \" and press enter on prompt. should exec normal ls
 *	[]	2>&-
 *	[]	with a redirection like 2>&1, 2 gets passed as an argument
-*	[]	ls "\foo". problem in strip quotes.
 *	[]	ls \ ls
 *	[]	echo ls -l > a
 *	[]	foo=bar. assignments no longer work
