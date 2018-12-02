@@ -38,7 +38,6 @@ static void		if_sub_lst(t_nodes **cur, t_token_lst *sub_lst,
 	else
 		(*arguments)->tail = sub_lst->tail;
 	sub_lst->tail->next = (*cur)->next;
-	// ft_strdel(&(*cur)->content); attempting double free ?
 	free((*cur));
 	*cur = sub_lst->head;
 	*cur = (*cur)->next;
@@ -107,18 +106,14 @@ int				check_token(t_nodes **cur, t_token_lst **arguments)
 int				expand_tokens(t_token_lst **arguments, char not_backtick)
 {
 	t_nodes		*cur;
-	static int	times = 0;
 
 	cur = (*arguments)->head;
 	while (cur)
 	{
-		// printf("ex: %s\n", cur->content);
 		if (check_token(&cur, arguments))
 			return (1);
-		times++;
 	}
 	if (not_backtick)
 		strip_quotes(((*arguments)->head));
-	printf("%s\n", (*arguments)->head->content);
 	return (0);
 }
