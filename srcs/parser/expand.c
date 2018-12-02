@@ -66,6 +66,8 @@ static void		set_type_to_cmd(t_token_lst **sub_lst)
 {
 	t_nodes *cur;
 
+	if (!sub_lst || !(*sub_lst))
+		return ;
 	cur = (*sub_lst)->head;
 	while (cur)
 	{
@@ -82,14 +84,11 @@ int				check_token(t_nodes **cur, t_token_lst **arguments)
 
 	token_expand(&expanded_str, (*cur)->content);
 	sub_lst = NULL;
-	// printf("expanded: >%s<\n", expanded_str);
-	// printf("cur content: >%s<\n", (*cur)->content);
 	if (ft_strcmp(expanded_str, (*cur)->content))
 	{
-		printf("1\n");
 		free((*cur)->content);
 		trimmed_str = ft_strtrim(expanded_str);
-		if (check_input(trimmed_str)) //this is wrong
+		if (check_input(trimmed_str) && (*trimmed_str))
 			return (1);
 		sub_lst = split_args(trimmed_str, 0);
 		set_type_to_cmd(&sub_lst);
@@ -100,10 +99,7 @@ int				check_token(t_nodes **cur, t_token_lst **arguments)
 			else_sub_lst(cur, arguments);
 	}
 	else
-	{
-		printf("2\n");
 		*cur = (*cur)->next;
-	}
 	free(expanded_str);
 	return (0);
 }
