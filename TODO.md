@@ -49,13 +49,13 @@ Test cases with problems. If it is fixed, don'tremove. Just put a checked box:
 *	[X]	"Il doit etre possible de copier/coller une partie ou toute la ligne de commande avec un raccourcie clavier."
 *	[X]	autocompletion of a path. like "/tm" and tab press
 *	[X]	ls `echo '$PATH'`
+*	[X]	leak caused by push_stack_elem
 
 Sunday Dec 2nd:
 *	[]	ls `'echo $PATH'`
 *	[]	"ls \" and press enter on prompt. should exec normal ls
 *	[]	2>&-
 *	[]	with a redirection like 2>&1, 2 gets passed as an argument
-*	[]	leak caused by push_stack_elem
 *	[]	ls "\foo". problem in strip quotes.
 *	[]	ls \ ls
 *	[]	echo ls -l > a
