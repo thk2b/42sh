@@ -55,10 +55,10 @@ int					pull_quote_content(const char *input, int *p,
 		else if (input[tmp] == '`')
 		{
 			tmp++;
-			while (input[tmp] != '`')
+			while (input[tmp] && input[tmp] != '`')
 				tmp++;
 		}
-		tmp += 1;
+		tmp += (input[tmp]) ? 1 : 0;
 	}
 	*p = tmp;
 	return (!input[tmp] ? 1 : 0);
