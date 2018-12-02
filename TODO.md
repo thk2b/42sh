@@ -55,11 +55,11 @@ Test cases with problems. If it is fixed, don'tremove. Just put a checked box:
 *	[X]	'echo hello'. Should be one token, two atm.
 *	[X]	foo=bar. assignments no longer work
 *	[X]	"; cat" error message is weird.
+*	[X]	2>&-
+*	[X]	with a redirection like 2>&1, 2 gets passed as an argument
 
 Sunday Dec 2nd:
 *	[]	execute: ls \ and press enter on prompt. should exec normal ls
-*	[]	2>&-
-*	[]	with a redirection like 2>&1, 2 gets passed as an argument
 *	[]	ls \ ls
 *	[]	"echo && ;"
 *	[]	deleting a line longer than the window is a bit buggy.
