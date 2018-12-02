@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 19:15:39 by tkobb             #+#    #+#             */
-/*   Updated: 2018/11/30 17:40:23 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/12/02 09:03:00 by dmendelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,29 @@ static int	process_command(int *status)
 	return (0);
 }
 
+int	execute_non_interactive_shell(char *line, int *status)
+{
+	t_tree	*root;
+	int		return_status;
+
+	if (!line)
+		return (1);
+	init_shell();
+	root = parse(line);
+	if (root)
+	{
+		return_status = exec_node(root, 0);
+		free_tree(root);
+	}
+	else
+		return_status = 1;
+	free(line);
+	*status = return_status;
+	teardown_shell();
+	return (0);
+}
+
+
 int			main(void)
 {
 	int		status;
@@ -43,6 +66,12 @@ int			main(void)
 
 	line = NULL;
 	status = 0;
+	if (!isatty(0))
+	{
+		get_next_line(0, &line);
+		execute_non_interactive_shell(line, &status);
+		return (status);
+	}
 	init_shell();
 	while (process_command(&status) == 0)
 		;
