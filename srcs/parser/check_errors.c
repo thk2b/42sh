@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/28 19:48:13 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/12/02 13:53:31 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/02 15:26:14 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ int					error_special(char *input, t_token_lst **head)
 		}
 		i++;
 	}
-	if (check_semicolon(input) || check_redirections(input))
+	if (check_semicolon(input) || check_redirections(input) ||
+		((*head) && (*head)->tail && check_errors(input, (*head)->tail->content)))
 	{
 		error_message(input);
 		return (1);
