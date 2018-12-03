@@ -65,3 +65,4 @@ Sunday Dec 2nd:
 *	[]	deleting a line longer than the window is a bit buggy.
 *	[]	echo "hello"| cat -e
 *	[]	ls "`echo "ok tis this"`" 2> a (tries to execute ls on the 2)
+*	[]	cd && echo $PATH
