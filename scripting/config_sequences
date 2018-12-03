@@ -1,0 +1,18 @@
+sequence=ls;
+sequence=ls 
+sequence= ls undefined ;
+sequence=;;;;
+sequence=echo"hello";
+sequence=test 
+sequence=cd ; cd -;
+sequence=man;
+sequence=&& ;
+sequence=hello
+#sequence=env;
+sequence=echo 'gello' > test ; cat -e test; rm test;
+sequence=ls `echo $PWD`;
+sequence=cat 
+maxseqlen=100
+endcfg
+FUZZ
+--

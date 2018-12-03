@@ -1,10 +1,49 @@
-literal=ls
-literal=echo hello world
-literal=echo ls ; ls ; ls;ls
+#literal=ls
+#literal=echo 'printing hello world' && echo hello world
+#literal=echo ls ; ls ; ls;ls
 literal=echo ls && cd .. ; ls
 literal=cd undefined && echo hm! || echo wat
-literal=echo "hello world"
-
+literal=echo 'hello world'
+literal=echo 'hello world' > testfile.txt ; cat -e testfile.txt && rm testfile.txt;
+literal=ls ; ls ; ls ; ls ; ls ; ls;ls;ls;ls
+#literal=cd && echo $PWD ; cd - && echo $PWD ; ls ;
+# literal=echo $PWD; cd - ; echo $OLDPWD ; cd - ; echo $PWD
+literal=cd && ls ; cd - && ls; cd - && ls;
+#literal=cd ; echo $PWD;
+# literal=cd && echo $PWD && echo $OLWPWD; echo $PWD && echo $OLDPWD; cd - && echo $PWD && echo $OLDPWD ;
+literal=echo;echo
+literal=echo $PWD ; cd ; cd -; ls
+literal=echo $PWD || echo NO! && echo `ls -l`
+literal=echo $PWD > testfile.txt ; cat -e testfile.txt || echo "nope!";
+literal=|
+literal=||
+literal=&&
+literal=;
+# literal=env env env env env env env
+# sh doesn't have -n flag literal=echo -n test
+# literal=ls *c*
+literal=>
+literal=echo `ls`
+literal=echo `cat main.c | more` | more
+literal=;;
+# literal=testvar=lol ; echo $testvar
+literal=/bin/ls | grep -o '42sh'
+literal=undefined
+literal=blabla
+literal=echo ~
+#literal=echo ~+
+#literal=echo ~-
+#literal=echo $(echo "a       b           c          def	ghi")
+literal=ls > a && cat < a ; rm a
+#literal=echo "a\	b"
+#literal= cat ../Makefile 3>&1 >&3
+#literal=echo "hello world" >&1
+#literal=echo "hello world" >&2
+literal=cat test_config > testfile ; echo testfile | cat -e; rm testfile
+literal=cat <>
+literal=cat unfedined
+literal=cat a || cat undefined ; echo $etc || echo "hmmm"
+literal=env;
 endcfg
 FUZZ
 --
