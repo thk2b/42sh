@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/28 20:07:01 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/12/01 18:37:42 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/02 18:51:15 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int					classify_token(char c)
 		return (T_SPACE);
 	else if (c == '#')
 		return (T_COMMENT);
+	else if (IS_RED(c))
+		return (T_RED);
 	else
 		return (0);
 }
