@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/28 19:48:13 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/12/02 18:46:49 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/03 14:11:44 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int					validate_quotes(char *input)
 	stack = NULL;
 	while (input[i])
 	{
-		if (IS_QU(input[i]))
+		if (i > 0 && IS_QU(input[i]) && input[i - 1] != '\\' && input[i] != '\\')
 		{
 			if (input[i] == peek(stack))
 				pop(&stack);
