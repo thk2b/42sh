@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/12/02 15:43:38 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/02 16:35:49 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ t_token_lst			*split_args(char *input, int activate_errors)
 	int					token_completion;
 
 	arguments = interpret_input(input, &token_completion, activate_errors);
+	if (arguments)
+		print_token_lst(arguments);
 	return (arguments);
 }
 

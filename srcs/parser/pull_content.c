@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/28 20:05:12 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/12/02 15:37:29 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/02 17:08:05 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,12 @@ int					pull_token(t_token_lst **head, const char *input, int *p,
 					int errors)
 {
 	int					tmp;
-	int					type;
 	char				*content;
 	t_node				*stack;
 
 	stack = NULL;
 	tmp = *p;
-	type = classify_token(input[tmp]);
-	while (input[tmp] && ((type == classify_token(input[tmp]) ||
+	while (input[tmp] && ((classify_token(input[tmp]) == T_ALPHANUM ||
 	classify_token(input[tmp]) == T_QUOTE)))
 	{
 		if (input[tmp] == 92)
@@ -92,7 +90,6 @@ int					pull_token(t_token_lst **head, const char *input, int *p,
 			push_stack_elem(&stack, input, tmp);
 			if (pull_quote_content(input, &tmp, &stack))
 				break ;
-			type = classify_token(input[tmp]);
 		}
 		else
 			tmp += input[tmp] ? 1 : 0;

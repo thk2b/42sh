@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/28 19:28:26 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/12/01 20:01:14 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/02 16:38:32 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void			print_token_lst(t_token_lst *lst)
 	i = 0;
 	while (node)
 	{
-		printf("index[%d] (type: %d) = %s\n", i, node->type, node->content);
+		printf("index[%d] (type: %d) = >%s<\n", i, node->type, node->content);
 		i++;
 		node = node->next;
 	}
