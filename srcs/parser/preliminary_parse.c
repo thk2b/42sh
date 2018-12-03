@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 13:34:40 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/12/02 18:12:55 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/02 18:38:24 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int					interpret_token(t_token_lst **head, const char *input,
 	{
 		info.status = skip_to_end_of_line(input, &tmp);
 	}
-	else if (info.type == T_AND || info.type == T_PIPE)
+	else if (info.type == T_AND || info.type == T_PIPE ||  info.type == T_SEMI)
 	{
 		if ((info.status = pull_operator(head, input, &tmp, errors)) == -1)
 			return (-1);
@@ -71,8 +71,6 @@ t_token_lst			*split_args(char *input, int activate_errors)
 	int					token_completion;
 
 	arguments = interpret_input(input, &token_completion, activate_errors);
-	// if (arguments)
-	// 	print_token_lst(arguments);
 	return (arguments);
 }
 

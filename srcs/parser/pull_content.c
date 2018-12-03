@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/28 20:05:12 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/12/02 18:24:58 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/02 18:41:51 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,36 +72,35 @@ static int			word_alpha(int tmp, const char *input)
 }
 
 int					pull_token(t_token_lst **head, const char *input, int *p,
-					int errors)
-{
-	int					tmp;
-	char				*content;
-	t_node				*stack;
+ 					int errors)
+ {
+ 	int					tmp;
+ 	char				*content;
+ 	t_node				*stack;
 
-	stack = NULL;
-	tmp = *p;
-	while (input[tmp] && ((classify_token(input[tmp]) == T_ALPHANUM ||
-	classify_token(input[tmp]) == T_QUOTE)))
-	{
-		if (input[tmp] == 92)
-			tmp = word_alpha(tmp, input);
-		if (classify_token(input[tmp]) == T_QUOTE)
-		{
-			push_stack_elem(&stack, input, tmp);
-			if (pull_quote_content(input, &tmp, &stack))
-				break ;
-		}
-		else
-			tmp += input[tmp] ? 1 : 0;
-	}
-	content = ft_strdup_range(input, *p, tmp - 1);
-	if (content && error_special(content, head) && errors)
-		return (-1);
-	append(head, content);
-	*p = tmp;
-	return (END);
-}
-
+ 	stack = NULL;
+ 	tmp = *p;
+ 	while (input[tmp] && ((T_ALPHANUM == classify_token(input[tmp]) ||
+ 	classify_token(input[tmp]) == T_QUOTE)))
+ 	{
+ 		if (input[tmp] == 92)
+ 			tmp = word_alpha(tmp, input);
+ 		if (classify_token(input[tmp]) == T_QUOTE)
+ 		{
+ 			push_stack_elem(&stack, input, tmp);
+ 			if (pull_quote_content(input, &tmp, &stack))
+ 				break ;
+ 		}
+ 		else
+ 			tmp += input[tmp] ? 1 : 0;
+ 	}
+ 	content = ft_strdup_range(input, *p, tmp - 1);
+ 	if (content && error_special(content, head) && errors)
+ 		return (-1);
+ 	append(head, content);
+ 	*p = tmp;
+ 	return (END);
+ }
 int					pull_operator(t_token_lst **head, const char *input, int *p,
 					int errors)
 {
@@ -124,7 +123,8 @@ int					pull_operator(t_token_lst **head, const char *input, int *p,
 			return (-1);
 		}
 	}
-	if (errors && check_errors((*head)->tail->content, content))
+	if (errors && (check_errors((*head)->tail->content, content) ||
+		error_special(content, head)))
 		return (-1);
 	append(head, content);
 	*p = tmp;

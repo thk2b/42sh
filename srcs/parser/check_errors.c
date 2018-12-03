@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/28 19:48:13 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/12/02 18:21:12 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/02 18:28:43 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,11 +122,11 @@ int					check_input(const char *input)
 	if (!*input)
 		return (1);
 	tmp = ft_strtrim(input);
-	if (!*tmp || !validate_quotes(tmp))
-	{
-		ft_dprintf(2, "42sh: unexpected EOF while looking for matching quote\n");
-		return (1);
-	}
+	// if (!*tmp || !validate_quotes(tmp))
+	// {
+	// 	ft_dprintf(2, "42sh: unexpected EOF while looking for matching quote\n");
+	// 	return (1);
+	// }
 	i = 0;
 	while (tmp[i])
 		i++;
