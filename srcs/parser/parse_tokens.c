@@ -6,9 +6,10 @@
 /*   By: dmendelo <dmendelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 10:18:05 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/12/01 20:14:36 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/02 15:46:43 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "parser.h"
 
@@ -48,7 +49,8 @@ int						append_word_argv(char *word, t_cmd **cmd)
 	return (0);
 }
 
-static void				handle_word(t_nodes *traverse, int aggreg, t_cmd **command)
+static void				handle_word(t_nodes *traverse,
+	int aggreg, t_cmd **command)
 {
 	if (aggreg)
 		;
@@ -67,7 +69,7 @@ void					append_struct(t_nodes *traverse,
 	while (traverse)
 	{
 		if (traverse->next && traverse->next->next &&
-			is_aggregation(traverse->content,traverse->next->content,
+			is_aggregation(traverse->content, traverse->next->content,
 			traverse->next->next->content))
 			aggreg = 1;
 		if (traverse->type == T_CMD)
@@ -95,13 +97,12 @@ t_cmd					*create_cmd(t_nodes **tokens)
 	command = init_command();
 	status = 0;
 	prev = NULL;
-	if (traverse && traverse->type > T_CMD && traverse->type <= T_SEMI) //is_op(traverse->content))
+	if (traverse && traverse->type > T_CMD && traverse->type <= T_SEMI)
 	{
 		status = append_word_argv(traverse->content, &command);
 		*tokens = traverse->next;
 		return (command);
 	}
 	append_struct(traverse, tokens, command);
-	print_redirect_info(command->redirects);
 	return (command);
 }

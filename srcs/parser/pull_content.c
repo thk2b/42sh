@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/28 20:05:12 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/12/01 19:19:49 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/02 15:37:29 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int					pull_operator(t_token_lst **head, const char *input, int *p,
 	while (input[tmp] && type == classify_token(input[tmp]) && op_max--)
 		tmp += 1;
 	content = ft_strdup_range(input, *p, tmp - 1);
-	if ((is_op(content) && (!(*head))))
+	if ((is_op(content) && ((!(*head)))))
 	{
 		if (errors)
 		{

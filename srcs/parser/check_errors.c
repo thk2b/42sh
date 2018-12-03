@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/28 19:48:13 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/12/01 13:12:06 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/02 15:29:47 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ int					error_special(char *input, t_token_lst **head)
 		}
 		i++;
 	}
-	if (check_semicolon(input) || check_redirections(input))
+	if (check_semicolon(input) || check_redirections(input) ||
+		((*head) && (*head)->tail && check_errors(input, (*head)->tail->content)))
 	{
 		error_message(input);
 		return (1);
@@ -105,9 +106,10 @@ int					check_input(const char *input)
 	i = 0;
 	while (tmp[i])
 		i++;
-	if (i > 0 && (IS_SEMI(tmp[0]) || IS_RED(tmp[i - 1])))
+	if (i > 0 && (IS_SEMI(tmp[0]) || IS_RED(tmp[i - 1]) || tmp[i - 1] == '&'
+		|| tmp[i - 1] == '|'))
 	{
-		if (IS_RED(tmp[i - 1]))
+		if (IS_RED(tmp[i - 1]) || !IS_SEMI(tmp[i - 1]))
 			error_message(tmp + i - 1);
 		else
 			error_message(";");
