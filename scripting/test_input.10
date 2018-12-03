@@ -1,0 +1,1 @@
+echo 'gello' > test ; cat -e test; rm test;echo 'gello' > test ; cat -e test; rm test;echo 'gello' >
