@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 06:14:19 by tkobb             #+#    #+#             */
-/*   Updated: 2018/12/03 16:54:09 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/12/03 18:17:38 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int	fork_and_exec(t_tree *tree, int use_current_process, char *path)
 	return (return_status);
 }
 
-int		exec_cmd(t_tree *tree, int use_current_process)
+int			exec_cmd(t_tree *tree, int use_current_process)
 {
 	char		*path;
 	int			return_status;
