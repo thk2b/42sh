@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 18:11:30 by tkobb             #+#    #+#             */
-/*   Updated: 2018/12/02 15:47:42 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/12/03 17:11:29 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int			read_heredoc(int stop_eof, int *fds, char *end)
 	int		ret;
 	int		len;
 
-	while ((ret = get_next_line(0, &line)) >= 0)
+	while ((ret = get_next_line(0, &line)) > 0)
 	{
 		if ((stop_eof && ret == 0) || (stop_eof && ft_strcmp(line, "EOF") == 0))
 			cmp = 0;
