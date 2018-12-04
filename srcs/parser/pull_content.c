@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/28 20:05:12 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/12/03 14:25:47 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/03 17:23:12 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,35 +65,36 @@ int					pull_quote_content(const char *input, int *p,
 }
 
 int					pull_token(t_token_lst **head, const char *input, int *p,
- 					int errors)
- {
- 	int					tmp;
- 	char				*content;
- 	t_node				*stack;
+					int errors)
+{
+	int					tmp;
+	char				*content;
+	t_node				*stack;
 
- 	stack = NULL;
- 	tmp = *p;
- 	while (input[tmp] && ((T_ALPHANUM == classify_token(input[tmp]) ||
- 	classify_token(input[tmp]) == T_QUOTE)))
- 	{
- 		if (input[tmp] == 92)
+	stack = NULL;
+	tmp = *p;
+	while (input[tmp] && ((T_ALPHANUM == classify_token(input[tmp]) ||
+	classify_token(input[tmp]) == T_QUOTE)))
+	{
+		if (input[tmp] == 92)
 			tmp += 2;
- 		if (classify_token(input[tmp]) == T_QUOTE)
- 		{
- 			push_stack_elem(&stack, input, tmp);
- 			if (pull_quote_content(input, &tmp, &stack))
- 				break ;
- 		}
- 		else
- 			tmp += input[tmp] ? 1 : 0;
- 	}
- 	content = ft_strdup_range(input, *p, tmp - 1);
- 	if (content && error_special(content, head) && errors)
- 		return (-1);
- 	append(head, content);
- 	*p = tmp;
- 	return (END);
- }
+		if (classify_token(input[tmp]) == T_QUOTE)
+		{
+			push_stack_elem(&stack, input, tmp);
+			if (pull_quote_content(input, &tmp, &stack))
+				break ;
+		}
+		else
+			tmp += input[tmp] ? 1 : 0;
+	}
+	content = ft_strdup_range(input, *p, tmp - 1);
+	if (content && error_special(content, head) && errors)
+		return (-1);
+	append(head, content);
+	*p = tmp;
+	return (END);
+}
+
 int					pull_operator(t_token_lst **head, const char *input, int *p,
 					int errors)
 {
