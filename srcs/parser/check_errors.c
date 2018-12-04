@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_errors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/28 19:48:13 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/12/03 17:29:50 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/12/03 19:11:39 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int					check_input(const char *input)
 	if (!validate_quotes(tmp))
 	{
 		ft_dprintf(2, "42sh: unexpected EOF : looking for matching quote\n");
+		free(tmp);
 		return (1);
 	}
 	i = 0;

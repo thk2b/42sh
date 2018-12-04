@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 17:22:00 by tkobb             #+#    #+#             */
-/*   Updated: 2018/12/03 17:23:03 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/12/03 19:16:01 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,29 @@ int					validate_quotes(char *input)
 {
 	int		i;
 	t_node	*stack;
+	int		empty;
 
 	i = -1;
 	stack = NULL;
+	empty = 0;
 	while (input[++i])
 	{
-		if (IS_QU(input[i]) && input[i] != '\\')
+		if (input[i] == '`')
 		{
 			if (i > 0 && input[i - 1] == '\\')
 				continue ;
-			if (input[i] == peek(stack))
-				pop(&stack);
 			else
-				push(&stack, input[i]);
+				while (input[i] != '`')
+				{
+					if (IS_QU(input[i]) && input[i] != '\\' && input[i] != '`')
+						push(&stack, input[i]);
+					else if (IS_QU(input[i]) && peek(stack) == input[i])
+						pop(&stack);
+				}
 		}
 	}
-	return (is_empty(stack));
+	if (is_empty(stack))
+		empty = 1;
+	free(stack);
+	return (empty);
 }
