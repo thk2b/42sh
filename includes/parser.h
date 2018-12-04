@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 16:31:26 by tkobb             #+#    #+#             */
-/*   Updated: 2018/12/01 20:10:18 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/03 17:28:58 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ typedef struct	s_token
 ** error
 */
 
+int				validate_quotes(char *input);
 int				check_semicolon(char *input);
 int				check_redirections(char *input);
 int				error_special(char *input, t_token_lst **head);
