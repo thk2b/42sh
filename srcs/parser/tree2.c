@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmendelo <dmendelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/20 09:45:55 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/12/03 20:02:49 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/03 20:26:59 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,6 @@ t_tree					*build_tree(t_nodes *tokens)
 		ast = insert(&ast, new, type);
 	}
 	if (ast && ast->type != T_SEMI)
-		ast = insert(&ast, new, T_SEMI);
+		ast = insert(&ast, NULL, T_SEMI);
 	return (ast);
 }
