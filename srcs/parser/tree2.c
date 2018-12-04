@@ -6,7 +6,7 @@
 /*   By: dmendelo <dmendelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/20 09:45:55 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/12/01 20:11:06 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/03 20:02:49 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,22 +102,17 @@ t_tree					*build_tree(t_nodes *tokens)
 	root = ast;
 	while (tokens && tokens->content)
 	{
+		new = NULL;
 		type = tokens->type;
 		if (type == T_CMD || type == T_ASS)
 			new = create_cmd(&tokens);
 		else
-		{
-			new = NULL;
 			tokens = tokens->next;
-		}
 		if (type == T_ASS)
 			type = T_CMD;
 		ast = insert(&ast, new, type);
 	}
 	if (ast && ast->type != T_SEMI)
-	{
-		new = NULL;
 		ast = insert(&ast, new, T_SEMI);
-	}
 	return (ast);
 }

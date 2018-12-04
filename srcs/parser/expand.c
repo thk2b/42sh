@@ -6,24 +6,11 @@
 /*   By: acakste <acakste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/01 12:44:52 by acakste           #+#    #+#             */
-/*   Updated: 2018/12/01 20:03:15 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/03 19:54:04 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_sh.h>
-
-void			print_tokens(t_nodes *token)
-{
-	t_nodes	*cur;
-
-	cur = token;
-	while (cur)
-	{
-		printf("%s -> ", cur->content);
-		cur = cur->next;
-	}
-	printf("\n");
-}
 
 static void		if_sub_lst(t_nodes **cur, t_token_lst *sub_lst,
 							t_token_lst **arguments)
