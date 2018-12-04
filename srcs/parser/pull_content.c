@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/28 20:05:12 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/12/03 17:23:12 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/03 19:59:16 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,7 @@ int					pull_token(t_token_lst **head, const char *input, int *p,
 			if (pull_quote_content(input, &tmp, &stack))
 				break ;
 		}
-		else
-			tmp += input[tmp] ? 1 : 0;
+		tmp += input[tmp] ? 1 : 0;
 	}
 	content = ft_strdup_range(input, *p, tmp - 1);
 	if (content && error_special(content, head) && errors)
