@@ -6,7 +6,7 @@
 /*   By: dmendelo <dmendelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 10:18:05 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/12/03 19:31:59 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/03 21:04:09 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void				handle_word(t_nodes *traverse,
 {
 	if (aggreg)
 		;
-	else if (is_number(traverse->content) &&
+	else if (is_number(traverse->content) && traverse->next &&
 		(!ft_strcmp(traverse->next->content, ">") ||
 		!ft_strcmp(traverse->next->content, ">>")))
 		;
