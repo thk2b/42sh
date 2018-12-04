@@ -58,7 +58,8 @@ t_tree	*parse_backticks(char *input)
 
 	if (check_input(input))
 		return (NULL);
-	arguments = split_args(input, 1);
+	if ((arguments = split_args(input, 1)) == NULL)
+		return (NULL);
 	if (expand_tokens(&arguments, 1))
 		return (NULL);
 	traverse = arguments->head;
