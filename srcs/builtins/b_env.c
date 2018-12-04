@@ -15,23 +15,11 @@
 int			b_env(char **av)
 {
 	extern char	**environ;
-	char		*str;
-	int			i;
-	int			status;
 
 	if (av[1])
 	{
-		i = 1;
-		status = 0;
-		while (av[i])
-		{
-			str = ft_getenv(av[i++]);
-			if (str == NULL)
-				status = 1;
-			else
-				ft_putendl(str);
-		}
-		return (status);
+		ft_printf("env: %s: No such file or directory\n", av[1]);
+		return (1);
 	}
 	ft_putstrv(environ);
 	return (0);
