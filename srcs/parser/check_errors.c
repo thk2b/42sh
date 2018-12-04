@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/28 19:48:13 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/12/03 16:20:14 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/03 17:20:05 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int					check_redirections(char *input)
 	}
 	return (0);
 }
-
 
 int					validate_quotes(char *input)
 {
@@ -123,9 +122,9 @@ int					check_input(const char *input)
 	if (!*input)
 		return (1);
 	tmp = ft_strtrim(input);
-	if (!*tmp || !validate_quotes(tmp))
+	if (!validate_quotes(tmp))
 	{
-		ft_dprintf(2, "42sh: unexpected EOF while looking for matching quote\n");
+		ft_dprintf(2, "42sh: unexpected EOF : looking for matching quote\n");
 		return (1);
 	}
 	i = 0;
@@ -134,10 +133,8 @@ int					check_input(const char *input)
 	if (i > 0 && (IS_SEMI(tmp[0]) || IS_RED(tmp[i - 1]) || tmp[i - 1] == '&'
 		|| tmp[i - 1] == '|'))
 	{
-		if (IS_RED(tmp[i - 1]) || !IS_SEMI(tmp[i - 1]))
-			error_message(tmp + i - 1);
-		else
-			error_message(";");
+		IS_RED(tmp[i - 1]) || !IS_SEMI(tmp[i - 1]) ? error_message(tmp + i - 1)
+		: error_message(";");
 		free(tmp);
 		return (1);
 	}
