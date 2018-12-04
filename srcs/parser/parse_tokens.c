@@ -6,7 +6,7 @@
 /*   By: dmendelo <dmendelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 10:18:05 by dmendelo          #+#    #+#             */
-/*   Updated: 2018/12/03 16:27:21 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/03 16:44:26 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,5 +104,6 @@ t_cmd					*create_cmd(t_nodes **tokens)
 		return (command);
 	}
 	append_struct(traverse, tokens, command);
+	print_redirect_info(command->redirects);
 	return (command);
 }
