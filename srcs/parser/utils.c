@@ -6,7 +6,7 @@
 /*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/28 18:21:05 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/12/01 20:08:33 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/03 16:23:52 by ale-goff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,10 @@ int						is_word(char *str)
 int						is_aggregation(char *s1, char *s2, char *s3)
 {
 	if (is_number(s1) && !ft_strcmp(s2, ">") && !ft_strcmp(s3, "&"))
+	{
+		return (1);
+	}
+	if (!ft_strcmp(s2, ">") && !ft_strcmp(s3, "&"))
 	{
 		return (1);
 	}
