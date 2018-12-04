@@ -12,7 +12,7 @@
 
 #include <ft_sh.h>
 
-char	*search_cmd(char *exec_name)
+char		*search_cmd(char *exec_name)
 {
 	char	exists;
 	char	*exec_path;

@@ -36,7 +36,7 @@ static int	process_command(int *status)
 	return (0);
 }
 
-int	execute_non_interactive_shell(char *line, int *status)
+int			execute_non_interactive_shell(char *line, int *status)
 {
 	t_tree	*root;
 	int		return_status;
@@ -57,7 +57,6 @@ int	execute_non_interactive_shell(char *line, int *status)
 	teardown_shell();
 	return (0);
 }
-
 
 int			main(void)
 {
