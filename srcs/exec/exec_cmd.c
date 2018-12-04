@@ -6,13 +6,13 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 06:14:19 by tkobb             #+#    #+#             */
-/*   Updated: 2018/12/01 16:59:27 by tkobb            ###   ########.fr       */
+/*   Updated: 2018/12/03 16:54:09 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_sh.h>
 
-char	*search_cmd(char *exec_name)
+char		*search_cmd(char *exec_name)
 {
 	char	exists;
 	char	*exec_path;
@@ -22,7 +22,7 @@ char	*search_cmd(char *exec_name)
 	if (exec_path)
 		return (exec_path);
 	ft_dprintf(2, "%s: %s: %s\n", "42sh", exists ?
-		"permission denied" : "command not found", exec_name); // move to errors.c?
+		"permission denied" : "command not found", exec_name);
 	return (NULL);
 }
 
@@ -42,7 +42,7 @@ static int	fork_and_exec(t_tree *tree, int use_current_process, char *path)
 		execve(path, tree->data->argv, environ);
 		return (error("execve"));
 	}
-	signal(SIGINT, SIG_IGN); // SIGQUIT should also be ignored in the parent
+	signal(SIGINT, SIG_IGN);
 	waitpid(pid, &return_status, 0);
 	signal(SIGINT, SIG_DFL);
 	free(path);

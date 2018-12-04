@@ -6,7 +6,7 @@
 /*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 19:15:39 by tkobb             #+#    #+#             */
-/*   Updated: 2018/12/02 09:03:00 by dmendelo         ###   ########.fr       */
+/*   Updated: 2018/12/03 17:12:07 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	process_command(int *status)
 	return (0);
 }
 
-int	execute_non_interactive_shell(char *line, int *status)
+int			execute_non_interactive_shell(char *line, int *status)
 {
 	t_tree	*root;
 	int		return_status;
@@ -57,7 +57,6 @@ int	execute_non_interactive_shell(char *line, int *status)
 	teardown_shell();
 	return (0);
 }
-
 
 int			main(void)
 {
