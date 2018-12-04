@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   check_errors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ale-goff <ale-goff@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkobb <tkobb@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/28 19:48:13 by ale-goff          #+#    #+#             */
-/*   Updated: 2018/12/03 16:20:14 by ale-goff         ###   ########.fr       */
+/*   Updated: 2018/12/03 17:22:50 by tkobb            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include <ft_sh.h>
 
 int					check_semicolon(char *input)
 {
@@ -45,29 +45,6 @@ int					check_redirections(char *input)
 		i++;
 	}
 	return (0);
-}
-
-
-int					validate_quotes(char *input)
-{
-	int		i;
-	t_node	*stack;
-
-	i = -1;
-	stack = NULL;
-	while (input[++i])
-	{
-		if (IS_QU(input[i]) && input[i] != '\\')
-		{
-			if (i > 0 && input[i - 1] == '\\')
-				continue ;
-			if (input[i] == peek(stack))
-				pop(&stack);
-			else
-				push(&stack, input[i]);
-		}
-	}
-	return (is_empty(stack));
 }
 
 int					error_special(char *input, t_token_lst **head)
