@@ -4,7 +4,7 @@ A complete UNIX shell implementation
 
 ![screenshot](https://raw.githubusercontent.com/thk2b/42sh/master/media/screenshot.png)
 
-Features
+## Features
 - command execution by searching the `PATH` environment variable
 - line edition and history
 - `;` for mutiple commands, `|` pipes, `>` and `N>` redirections
